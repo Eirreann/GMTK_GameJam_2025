@@ -10,4 +10,13 @@ public class PlayerController : MonoBehaviour
         playerMovement = GetComponent<PlayerMovement>();
         playerStats = GetComponent<PlayerStats>();
     }
+
+    public void TakeDamage(int damage)
+    {
+        var health = playerStats.DamagePlayer(damage);
+        if (health <= 0)
+        {
+            // TODO: Game Over logic
+        }
+    }
 }
