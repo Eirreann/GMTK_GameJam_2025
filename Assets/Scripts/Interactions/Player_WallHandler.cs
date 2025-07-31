@@ -78,8 +78,8 @@ public class Player_WallHandler : MonoBehaviour
             var positions = new Vector3[_trail.positionCount];
             if (_trail.positionCount > 0)
             {
-                var firstPoint = positions[0];
                 _trail.GetPositions(positions);
+                var firstPoint = positions[0];
                 if (Vector3.Distance(_trail.transform.position, firstPoint) <= DISTANCE_THRESHOLD)
                 {
                     _buildWall(positions);
@@ -99,7 +99,7 @@ public class Player_WallHandler : MonoBehaviour
 
     private void _buildWall(Vector3[] points)
     {
-        Debug.Log($"Build wall with {points.Length} corners");
+        //Debug.Log($"Build wall with {points.Length} corners");
 
         int count = points.Length;
         if (count < 2) return;
