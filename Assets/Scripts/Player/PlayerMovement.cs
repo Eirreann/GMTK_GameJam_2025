@@ -69,7 +69,11 @@ public class PlayerMovement : MonoBehaviour
         var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
 
         playerCamera.transform.localRotation = xQuat * yQuat;
+        
         desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
+        
+        // var leanValue = GameManager.Instance.inputHandler._moveDirection.x;
+        // leanTransform.rotation = Quaternion.Euler(0,0, leanValue);
         
         switch (_playerState)
         {
