@@ -7,6 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
     [SerializeField] private Camera playerCamera;
+    [SerializeField] private Transform leanTransform;
     private Rigidbody rb;
 
     [Header("Movement")]
