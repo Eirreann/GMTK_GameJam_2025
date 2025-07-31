@@ -35,7 +35,6 @@ public class Player_WallHandler : MonoBehaviour
         {
             _trail = Instantiate(_trailPrefab, transform).GetComponent<TrailRenderer>();
             _trail.time = _trailDuration;
-            _trail.gameObject.SetActive(true);
         }
         else
         {

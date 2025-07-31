@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3838994034315796008}
   - component: {fileID: 8771606090870882031}
   - component: {fileID: 541133255216557778}
+  - component: {fileID: 7711792485344224027}
   - component: {fileID: 4343155719611324924}
   - component: {fileID: 4313108142864922454}
   m_Layer: 0
@@ -129,6 +130,21 @@ MonoBehaviour:
   isGrounded: 1
   isJumping: 0
   _playerState: 0
+--- !u!114 &7711792485344224027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168119540958964313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86d3d78a73a12b843a915b1fcb5b422e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _wallPrefab: {fileID: 9205461464894056063, guid: 8979fcd103979254c877df2f7d4d6f95, type: 3}
+  _trailPrefab: {fileID: 7183630887654587577, guid: a8cbf0907661f31439a860eb95fbc41d, type: 3}
+  _trailDuration: 5
 --- !u!54 &4343155719611324924
 Rigidbody:
   m_ObjectHideFlags: 0
