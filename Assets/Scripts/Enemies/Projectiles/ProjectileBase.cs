@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using Utilities;
 
 namespace Enemies
 {
     public class ProjectileBase : MonoBehaviour
     {
         [SerializeField] protected float _projectileSpeed = 5f;
-        [SerializeField] protected float _impactDistance = 0.5f;
 
         protected ProjectilePool pool;
         protected PlayerController target;
@@ -17,6 +17,7 @@ namespace Enemies
         private float _despawnTimer = 3f;
         
         private const string TAG_PLAYER = "Player";
+        private const float DESPAWN_TIME = 3f;
 
         public void Init(ProjectilePool pool)
         {
@@ -27,20 +28,12 @@ namespace Enemies
         {
             this.target = target;
             this.damage = damage;
+            _despawnTimer = DESPAWN_TIME;
             _isFired = true;
-            
-            //_fireCoroutine = StartCoroutine(_moveTowardTarget());
         }
 
         protected virtual void Update()
         {
-            // if(_target == null && _isFired)
-            // {
-            //     StopAllCoroutines();
-            //     _isFired = false;
-            //     _pool.ReturnToPool(this);
-            // }
-
             if (_isFired)
             {
                 transform.position += (transform.forward * _projectileSpeed) * Time.deltaTime;
@@ -54,10 +47,10 @@ namespace Enemies
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag(TAG_PLAYER))
+            var hit = other.GetComponent(typeof(IDamageable));
+            if (hit != null)
             {
-                var player = other.GetComponent<PlayerController>();
-                player.TakeDamage(damage);
+                (hit as IDamageable).TakeDamage(damage);
                 _returnToPool();
             }
         }
@@ -66,21 +59,6 @@ namespace Enemies
         {
             _isFired = false;
             pool.ReturnToPool(this);
-        }
-
-        protected virtual IEnumerator _moveTowardTarget()
-        {
-            while(Vector3.Distance(transform.position, target.transform.position) > _impactDistance)
-            {
-                //Debug.Log(Vector3.Distance(transform.position, _target.position));
-                transform.position = Vector3.MoveTowards(transform.position, target.transform.position, _projectileSpeed * Time.deltaTime);
-                transform.LookAt(target.transform);
-
-                yield return null;
-            }
-
-            target.TakeDamage(damage);
-            _returnToPool();
         }
     }
 }

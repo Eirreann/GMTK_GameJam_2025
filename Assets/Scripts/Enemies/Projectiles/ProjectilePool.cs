@@ -50,6 +50,7 @@ namespace Enemies
             for(int i = 0; i < _initPoolSize; i++)
             {
                 ProjectileBase instance = _createPoolInstance();
+                instance.gameObject.name = $"Projectile_{i}";
                 instance.gameObject.SetActive(false);
                 _poolStack.Push(instance);
             }
@@ -75,7 +76,6 @@ namespace Enemies
             _parentIndex++;
             if(_parentIndex >= _projectileParents.Count)
                 _parentIndex = 0;
-            Debug.Log($"Parent index: {_parentIndex}");
         }
     }
 }

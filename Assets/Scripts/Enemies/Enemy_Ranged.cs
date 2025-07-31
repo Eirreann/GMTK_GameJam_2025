@@ -77,7 +77,6 @@ public class Enemy_Ranged : Enemy_Base
             _fireCooldown -= Time.deltaTime;
             if (_fireCooldown < 0)
                 _fireCooldown = 0;
-            
         }
     }
 

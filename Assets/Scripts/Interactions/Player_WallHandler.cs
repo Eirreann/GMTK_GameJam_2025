@@ -41,7 +41,7 @@ public class Player_WallHandler : MonoBehaviour
         return _drawCooldown > 0f ? false : GameManager.Instance.inputHandler._drawWall;
     }
 
-    private void _deductDrawJuice()
+    private void _deductDrawJuice() // TODO: Refactor to better handle running out of juice
     {
         var trailLength = _trail.positionCount;
         if (trailLength != _currentPoints)

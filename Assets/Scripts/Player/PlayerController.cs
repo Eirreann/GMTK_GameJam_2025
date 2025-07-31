@@ -1,6 +1,7 @@
 using UnityEngine;
+using Utilities;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamageable
 {
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public PlayerStats playerStats;
