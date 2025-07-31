@@ -72,9 +72,6 @@ public class PlayerMovement : MonoBehaviour
         
         desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
         
-        // var leanValue = GameManager.Instance.inputHandler._moveDirection.x;
-        // leanTransform.rotation = Quaternion.Euler(0,0, leanValue);
-        
         switch (_playerState)
         {
             case PlayerState.Standing:
@@ -179,8 +176,19 @@ public class PlayerMovement : MonoBehaviour
         transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
 
         if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
-        
-        if (rb.linearVelocity.magnitude < 0.1f) _playerState = PlayerState.Crouching;
+
+        if (rb.linearVelocity.magnitude < 0.1)
+        {
+            if (!GameManager.Instance.inputHandler._crouch)
+            {
+                _playerState = PlayerState.Standing;
+            }
+            else
+            {
+                _playerState = PlayerState.Crouching;
+            }
+
+        }
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
@@ -189,6 +197,10 @@ public class PlayerMovement : MonoBehaviour
                 transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
                 _playerState = PlayerState.Standing;
             }
+            else
+            {
+                _playerState = PlayerState.Crouching;
+            }
         }
     }
 
@@ -196,6 +208,23 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!isJumping) rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isJumping = true;
+        
+        if(GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        
+        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        
+        RaycastHit HitInfo;
+        if (Physics.Raycast(ray, out HitInfo,3f)){
+            Debug.DrawRay(playerCamera.transform.position,playerCamera.transform.forward * HitInfo.distance, Color.yellow);
+
+            if (GameManager.Instance.inputHandler._isJumping && isJumping)
+            {
+                Vector3 forceToApply = transform.up * jumpForce + Vector3.Reflect(playerCamera.transform.forward, HitInfo.normal) * (jumpForce * 2);
+
+                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+                rb.AddForce(forceToApply, ForceMode.Impulse);
+            }
+        }
         
         RaycastHit hit;
         if (rb.linearVelocity.y < 0)
@@ -211,8 +240,7 @@ public class PlayerMovement : MonoBehaviour
                 {
                     _playerState = PlayerState.Standing;
                     isJumping = false;
-                }
-                    
+                }  
             }
         }
     }
