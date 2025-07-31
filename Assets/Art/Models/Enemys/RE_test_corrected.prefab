@@ -245,7 +245,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initPoolSize: 10
-  _projectileTemplate: {fileID: 0}
+  _projectileTemplate: {fileID: 4358376476983190833, guid: d8b683bdb578b6046a8583fd8bbe9367, type: 3}
 --- !u!1 &1434938725356626695
 GameObject:
   m_ObjectHideFlags: 0

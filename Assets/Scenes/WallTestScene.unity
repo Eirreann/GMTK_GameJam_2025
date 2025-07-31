@@ -832,10 +832,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: RE_test_corrected
       objectReference: {fileID: 0}
-    - target: {fileID: 5851001932663528477, guid: 29e02a50f31f3764286fdbcf2411bb21, type: 3}
-      propertyPath: _projectileTemplate
-      value: 
-      objectReference: {fileID: 4358376476983190833, guid: d8b683bdb578b6046a8583fd8bbe9367, type: 3}
     - target: {fileID: 8377213017341561652, guid: 29e02a50f31f3764286fdbcf2411bb21, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.38
