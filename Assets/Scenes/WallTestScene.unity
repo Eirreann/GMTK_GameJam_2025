@@ -321,6 +321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _isPersistent: 1
+  Player: {fileID: 1997613094}
   inputHandler: {fileID: 0}
 --- !u!4 &513786293
 Transform:
@@ -612,11 +613,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7711792485344224027, guid: c1e0492e81d45ae4381196865b267946, type: 3}
+      propertyPath: _trailDuration
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c1e0492e81d45ae4381196865b267946, type: 3}
+--- !u!114 &1997613094 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8771606090870882031, guid: c1e0492e81d45ae4381196865b267946, type: 3}
+  m_PrefabInstance: {fileID: 1997613088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f68b8aad85e0441a3313ca1e046467, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

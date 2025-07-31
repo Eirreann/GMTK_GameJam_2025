@@ -2,45 +2,45 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private float _currentWallJuice;
-    [SerializeField] private float _maxWallJuice;
+    [SerializeField] private int _currentWallJuice;
+    [SerializeField] private int _maxWallJuice;
 
-    [SerializeField] private float _currentPlayerHealth;
-    [SerializeField] private float _maxPlayerHealth;
+    [SerializeField] private int _currentPlayerHealth;
+    [SerializeField] private int _maxPlayerHealth;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    public float DrainJuice(float drain)
+    public int DrainJuice(int drain)
     {
         _currentWallJuice -= drain;
-
         return _currentWallJuice;
     }
 
-    public float InjectJuice(float inject)
+    public int InjectJuice(int inject)
     {
         _currentWallJuice += inject;
-        
         return _currentWallJuice;
     }
 
-    public float DamagePlayer(float damage)
+    public int DamagePlayer(int damage)
     {
         _currentPlayerHealth -= damage;
-        
         return _currentPlayerHealth;
     }
 
-    public float HealPlayer(float heal)
+    public int HealPlayer(int heal)
     {
         _currentPlayerHealth += heal;
-        
         return _currentPlayerHealth;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ReplenishAllJuice()
     {
-        
+        _currentWallJuice = _maxWallJuice;
+    }
+    
+    public void ReplenishAllHealth()
+    {
+        _currentPlayerHealth = _maxPlayerHealth;
     }
 }

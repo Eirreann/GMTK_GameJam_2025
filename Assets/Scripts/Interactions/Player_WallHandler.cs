@@ -12,25 +12,61 @@ public class Player_WallHandler : MonoBehaviour
     [SerializeField] private GameObject _trailPrefab;
     [SerializeField] private float _trailDuration = 5f;
     
+    private const float COOLDOWN = 1f;
+    private const float DISTANCE_THRESHOLD = 1f;
+    
     private TrailRenderer _trail;
-    private float _distanceThreshold = 1f;
+    private float _drawCooldown = 0f;
     private bool _isDrawing = false;
+    private int _currentPoints = 0;
 
     private void Update()
     {
-        if (GameManager.Instance.inputHandler._drawWall && !_isDrawing)
-        {
+        var drawInput = _isDrawingAllowed();
+        
+        if (drawInput && !_isDrawing)
             _drawWall(true);
-        }
-        else if (!GameManager.Instance.inputHandler._drawWall && _isDrawing)
-        {
+        else if (!drawInput && _isDrawing)
             _drawWall(false);
+
+        if (_isDrawing)
+            _deductDrawJuice();
+    }
+
+    private bool _isDrawingAllowed()
+    {
+        if(_drawCooldown > 0f)
+            _drawCooldown -= Time.deltaTime;
+        
+        return _drawCooldown > 0f ? false : GameManager.Instance.inputHandler._drawWall;
+    }
+
+    private void _deductDrawJuice()
+    {
+        var trailLength = _trail.positionCount;
+        if (trailLength != _currentPoints)
+        {
+            if (trailLength < _currentPoints)
+            {
+                GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints - trailLength);
+                _currentPoints = trailLength;
+                return;
+            }
+                
+            var amountToDeduct = trailLength - _currentPoints;
+            _currentPoints = trailLength;
+            
+            var juiceRemaining = GameManager.Instance.Player.playerStats.DrainJuice(amountToDeduct);
+            if (juiceRemaining <= 0)
+            {
+                _drawCooldown = COOLDOWN;
+                _drawWall(false);
+            }
         }
     }
 
     private void _drawWall(bool state)
     {
-        _isDrawing = state;
         if (state)
         {
             _trail = Instantiate(_trailPrefab, transform).GetComponent<TrailRenderer>();
@@ -39,35 +75,38 @@ public class Player_WallHandler : MonoBehaviour
         else
         {
             var positions = new Vector3[_trail.positionCount];
-            var count = _trail.GetPositions(positions);
             if (_trail.positionCount > 0)
             {
                 var firstPoint = positions[0];
-                if (Vector3.Distance(_trail.transform.position, firstPoint) <= _distanceThreshold)
+                if (Vector3.Distance(_trail.transform.position, firstPoint) <= DISTANCE_THRESHOLD)
                 {
                     _buildWall(positions);
                 }
                 else
                 {
                     // TODO: Fizzle visual/audio effect?
+                    
+                    // Give juice back
+                    GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
                 }
             }
             Destroy(_trail.gameObject);
+            _currentPoints = 0;
         }
+        _isDrawing = state;
     }
 
     private void _buildWall(Vector3[] points)
     {
-        Debug.Log($"Build wall with {points.Length} corners");
-        
         int count = points.Length;
         if (count < 2) return;
 
         Transform wallParent = new GameObject("Wall").transform;
         for (int i = 0; i < count; i++)
         {
-            Vector3 start = points[i];
-            Vector3 end = points[(i + 1) % count];
+            Vector3 start = new Vector3(points[i].x, 1, points[i].z);
+            Vector3 endPoint = points[(i + 1) % count];
+            Vector3 end = new Vector3(endPoint.x, 1, endPoint.z);
 
             Vector3 direction = end - start;
             float distance = direction.magnitude;

@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlayerMovement playerMovement;
-    public PlayerStats playerStats;
+    [HideInInspector] public PlayerMovement playerMovement;
+    [HideInInspector] public PlayerStats playerStats;
     
     public void Awake() 
     {
