@@ -219,7 +219,8 @@ public class PlayerMovement : MonoBehaviour
 
             if (GameManager.Instance.inputHandler._isJumping && isJumping)
             {
-                Vector3 forceToApply = transform.up * jumpForce + Vector3.Reflect(playerCamera.transform.forward, HitInfo.normal) * (jumpForce * 2);
+                Vector3 reflectDirection = Vector3.Reflect(playerCamera.transform.forward, HitInfo.normal);
+                Vector3 forceToApply = transform.up * jumpForce + new Vector3(reflectDirection.x, 0, reflectDirection.z) * (jumpForce * 2);
 
                 rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
                 rb.AddForce(forceToApply, ForceMode.Impulse);
