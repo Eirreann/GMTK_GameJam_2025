@@ -1,0 +1,28 @@
+using UnityEngine;
+using UnityEngine.InputSystem;
+
+public class InputHandler : MonoBehaviour
+{
+    public PlayerInput playerInput;
+    
+    public InputSystem_Actions inputSystem;
+    private InputSystem_Actions.PlayerActions playerActions;
+
+    public Vector2 _lookDirection;
+    
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    void Start()
+    {
+        inputSystem = new InputSystem_Actions();
+        playerInput = GetComponent<PlayerInput>();
+
+        playerActions = inputSystem.Player;
+        playerActions.Enable();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        _lookDirection = playerActions.Look.ReadValue<Vector2>();
+    }
+}
