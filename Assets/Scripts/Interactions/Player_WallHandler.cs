@@ -13,7 +13,7 @@ public class Player_WallHandler : MonoBehaviour
     [SerializeField] private float _trailDuration = 5f;
     
     private const float COOLDOWN = 1f;
-    private const float DISTANCE_THRESHOLD = 1f;
+    private const float DISTANCE_THRESHOLD = 2f;
     
     private TrailRenderer _trail;
     private float _drawCooldown = 0f;
@@ -67,6 +67,7 @@ public class Player_WallHandler : MonoBehaviour
 
     private void _drawWall(bool state)
     {
+        _isDrawing = state;
         if (state)
         {
             _trail = Instantiate(_trailPrefab, transform).GetComponent<TrailRenderer>();
@@ -93,7 +94,6 @@ public class Player_WallHandler : MonoBehaviour
             Destroy(_trail.gameObject);
             _currentPoints = 0;
         }
-        _isDrawing = state;
     }
 
     private void _buildWall(Vector3[] points)
