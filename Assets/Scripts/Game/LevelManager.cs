@@ -1,28 +1,33 @@
 ﻿using System.Collections.Generic;
 using GogoGaga.OptimizedRopesAndCables;
+using Interactions;
 using UnityEngine;
 
 namespace Game
 {
     public class LevelManager : MonoBehaviour
     {
-        public Rope ropePickup;
-        public GameObject depositPoint;
+        public Interactable ropePickup;
+        public Interactable depositPoint;
         
         public GameObject endDoor;
 
         public List<Enemy_Base> enemies;
 
-        private const float INTERACT_DISTANCE = 3f;
         public bool allCaptured;
 
         [SerializeField] private MeshRenderer pickupCubeRend;
         [SerializeField] private MeshRenderer depositPointCubeRend;
 
+        public bool playerHasRope = false;
+
         public void StartLevel()
         {
             // TODO
-            _setRopeActive(false);
+            _setRopeActive(allCaptured);
+            
+            ropePickup.Init(PickupRope);
+            depositPoint.Init(DepositRope);
         }
 
         public void RegisterEnemyCaptured()
@@ -31,35 +36,15 @@ namespace Game
             _setRopeActive(allCaptured);
         }
 
-        public bool PickupRope(bool hasRope)
+        public void PickupRope(bool hasRope)
         {
-            if (allCaptured && !hasRope)
-            {
-                var ropeDis = Vector3.Distance(GameManager.Instance.Player.transform.position, ropePickup.transform.position);
-                if (ropeDis < INTERACT_DISTANCE)
-                {
-                    ropePickup.endPoint = GameManager.Instance.Player.transform;
-                    return true;
-                }
-            }
-            
-            return false;
+            ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
         }
 
-        public bool DepositRope(bool hasRope)
+        public void DepositRope(bool hasRope)
         {
-            if (allCaptured && hasRope)
-            {
-                var depositDis = Vector3.Distance(GameManager.Instance.Player.transform.position, depositPoint.transform.position);
-                if (depositDis < INTERACT_DISTANCE)
-                {
-                    ropePickup.endPoint = depositPoint.transform;
-                    endDoor.SetActive(false);
-                    return false;
-                }
-            }
-
-            return false;
+            ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
+            endDoor.SetActive(false);
         }
 
         private void _setRopeActive(bool isActive)
