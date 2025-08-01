@@ -60,7 +60,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (transform.position.y < -2 || transform.position.y > 25)
         {
-            transform.position = new Vector3(0, 3, 0);
+            transform.position = new Vector3(-0.552f, 1f, -65f);
             rb.linearVelocity = Vector3.zero;
         }
         

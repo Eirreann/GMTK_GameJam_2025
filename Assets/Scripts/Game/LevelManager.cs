@@ -16,12 +16,25 @@ namespace Game
         private const float INTERACT_DISTANCE = 3f;
         public bool allCaptured;
 
+        [SerializeField] private MeshRenderer pickupCubeRend;
+        [SerializeField] private MeshRenderer depositPointCubeRend;
+
         public void Update()
         {
             //check if all enemies are captured, if so activate the rope pickup
             if (allCaptured)
             {
-                ropePickup.enabled = true;
+                ropePickup.gameObject.SetActive(true);
+                
+                pickupCubeRend.material.color = Color.green;
+                depositPointCubeRend.material.color = Color.green;
+            }
+            else
+            {
+                ropePickup.gameObject.SetActive(false);
+                
+                pickupCubeRend.material.color = Color.red;
+                depositPointCubeRend.material.color = Color.red;
             }
         }
 
