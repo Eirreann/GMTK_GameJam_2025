@@ -15,6 +15,8 @@ public class InputHandler : MonoBehaviour
     public bool _run;
     public bool _crouch;
     public bool _drawWall;
+
+    public bool _interact;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -38,5 +40,7 @@ public class InputHandler : MonoBehaviour
         _run = playerActions.Sprint.ReadValue<float>() > 0.25f;
         
         _drawWall = playerActions.Attack.IsPressed();
+
+        _interact = playerActions.Interact.WasPressedThisFrame();
     }
 }

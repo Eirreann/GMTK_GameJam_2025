@@ -19,6 +19,10 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] private float jumpForce = 20f;
     
+    [Header("Wall Jumping")]
+    [SerializeField] private float wallJumpUpForce = 20f;
+    [SerializeField] private float wallJumpSideForce = 20f;
+    
     [Header("Look Rotation Values")]
     [Range(0.1f, 9f)][SerializeField] private float _sensitivity = 2f;
     [Range(0f, 90f)][SerializeField] private float _yRotationLimit = 88f;
@@ -31,12 +35,13 @@ public class PlayerMovement : MonoBehaviour
     
     [Header("Player State Machine")]
     [SerializeField] private PlayerState _playerState = PlayerState.Standing;
+
+    [SerializeField] private Transform lastWallJumped;
     
     private enum PlayerState
     {
         Standing,
         Crouching,
-        Sprinting,
         Sliding,
         Running,
         Jumping
@@ -52,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        if (transform.position.y < -2 || transform.position.y > 10)
+        if (transform.position.y < -2 || transform.position.y > 25)
         {
             transform.position = new Vector3(0, 3, 0);
             rb.linearVelocity = Vector3.zero;
@@ -82,9 +87,6 @@ public class PlayerMovement : MonoBehaviour
                 break;
             case PlayerState.Crouching:
                 Crouching();
-                break;
-            case PlayerState.Sprinting:
-                Sprinting();
                 break;
             case PlayerState.Sliding:
                 Sliding();
@@ -120,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
         );
         
         transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        
         if (!GameManager.Instance.inputHandler._crouch)
         {
             if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1.5f))
@@ -133,13 +136,12 @@ public class PlayerMovement : MonoBehaviour
     void Running()
     {
         currentSpeed = playerSpeed;
+        
         rb.linearVelocity = new Vector3(
             desiredMoveDirection.x * currentSpeed,
             rb.linearVelocity.y,
             desiredMoveDirection.z * currentSpeed
         );
-        
-        if(GameManager.Instance.inputHandler._run) _playerState = PlayerState.Sprinting;
         
         if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
 
@@ -148,26 +150,8 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
             _playerState = PlayerState.Sliding;
         }
+        
         if (GameManager.Instance.inputHandler._moveDirection.magnitude < 0.1f) _playerState = PlayerState.Standing;
-    }
-    
-    void Sprinting()
-    {
-        currentSpeed = playerSpeed * sprintMultiplier;
-        rb.linearVelocity = new Vector3(
-            desiredMoveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            desiredMoveDirection.z * currentSpeed
-        );
-        
-        if (GameManager.Instance.inputHandler._crouch)
-        {
-            rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
-            _playerState = PlayerState.Sliding;
-        }
-        
-        if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
-        if(!GameManager.Instance.inputHandler._run) _playerState = PlayerState.Running;
     }
     
     void Sliding()
@@ -211,37 +195,47 @@ public class PlayerMovement : MonoBehaviour
         
         if(GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
         
-        Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+        Ray leftRay = new Ray(playerCamera.transform.position, -playerCamera.transform.right);
+        Ray rightRay = new Ray(playerCamera.transform.position, playerCamera.transform.right);
         
         RaycastHit HitInfo;
-        if (Physics.Raycast(ray, out HitInfo,3f)){
-            Debug.DrawRay(playerCamera.transform.position,playerCamera.transform.forward * HitInfo.distance, Color.yellow);
-
-            if (GameManager.Instance.inputHandler._isJumping && isJumping)
+        if (GameManager.Instance.inputHandler._isJumping && isJumping)
+        {
+            if (Physics.Raycast(leftRay, out HitInfo, 2f) || Physics.Raycast(rightRay, out HitInfo, 2f))
             {
-                Vector3 reflectDirection = Vector3.Reflect(playerCamera.transform.forward, HitInfo.normal);
-                Vector3 forceToApply = transform.up * jumpForce + new Vector3(reflectDirection.x, 0, reflectDirection.z) * (jumpForce * 2);
-
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-                rb.AddForce(forceToApply, ForceMode.Impulse);
+                if (HitInfo.transform != lastWallJumped)
+                {
+                    rb.linearVelocity = Vector3.zero;
+                    Vector3 forceToApply = transform.up * wallJumpUpForce + playerCamera.transform.forward * wallJumpSideForce;
+                    rb.AddForce(forceToApply, ForceMode.Impulse);
+                    
+                    lastWallJumped = HitInfo.transform;
+                }
             }
         }
-        
+
+        StartCoroutine("JumpingRoutine");
+    }
+
+    IEnumerator JumpingRoutine()
+    {
         RaycastHit hit;
-        if (rb.linearVelocity.y < 0)
+        yield return new WaitForSeconds(0.2f);
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
         {
-            if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
+            if (GameManager.Instance.inputHandler._crouch)
             {
-                if (GameManager.Instance.inputHandler._crouch)
-                {
-                    _playerState = PlayerState.Sliding;
-                    isJumping = false;
-                }
-                else
-                {
-                    _playerState = PlayerState.Standing;
-                    isJumping = false;
-                }  
+                lastWallJumped = null;
+
+                _playerState = PlayerState.Sliding;
+                isJumping = false;
+            }
+            else
+            {
+                lastWallJumped = null;
+
+                _playerState = PlayerState.Standing;
+                isJumping = false;
             }
         }
     }

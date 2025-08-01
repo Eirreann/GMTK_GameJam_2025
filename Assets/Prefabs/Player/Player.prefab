@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 541133255216557778}
   - component: {fileID: 7711792485344224027}
   - component: {fileID: 2418554900736022803}
+  - component: {fileID: 8128099997728786182}
   - component: {fileID: 4343155719611324924}
   - component: {fileID: 4313108142864922454}
   m_Layer: 0
@@ -122,16 +123,19 @@ MonoBehaviour:
   playerCamera: {fileID: 47698364035874897}
   leanTransform: {fileID: 5764127299342496211}
   currentSpeed: 2
-  playerSpeed: 6
-  sprintMultiplier: 2
+  playerSpeed: 16
+  sprintMultiplier: 1
   desiredMoveDirection: {x: 0, y: 0, z: 0}
-  jumpForce: 24
+  jumpForce: 32
+  wallJumpUpForce: 32
+  wallJumpSideForce: 80
   _sensitivity: 0.1
   _yRotationLimit: 70
   isSliding: 0
   isGrounded: 1
   isJumping: 0
   _playerState: 0
+  lastWallJumped: {fileID: 0}
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,10 +164,26 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 0}
-  _currentWallJuice: 25
-  _maxWallJuice: 25
+  _currentWallJuice: 50
+  _maxWallJuice: 50
   _currentPlayerHealth: 25
   _maxPlayerHealth: 25
+--- !u!114 &8128099997728786182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1168119540958964313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c9178bd639b4f4e86e7807585296d6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rope: {fileID: 0}
+  depositPoint: {fileID: 0}
+  text: {fileID: 0}
+  holding_rope: 0
 --- !u!54 &4343155719611324924
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -311,7 +331,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 90
   orthographic: 0
