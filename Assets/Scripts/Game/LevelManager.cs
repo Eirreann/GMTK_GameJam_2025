@@ -19,23 +19,16 @@ namespace Game
         [SerializeField] private MeshRenderer pickupCubeRend;
         [SerializeField] private MeshRenderer depositPointCubeRend;
 
-        public void Update()
+        public void StartLevel()
         {
-            //check if all enemies are captured, if so activate the rope pickup
-            if (allCaptured)
-            {
-                ropePickup.gameObject.SetActive(true);
-                
-                pickupCubeRend.material.color = Color.green;
-                depositPointCubeRend.material.color = Color.green;
-            }
-            else
-            {
-                ropePickup.gameObject.SetActive(false);
-                
-                pickupCubeRend.material.color = Color.red;
-                depositPointCubeRend.material.color = Color.red;
-            }
+            // TODO
+            _setRopeActive(false);
+        }
+
+        public void RegisterEnemyCaptured()
+        {
+            allCaptured = enemies.TrueForAll(e => e.IsTrapped);
+            _setRopeActive(allCaptured);
         }
 
         public bool PickupRope(bool hasRope)
@@ -67,6 +60,25 @@ namespace Game
             }
 
             return false;
+        }
+
+        private void _setRopeActive(bool isActive)
+        {
+            
+            if (isActive)
+            {
+                ropePickup.gameObject.SetActive(true);
+                
+                pickupCubeRend.material.color = Color.green;
+                depositPointCubeRend.material.color = Color.green;
+            }
+            else
+            {
+                ropePickup.gameObject.SetActive(false);
+                
+                pickupCubeRend.material.color = Color.red;
+                depositPointCubeRend.material.color = Color.red;
+            }
         }
     }
 }

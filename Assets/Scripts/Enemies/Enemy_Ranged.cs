@@ -8,6 +8,7 @@ public class Enemy_Ranged : Enemy_Base
     [SerializeField] protected float fireRate;
     [SerializeField] protected Transform gunRotation;
     [SerializeField] protected List<Transform> bulletSpawnPos;
+    [SerializeField] protected AnimationClip idleAnim;
     
     [Header("Audio")]
     [SerializeField] protected AudioClip onFire;
@@ -61,7 +62,7 @@ public class Enemy_Ranged : Enemy_Base
         {
             rotationOrigin.localRotation = startRot;
             _anim.enabled = true;
-            _anim.Play("Enemy_Ranged_Idle");
+            _anim.Play(idleAnim.name);
         }
     }
 

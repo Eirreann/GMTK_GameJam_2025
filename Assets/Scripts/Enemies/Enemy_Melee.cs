@@ -39,7 +39,7 @@ namespace Enemies
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > DISTANCE_TO_ATTACK)
                 {
-                    if (isTrapped)
+                    if (IsTrapped)
                     {
                         if (Physics.Raycast(transform.position, player.transform.position - transform.position,
                                 out RaycastHit hit, distance) && hit.collider.CompareTag("PlayerWall"))
@@ -67,7 +67,7 @@ namespace Enemies
             }
             else
             {
-                if(isTrapped)
+                if(IsTrapped)
                     _agent.isStopped = true;
                 else
                     patrolRoute.Patrol(_agent);

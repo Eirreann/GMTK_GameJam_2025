@@ -12,8 +12,8 @@ namespace Player
         {
             if (GameManager.Instance.inputHandler._interact)
             {
-                if(!holding_rope) holding_rope = GameManager.Instance.levelManager.PickupRope(holding_rope);
-                else holding_rope =  GameManager.Instance.levelManager.DepositRope(holding_rope);
+                if(!holding_rope) holding_rope = GameManager.Instance.CurrentLevel.PickupRope(holding_rope);
+                else holding_rope =  GameManager.Instance.CurrentLevel.DepositRope(holding_rope);
             }
         }
     }

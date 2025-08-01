@@ -468,6 +468,7 @@ MonoBehaviour:
   - {fileID: 1760032908180285554}
   - {fileID: 5093967349301763596}
   - {fileID: 460381105929602387}
+  idleAnim: {fileID: 7400000, guid: 1440cf53e0db42345b2f30e7cb0ee30d, type: 2}
   onFire: {fileID: 0}
 --- !u!114 &4376036286061344190
 MonoBehaviour:

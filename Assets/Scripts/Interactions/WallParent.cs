@@ -62,7 +62,6 @@ namespace Interactions
                 Vector3 enemyPosition = e.transform.position;
                 if (GeometryHelper.IsPointInPolygonXZ(enemyPosition, _points.ToArray()))
                 {
-                    Debug.Log($"Enemy {e.name} trapped in a Loop!");
                     var enemy = e.GetComponent<Enemy_Base>();
                     enemy.SetTrapped(true);
                     _trappedEnemies.Add(enemy);

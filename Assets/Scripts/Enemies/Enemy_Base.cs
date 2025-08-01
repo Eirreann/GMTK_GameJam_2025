@@ -1,8 +1,11 @@
 using System;
+using Game;
 using UnityEngine;
 
 public class Enemy_Base : MonoBehaviour
 {
+    [HideInInspector] public bool IsTrapped = false;
+    
     [Header("Base Enemy")]
     [SerializeField] protected Transform rotationOrigin;
     [SerializeField] protected int damage;
@@ -12,7 +15,6 @@ public class Enemy_Base : MonoBehaviour
     protected Quaternion startRot;
     protected PlayerController player;
     protected bool hasTarget = false;
-    protected bool isTrapped = false;
     
     private const string TAG_PLAYER = "Player";
 
@@ -31,7 +33,8 @@ public class Enemy_Base : MonoBehaviour
 
     public virtual void SetTrapped(bool state)
     {
-        isTrapped = state;
+        IsTrapped = state;
+        GameManager.Instance.CurrentLevel.RegisterEnemyCaptured();
     }
 
     protected virtual void lookAt(Transform target)
