@@ -13,8 +13,6 @@ public class Enemy_Base : MonoBehaviour
     protected PlayerController player;
     protected bool hasTarget = false;
     
-    private float fireCooldown;
-    
     private const string TAG_PLAYER = "Player";
 
     protected virtual void Start()

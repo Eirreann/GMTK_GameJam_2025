@@ -82,7 +82,8 @@ public class Player_WallHandler : MonoBehaviour
             {
                 _trail.GetPositions(positions);
                 var firstPoint = positions[0];
-                if (Vector3.Distance(_trail.transform.position, firstPoint) <= DISTANCE_THRESHOLD)
+                var distance = Vector3.Distance(_trail.transform.position, firstPoint);
+                if (positions.Length > 2 && distance <= DISTANCE_THRESHOLD)
                 {
                     _buildWall(positions);
                 }
@@ -94,6 +95,7 @@ public class Player_WallHandler : MonoBehaviour
                     GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
                 }
             }
+            
             Destroy(_trail.gameObject);
             _currentPoints = 0;
         }
@@ -125,7 +127,6 @@ public class Player_WallHandler : MonoBehaviour
             localScale.z = distance;
             wallSegment.transform.localScale = localScale;
             
-            //wallSegment.transform.SetParent(wallParent.transform);
             wallParent.AddWallSegment(wallSegment);
         }
     }

@@ -49,7 +49,6 @@ namespace Enemies
             var hit = other.GetComponent(typeof(IDamageable));
             if (hit != null)
             {
-                Debug.Log(hit.gameObject.name);
                 (hit as IDamageable).TakeDamage(damage);
                 _returnToPool();
             }
