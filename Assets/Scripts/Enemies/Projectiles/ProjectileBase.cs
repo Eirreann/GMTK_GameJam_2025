@@ -32,7 +32,7 @@ namespace Enemies
             _isFired = true;
         }
 
-        protected virtual void Update()
+        private void FixedUpdate()
         {
             if (_isFired)
             {
@@ -42,7 +42,6 @@ namespace Enemies
                 if(_despawnTimer <= 0)
                     _returnToPool();
             }
-
         }
 
         private void OnTriggerEnter(Collider other)
@@ -50,6 +49,7 @@ namespace Enemies
             var hit = other.GetComponent(typeof(IDamageable));
             if (hit != null)
             {
+                Debug.Log(hit.gameObject.name);
                 (hit as IDamageable).TakeDamage(damage);
                 _returnToPool();
             }

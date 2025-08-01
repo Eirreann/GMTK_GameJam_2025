@@ -60,7 +60,7 @@ namespace Enemies
         {
             ProjectileBase instance = Instantiate(_projectileTemplate, _projectileParents[_parentIndex]);
             instance.Init(this);
-            instance.transform.parent = transform.parent;
+            instance.transform.parent = transform;
             return instance;
         }
 

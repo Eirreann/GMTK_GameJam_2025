@@ -148,7 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86d3d78a73a12b843a915b1fcb5b422e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallPrefab: {fileID: 9205461464894056063, guid: 8979fcd103979254c877df2f7d4d6f95, type: 3}
+  _wallParentPrefab: {fileID: 1095038775122224773, guid: f3f63814311dc7d4ba2186cd6a0bb5a6, type: 3}
+  _wallPrefab: {fileID: 8698839035296989236, guid: 8979fcd103979254c877df2f7d4d6f95, type: 3}
   _trailPrefab: {fileID: 7183630887654587577, guid: a8cbf0907661f31439a860eb95fbc41d, type: 3}
   _trailDuration: 5
 --- !u!114 &2418554900736022803

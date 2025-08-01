@@ -15,6 +15,9 @@ public class PlayerStats : MonoBehaviour
     public int DrainJuice(int drain)
     {
         _currentWallJuice -= drain;
+        if(_currentWallJuice < 0)
+            _currentWallJuice = 0;
+        
         _updateUI();
         return _currentWallJuice;
     }
@@ -22,6 +25,8 @@ public class PlayerStats : MonoBehaviour
     public int InjectJuice(int inject)
     {
         _currentWallJuice += inject;
+        if(_currentWallJuice > _maxWallJuice)
+            _currentWallJuice = _maxWallJuice;
         _updateUI();
         return _currentWallJuice;
     }

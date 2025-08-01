@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using Interactions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class Player_WallHandler : MonoBehaviour
 {
-    [SerializeField] private GameObject _wallPrefab;
+    [SerializeField] private WallParent _wallParentPrefab;
+    [SerializeField] private WallSegment _wallPrefab;
     
     [Header("Trail")]
     [SerializeField] private GameObject _trailPrefab;
@@ -104,7 +106,8 @@ public class Player_WallHandler : MonoBehaviour
         int count = points.Length;
         if (count < 2) return;
 
-        Transform wallParent = new GameObject("Wall").transform;
+        //Transform wallParent = new GameObject("Wall").transform;
+        WallParent wallParent = Instantiate(_wallParentPrefab);
         for (int i = 0; i < count; i++)
         {
             Vector3 start = new Vector3(points[i].x, 1, points[i].z);
@@ -122,7 +125,8 @@ public class Player_WallHandler : MonoBehaviour
             localScale.z = distance;
             wallSegment.transform.localScale = localScale;
             
-            wallSegment.transform.SetParent(wallParent);
+            //wallSegment.transform.SetParent(wallParent.transform);
+            wallParent.AddWallSegment(wallSegment);
         }
     }
 }

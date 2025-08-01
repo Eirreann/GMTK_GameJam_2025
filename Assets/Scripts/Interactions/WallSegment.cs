@@ -2,21 +2,51 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
+using Utilities;
 
-public class WallSegment : MonoBehaviour
+public class WallSegment : MonoBehaviour, IDamageable
 {
     [SerializeField] private Material _builtWall;
+    [SerializeField] private Material _hitMat;
+
+    private MeshRenderer _renderer;
+    private UnityAction<int> _onHit;
+    private bool _isHittable = false;
 
     private void Start()
     {
+        _renderer = GetComponent<MeshRenderer>();
         StartCoroutine(_buildAfterDelay());
+    }
+
+    public void SetOnHitCallback(UnityAction<int> callback)
+    {
+        _onHit = callback;
+    }
+
+    public void TakeDamage(int damage)
+    {
+        if(_isHittable)
+            _onHit.Invoke(damage);
+        
+        StartCoroutine(_flashOnHit());
     }
 
     private IEnumerator _buildAfterDelay()
     {
         yield return new WaitForSeconds(1f);
+        _renderer.material = _builtWall;
         GetComponent<BoxCollider>().enabled = true;
         GetComponent<NavMeshObstacle>().enabled = true;
-        GetComponent<MeshRenderer>().material = _builtWall;
+        
+        _isHittable = true;
+    }
+
+    private IEnumerator _flashOnHit()
+    {
+        _renderer.material = _hitMat;
+        yield return new WaitForSeconds(0.1f);
+        _renderer.material = _builtWall;
     }
 }
