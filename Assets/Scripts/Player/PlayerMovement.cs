@@ -99,6 +99,14 @@ public class PlayerMovement : MonoBehaviour
 
     void Standing()
     {
+        currentSpeed = playerSpeed;
+        
+        rb.linearVelocity = new Vector3(
+            desiredMoveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            desiredMoveDirection.z * currentSpeed
+        );
+        
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         
         //Jumping Logic
@@ -106,7 +114,7 @@ public class PlayerMovement : MonoBehaviour
         
         if(GameManager.Instance.inputHandler._crouch) _playerState = PlayerState.Crouching;
 
-        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0)
+        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 && rb.linearVelocity.magnitude > (playerSpeed / 2))
         {
             _playerState = PlayerState.Running;
         }
@@ -114,11 +122,13 @@ public class PlayerMovement : MonoBehaviour
     
     void Crouching()
     {
+        currentSpeed = playerSpeed / 2;
+        
         RaycastHit hit;
         rb.linearVelocity = new Vector3(
-            desiredMoveDirection.x * currentSpeed / 2,
+            desiredMoveDirection.x * currentSpeed,
             rb.linearVelocity.y,
-            desiredMoveDirection.z * currentSpeed / 2
+            desiredMoveDirection.z * currentSpeed
         );
         
         transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
@@ -190,6 +200,12 @@ public class PlayerMovement : MonoBehaviour
 
     void Jumping()
     {
+        rb.linearVelocity = new Vector3(
+            desiredMoveDirection.x * currentSpeed,
+            rb.linearVelocity.y,
+            desiredMoveDirection.z * currentSpeed
+        );
+        
         if(!isJumping) rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
         isJumping = true;
         
