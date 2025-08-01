@@ -35,11 +35,8 @@ namespace AI
                 }
                 else
                 {
-                    if (agent.isStopped)
-                    {
-                        agent.isStopped = false;
-                        agent.SetDestination(_waypoints[_currentTargetIndex].position);
-                    }
+                    agent.isStopped = false;
+                    agent.SetDestination(_waypoints[_currentTargetIndex].position);
                 }
             }
         }

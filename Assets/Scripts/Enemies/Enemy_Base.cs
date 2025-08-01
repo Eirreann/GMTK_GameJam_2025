@@ -12,6 +12,7 @@ public class Enemy_Base : MonoBehaviour
     protected Quaternion startRot;
     protected PlayerController player;
     protected bool hasTarget = false;
+    protected bool isTrapped = false;
     
     private const string TAG_PLAYER = "Player";
 
@@ -26,6 +27,11 @@ public class Enemy_Base : MonoBehaviour
     {
         hasTarget = player != null;
         lookAt(hasTarget ? player.transform : null);
+    }
+
+    public virtual void SetTrapped(bool state)
+    {
+        isTrapped = state;
     }
 
     protected virtual void lookAt(Transform target)

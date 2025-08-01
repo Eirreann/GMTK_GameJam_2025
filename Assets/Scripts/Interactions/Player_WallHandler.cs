@@ -130,5 +130,6 @@ public class Player_WallHandler : MonoBehaviour
             
             wallParent.AddWallSegment(wallSegment);
         }
+        wallParent.Init(points);
     }
 }

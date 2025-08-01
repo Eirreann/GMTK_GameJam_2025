@@ -39,19 +39,38 @@ namespace Enemies
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > DISTANCE_TO_ATTACK)
                 {
-                    _agent.isStopped = false;
-                    _agent.SetDestination((player.transform.position));
-                    _runCooldown();
+                    if (isTrapped)
+                    {
+                        if (Physics.Raycast(transform.position, player.transform.position - transform.position,
+                                out RaycastHit hit, distance) && hit.collider.CompareTag("PlayerWall"))
+                        {
+                            float distanceToWall = Vector3.Distance(transform.position, hit.transform.position);
+                            if (distanceToWall > (DISTANCE_TO_ATTACK + 0.5f))
+                            {
+                                //Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
+                                _agent.isStopped = false;
+                                _agent.SetDestination((hit.transform.position));
+                            }
+                            else
+                                _attack();
+                        }
+                    }
+                    else
+                    {
+                        _agent.isStopped = false;
+                        _agent.SetDestination((player.transform.position));
+                        _runCooldown();
+                    }
                 }
                 else
-                    _attackPlayer();
+                    _attack();
             }
             else
             {
-                _agent.isStopped = true;
-                patrolRoute.Patrol(_agent);
-                // TODO: Return to patrol route
-
+                if(isTrapped)
+                    _agent.isStopped = true;
+                else
+                    patrolRoute.Patrol(_agent);
                 _runCooldown();
             }
         }
@@ -61,7 +80,7 @@ namespace Enemies
             // NavMeshAgent does this for us, yay ^_^
         }
 
-        private void _attackPlayer()
+        private void _attack()
         {
             if (_attackCooldown == 0)
             {

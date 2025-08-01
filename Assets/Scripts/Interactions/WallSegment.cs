@@ -17,7 +17,6 @@ public class WallSegment : MonoBehaviour, IDamageable
     private void Start()
     {
         _renderer = GetComponent<MeshRenderer>();
-        StartCoroutine(_buildAfterDelay());
     }
 
     public void SetOnHitCallback(UnityAction<int> callback)
@@ -33,9 +32,8 @@ public class WallSegment : MonoBehaviour, IDamageable
         StartCoroutine(_flashOnHit());
     }
 
-    private IEnumerator _buildAfterDelay()
+    public void BuildAfterDelay()
     {
-        yield return new WaitForSeconds(1f);
         _renderer.material = _builtWall;
         GetComponent<BoxCollider>().enabled = true;
         GetComponent<NavMeshObstacle>().enabled = true;

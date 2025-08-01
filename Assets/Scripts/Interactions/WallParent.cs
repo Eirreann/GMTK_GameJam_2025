@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Utilities;
 
 namespace Interactions
 {
@@ -10,6 +13,8 @@ namespace Interactions
 
         private const int WALL_HEALTH = 25;
         
+        private Vector3[] _points;
+        private List<Enemy_Base> _trappedEnemies = new List<Enemy_Base>();
         private int _currentHealth;
 
         private void Awake()
@@ -17,11 +22,24 @@ namespace Interactions
             _currentHealth = WALL_HEALTH;
         }
 
+        public void Init(Vector3[] points)
+        {
+            _points = points;
+            StartCoroutine(_buildAfterDelay());
+        }
+        
         public void AddWallSegment(WallSegment segment)
         {
             segment.transform.SetParent(transform);
             segment.SetOnHitCallback(_onWallHit);
             _segments.Add(segment);
+        }
+
+        private IEnumerator _buildAfterDelay()
+        {
+            yield return new WaitForSeconds(1f);
+            _segments.ForEach(s => s.BuildAfterDelay());
+            _checkIfEnemyIsCaptured();
         }
 
         private void _onWallHit(int damage)
@@ -30,9 +48,26 @@ namespace Interactions
             if (_currentHealth <= 0)
             {
                 // TODO: destroy visual effect?
+                _trappedEnemies.ForEach(e => e.SetTrapped(false));
                 Destroy(gameObject);
             }
             // Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");
+        }
+
+        private void _checkIfEnemyIsCaptured()
+        {
+            List<GameObject> enemyObjects = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+            enemyObjects.ForEach(e =>
+            {
+                Vector3 enemyPosition = e.transform.position;
+                if (GeometryHelper.IsPointInPolygonXZ(enemyPosition, _points.ToArray()))
+                {
+                    Debug.Log($"Enemy {e.name} trapped in a Loop!");
+                    var enemy = e.GetComponent<Enemy_Base>();
+                    enemy.SetTrapped(true);
+                    _trappedEnemies.Add(enemy);
+                }
+            });
         }
     }
 }
