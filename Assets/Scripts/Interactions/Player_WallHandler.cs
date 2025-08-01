@@ -4,6 +4,7 @@ using Interactions;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Game;
 
 public class Player_WallHandler : MonoBehaviour
 {

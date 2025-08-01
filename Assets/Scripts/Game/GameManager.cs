@@ -1,21 +1,28 @@
 using UnityEngine;
 
-public class GameManager : MonoSingleton<GameManager>
+namespace Game
 {
-    [SerializeField] private bool _isPersistent;
-    
-    public PlayerController Player;
-    [HideInInspector] public InputHandler inputHandler;
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public override void Awake()
+    public class GameManager : MonoSingleton<GameManager>
     {
-        inputHandler = GetComponent<InputHandler>();
-        Init(_isPersistent);
-    }
+        [SerializeField] private bool _isPersistent;
+    
+        public PlayerController Player;
+        [HideInInspector] public InputHandler inputHandler;
 
-    public override void Init(bool isPersist = false)
-    {
-        base.Init(isPersist);
+        public LevelManager levelManager;
+    
+        // Start is called once before the first execution of Update after the MonoBehaviour is created
+        public override void Awake()
+        {
+            inputHandler = GetComponent<InputHandler>();
+            levelManager = GetComponent<LevelManager>();
+            
+            Init(_isPersistent);
+        }
+
+        public override void Init(bool isPersist = false)
+        {
+            base.Init(isPersist);
+        }
     }
 }

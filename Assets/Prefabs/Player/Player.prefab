@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2418554900736022803}
   - component: {fileID: 8128099997728786182}
   - component: {fileID: 4343155719611324924}
-  - component: {fileID: 4313108142864922454}
+  - component: {fileID: 7680020308343265341}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 47698364035874897}
   leanTransform: {fileID: 5764127299342496211}
-  currentSpeed: 2
+  currentSpeed: 16
   playerSpeed: 16
   sprintMultiplier: 1
   desiredMoveDirection: {x: 0, y: 0, z: 0}
@@ -181,9 +181,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9178bd639b4f4e86e7807585296d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rope: {fileID: 0}
-  depositPoint: {fileID: 0}
-  text: {fileID: 0}
   holding_rope: 0
 --- !u!54 &4343155719611324924
 Rigidbody:
@@ -212,8 +209,8 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!136 &4313108142864922454
-CapsuleCollider:
+--- !u!65 &7680020308343265341
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -230,10 +227,8 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 2, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2193339842059782332
 GameObject:
