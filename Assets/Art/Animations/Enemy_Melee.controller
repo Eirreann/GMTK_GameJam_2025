@@ -21,7 +21,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400000, guid: c6a29c7bc436a3d4ba42e40478cab203, type: 2}
+  m_Motion: {fileID: 7400000, guid: a5ad0e5bd77196c40930b5be0ddc5eb5, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -112,7 +112,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Take 001
+  m_Name: Enemy_Melee_Walk
   m_Speed: 5
   m_CycleOffset: 0
   m_Transitions:
