@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
@@ -63,5 +64,10 @@ public class PlayerStats : MonoBehaviour
         
         _hud.UpdateHealthUI(_currentPlayerHealth, _maxPlayerHealth);
         _hud.UpdateWallJuiceUI(_currentWallJuice, _maxWallJuice);
+    }
+
+    public void UpdateInteractText(String text)
+    {
+        _hud.UpdateInteractText(text);
     }
 }

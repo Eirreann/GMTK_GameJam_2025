@@ -1,3 +1,4 @@
+using Player;
 using UnityEngine;
 using Utilities;
 
@@ -5,11 +6,13 @@ public class PlayerController : MonoBehaviour, IDamageable
 {
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public PlayerStats playerStats;
+    [HideInInspector] public PlayerInteractions playerInteractions;
     
     public void Awake() 
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerStats = GetComponent<PlayerStats>();
+        playerInteractions = GetComponent<PlayerInteractions>();
     }
 
     public void TakeDamage(int damage)

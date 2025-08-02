@@ -33,6 +33,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private bool isSliding = false;
     [SerializeField] private bool isGrounded = true;
     [SerializeField] private bool isJumping = false;
+    [SerializeField] private bool isFalling = false;
     
     [Header("Player State Machine")]
     [SerializeField] private PlayerState _playerState = PlayerState.Standing;
@@ -45,7 +46,8 @@ public class PlayerMovement : MonoBehaviour
         Crouching,
         Sliding,
         Running,
-        Jumping
+        Jumping,
+        Falling
     }
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -55,13 +57,20 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void ResetPlayer()
+    {
+        transform.position = new Vector3(-0.552f, 1f, -65f);
+        rb.linearVelocity = Vector3.zero;
+            
+        _playerState = PlayerState.Standing;
+        isJumping = false;
+    }
     
     void Update()
     {
         if (transform.position.y < -2 || transform.position.y > 25)
         {
-            transform.position = new Vector3(-0.552f, 1f, -65f);
-            rb.linearVelocity = Vector3.zero;
+            ResetPlayer();
         }
         
         playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(rb.linearVelocity.x, -0.2f, 0.2f), 0, 0);
@@ -86,6 +95,9 @@ public class PlayerMovement : MonoBehaviour
             case PlayerState.Running:
                 Running();
                 break;
+            case PlayerState.Falling:
+                Falling();
+                break;
             case PlayerState.Crouching:
                 Crouching();
                 break;
@@ -97,21 +109,43 @@ public class PlayerMovement : MonoBehaviour
                 break;
         }
     }
-
-    void Standing()
+    
+    void ProcessMovement(float desiredSpeed)
     {
-        currentSpeed = playerSpeed;
-        
+        currentSpeed = desiredSpeed;
         rb.linearVelocity = new Vector3(
             desiredMoveDirection.x * currentSpeed,
             rb.linearVelocity.y,
             desiredMoveDirection.z * currentSpeed
         );
-        
+    }
+    
+    void HandleStand()
+    {
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+    }
+
+    void HandleCrouch()
+    {
+        if (GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+    }
+
+    void CheckFalling()
+    {
+        if (rb.linearVelocity.y < 0)
+        {
+            _playerState = PlayerState.Falling;
+        }
+    }
+
+    void Standing()
+    {
+        ProcessMovement(playerSpeed);
+        HandleStand();
+        CheckFalling();
         
         //Jumping Logic
-        if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
+        if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
         
         if(GameManager.Instance.inputHandler._crouch) _playerState = PlayerState.Crouching;
 
@@ -119,20 +153,14 @@ public class PlayerMovement : MonoBehaviour
         {
             _playerState = PlayerState.Running;
         }
+
     }
     
     void Crouching()
     {
-        currentSpeed = playerSpeed / 2;
-        
         RaycastHit hit;
-        rb.linearVelocity = new Vector3(
-            desiredMoveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            desiredMoveDirection.z * currentSpeed
-        );
-        
-        transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        ProcessMovement(playerSpeed / 2);
+        HandleCrouch();
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
@@ -146,15 +174,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Running()
     {
-        currentSpeed = playerSpeed;
+        ProcessMovement(playerSpeed);
+        CheckFalling();
         
-        rb.linearVelocity = new Vector3(
-            desiredMoveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            desiredMoveDirection.z * currentSpeed
-        );
-        
-        if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
+        if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
         if (GameManager.Instance.inputHandler._crouch)
         {
@@ -170,9 +193,9 @@ public class PlayerMovement : MonoBehaviour
         RaycastHit hit;
         transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
 
-        if (GameManager.Instance.inputHandler._isJumping) _playerState = PlayerState.Jumping;
+        if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
-        if (rb.linearVelocity.magnitude < 0.1)
+        if (rb.linearVelocity.magnitude <= 0)
         {
             if (!GameManager.Instance.inputHandler._crouch)
             {
@@ -189,7 +212,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1.5f))
             {
-                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                HandleStand();
                 _playerState = PlayerState.Standing;
             }
             else
@@ -201,50 +224,54 @@ public class PlayerMovement : MonoBehaviour
 
     void Jumping()
     {
-        rb.linearVelocity = new Vector3(
-            desiredMoveDirection.x * currentSpeed,
-            rb.linearVelocity.y,
-            desiredMoveDirection.z * currentSpeed
-        );
-        
-        if(!isJumping) rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-        isJumping = true;
-        
-        if(GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        ProcessMovement(playerSpeed);
+
+        if (!isJumping)
+        {
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+            isJumping = true;
+        }
+
+        CheckFalling();
+        HandleCrouch();
         
         Ray leftRay = new Ray(playerCamera.transform.position, -playerCamera.transform.right);
         Ray rightRay = new Ray(playerCamera.transform.position, playerCamera.transform.right);
         
-        RaycastHit HitInfo;
-        if (GameManager.Instance.inputHandler._isJumping && isJumping)
+        RaycastHit hit;
+        if (GameManager.Instance.inputHandler._jump && isJumping)
         {
-            if (Physics.Raycast(leftRay, out HitInfo, 2f) || Physics.Raycast(rightRay, out HitInfo, 2f))
+            const float wallrunRange = 3f;
+            if (Physics.Raycast(leftRay, out hit, wallrunRange) || Physics.Raycast(rightRay, out hit, wallrunRange))
             {
-                if (HitInfo.transform != lastWallJumped)
+                if (hit.transform != lastWallJumped)
                 {
+                    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow); 
+                    
                     rb.linearVelocity = Vector3.zero;
                     Vector3 forceToApply = transform.up * wallJumpUpForce + playerCamera.transform.forward * wallJumpSideForce;
                     rb.AddForce(forceToApply, ForceMode.Impulse);
                     
-                    lastWallJumped = HitInfo.transform;
+                    lastWallJumped = hit.transform;
                 }
             }
         }
-
-        StartCoroutine("JumpingRoutine");
     }
-
-    IEnumerator JumpingRoutine()
+    
+    void Falling()
     {
-        RaycastHit hit;
-        yield return new WaitForSeconds(0.2f);
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, 1.1f))
+        ProcessMovement(playerSpeed);
+        HandleCrouch();
+        
+        RaycastHit fallHit;
+        if (Physics.Raycast(transform.position, Vector3.down, out fallHit, 1.25f))
         {
+            Debug.DrawRay(fallHit.point, fallHit.normal, Color.red);
             if (GameManager.Instance.inputHandler._crouch)
             {
                 lastWallJumped = null;
 
-                _playerState = PlayerState.Sliding;
+                _playerState = PlayerState.Crouching;
                 isJumping = false;
             }
             else

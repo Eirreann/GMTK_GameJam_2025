@@ -13,9 +13,13 @@ namespace Interactions
 
         public void Update()
         {
-            if (GameManager.Instance.inputHandler._interact && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
+            if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
             {
-                Interact(!triggered);
+                
+                if (GameManager.Instance.inputHandler._interact)
+                {
+                    if(!triggered) Interact(true);
+                }
             }
         }
 
@@ -30,6 +34,22 @@ namespace Interactions
             
             interactableAction.Invoke(status);
             return status;
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.tag == "Player" && !triggered)
+            {
+                GameManager.Instance.Player.playerStats.UpdateInteractText("Interact");
+            }
+        }
+        
+        public void OnTriggerExit(Collider other)
+        {
+            if (other.tag == "Player")
+            {
+                GameManager.Instance.Player.playerStats.UpdateInteractText("");
+            }
         }
     }
 }

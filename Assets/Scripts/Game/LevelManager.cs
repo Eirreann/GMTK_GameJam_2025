@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using GogoGaga.OptimizedRopesAndCables;
 using Interactions;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game
@@ -36,20 +37,33 @@ namespace Game
             _setRopeActive(allCaptured);
         }
 
+        public void ReturnRope()
+        {
+            Debug.Log("Returning rope");
+            
+            playerHasRope = false;
+            ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickup.transform;
+        }
+
         public void PickupRope(bool hasRope)
         {
+            playerHasRope = hasRope;
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
         }
 
         public void DepositRope(bool hasRope)
         {
             ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
-            endDoor.SetActive(false);
+            if (hasRope)
+            {
+                playerHasRope = false;
+                endDoor.SetActive(false);
+                DestroyEnemies();
+            }
         }
 
         private void _setRopeActive(bool isActive)
         {
-            
             if (isActive)
             {
                 ropePickup.gameObject.SetActive(true);
@@ -64,6 +78,15 @@ namespace Game
                 pickupCubeRend.material.color = Color.red;
                 depositPointCubeRend.material.color = Color.red;
             }
+        }
+
+        private void DestroyEnemies()
+        {
+            foreach (var e in enemies)
+            {
+                Destroy(e.gameObject);
+            }
+            enemies.Clear();
         }
     }
 }

@@ -44,7 +44,9 @@ public class WallSegment : MonoBehaviour, IDamageable
     private IEnumerator _flashOnHit()
     {
         _renderer.material = _hitMat;
+        
         yield return new WaitForSeconds(0.1f);
+        
         _renderer.material = _builtWall;
     }
 }

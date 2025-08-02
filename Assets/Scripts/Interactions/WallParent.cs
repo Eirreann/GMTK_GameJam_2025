@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Game;
 using UnityEngine;
 using Utilities;
 
@@ -47,11 +48,15 @@ namespace Interactions
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
+                GameManager.Instance.CurrentLevel.ReturnRope();
+                
                 // TODO: destroy visual effect?
                 _trappedEnemies.ForEach(e => e.SetTrapped(false));
                 Destroy(gameObject);
+                
             }
-            // Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");
+            
+            Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");
         }
 
         private void _checkIfEnemyIsCaptured()

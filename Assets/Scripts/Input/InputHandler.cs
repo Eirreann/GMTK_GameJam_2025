@@ -11,12 +11,13 @@ public class InputHandler : MonoBehaviour
     public Vector2 _moveDirection;
     public Vector2 _lookDirection;
 
-    public bool _isJumping = false;
-    public bool _run;
+    public bool _jump = false;
     public bool _crouch;
     public bool _drawWall;
 
     public bool _interact;
+
+    public bool _reset;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,10 +35,9 @@ public class InputHandler : MonoBehaviour
         _lookDirection = playerActions.Look.ReadValue<Vector2>();
         _moveDirection = playerActions.Move.ReadValue<Vector2>();
 
-        _isJumping = playerActions.Jump.WasPressedThisFrame();
+        _jump = playerActions.Jump.WasPressedThisFrame();
 
         _crouch = playerActions.Crouch.ReadValue<float>() > 0.25f;
-        _run = playerActions.Sprint.ReadValue<float>() > 0.25f;
         
         _drawWall = playerActions.Attack.IsPressed();
 
