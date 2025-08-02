@@ -42,10 +42,10 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform lastWallJumped;
 
-    private const float RESET_COOLDOWN = 5f;
+    private const float RESET_COOLDOWN = 3f;
     
     private Transform _respawnLocation;
-    private float _resetCooldown = 0f;
+    private float _knockbackCooldown = 0f;
     
     private enum PlayerState
     {
@@ -88,9 +88,21 @@ public class PlayerMovement : MonoBehaviour
         isJumping = false;
         gameObject.SetActive(true);
     }
+
+    public void SetKnockback(Vector3 force)
+    {
+        _knockbackCooldown = RESET_COOLDOWN;
+        rb.AddForce(force, ForceMode.Impulse);
+    }
     
     void Update()
     {
+        if (_knockbackCooldown > 0)
+        {
+            _knockbackCooldown -= Time.deltaTime;
+            return;
+        }
+        
         if (transform.position.y < -2 || transform.position.y > 25)
         {
             ResetPlayer();

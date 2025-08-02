@@ -14,12 +14,13 @@ namespace AI
         private int _currentTargetIndex = 0;
         private float _patrolWaitCooldown = 0f;
 
-        public void Patrol(NavMeshAgent agent)
+        public void Patrol(NavMeshAgent agent, Animator anim)
         {
             var distance = Vector3.Distance(agent.transform.position, _waypoints[_currentTargetIndex].position);
             if (distance < 0.5f)
             {
                 agent.isStopped = true;
+                anim.SetBool("isWalking", false);
                 _patrolWaitCooldown = PATROL_WAIT_TIME;
                 _currentTargetIndex++;
                 if (_currentTargetIndex > _waypoints.Count - 1)
@@ -37,6 +38,7 @@ namespace AI
                 {
                     agent.isStopped = false;
                     agent.SetDestination(_waypoints[_currentTargetIndex].position);
+                    anim.SetBool("isWalking", true);
                 }
             }
         }
