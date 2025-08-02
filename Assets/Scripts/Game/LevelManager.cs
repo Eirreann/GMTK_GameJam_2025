@@ -113,6 +113,12 @@ namespace Game
             _destroyEnemies();
             
             endDoor.SetActive(false);
+            
+            if (GameManager.Instance._levelIndex < GameManager.Instance.Levels.Count)
+            {
+                GameManager.Instance.Levels[GameManager.Instance._levelIndex + 1].gameObject.SetActive(true);
+            }
+            
         }
 
         private void _destroyEnemies()

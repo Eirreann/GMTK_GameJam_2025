@@ -16,7 +16,7 @@ namespace Game
         
         [SerializeField] private GameHUD _gameHUD;
 
-        [SerializeField] private int _levelIndex = 0;
+        [SerializeField] public int _levelIndex = 0;
     
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         public override void Awake()
@@ -50,10 +50,13 @@ namespace Game
             if (_levelIndex < Levels.Count)
             {
                 CurrentLevel.startDoor.SetActive(true);
-                
                 Levels[_levelIndex].StartLevel();
-                
                 Levels[_levelIndex - 1].gameObject.SetActive(false);
+
+                Player.transform.position = Levels[_levelIndex].PlayerRespawnLocation.position;
+                
+                Player.playerStats.ReplenishAllHealth();
+                Player.playerStats.ReplenishAllJuice();
             }
             else
             {

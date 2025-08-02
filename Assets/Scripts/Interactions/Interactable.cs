@@ -6,7 +6,7 @@ namespace Interactions
 {
     public class Interactable : MonoBehaviour
     {
-        private const float INTERACT_DISTANCE = 2.5f;
+        private const float INTERACT_DISTANCE = 3.75f;
         public UnityAction<bool> interactableAction;
 
         public bool triggered = false;

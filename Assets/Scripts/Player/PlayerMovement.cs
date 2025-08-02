@@ -43,6 +43,10 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Transform lastWallJumped;
 
     private const float RESET_COOLDOWN = 1f;
+    private const float RESPAWN_HEIGHT_MIN = -5.25f;
+    private const float RESPAWN_HEIGHT_MAX = 25f;
+
+    private Quaternion originalRotation;
     
     private Transform _respawnLocation;
     private float _knockbackCooldown = 0f;
@@ -63,6 +67,8 @@ public class PlayerMovement : MonoBehaviour
         playerCanMove = true;
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+
+        originalRotation = transform.rotation;
     }
 
     public void DisablePlayerMovement()
@@ -78,10 +84,12 @@ public class PlayerMovement : MonoBehaviour
     
     public void ResetPlayer()
     {
+        playerCamera.transform.rotation = originalRotation;
         gameObject.SetActive(false);
         
         rb.linearVelocity = Vector3.zero;
         _playerState = PlayerState.Standing;
+
         
         transform.position = _respawnLocation != null ? _respawnLocation.position : new Vector3(-0.552f, 1f, -65f);
         
@@ -99,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         
-        if (transform.position.y < -2 || transform.position.y > 25)
+        if (transform.position.y < RESPAWN_HEIGHT_MIN || transform.position.y > RESPAWN_HEIGHT_MAX)
         {
             ResetPlayer();
             GameManager.Instance.CurrentLevel.ReturnRope();
@@ -119,7 +127,6 @@ public class PlayerMovement : MonoBehaviour
 
             playerCamera.transform.localRotation = xQuat * yQuat;
 
-            
             if (_knockbackCooldown > 0)
             {
                 _knockbackCooldown -= Time.deltaTime;
@@ -186,7 +193,6 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessMovement(playerSpeed);
         HandleStand();
-        CheckFalling();
         
         //Jumping Logic
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
@@ -208,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
-            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1.5f))
+            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1f))
             {
                 transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
                 _playerState = PlayerState.Standing;
@@ -219,7 +225,6 @@ public class PlayerMovement : MonoBehaviour
     void Running()
     {
         ProcessMovement(playerSpeed);
-        CheckFalling();
         
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
