@@ -396,8 +396,9 @@ MonoBehaviour:
   damage: 3
   detectionRange: 3
   attackSpd: 2
+  distToAttack: 1.5
   weapon: {fileID: 7396730887322276883}
-  attackAnim: {fileID: 7400000, guid: a5ad0e5bd77196c40930b5be0ddc5eb5, type: 2}
+  attackAnim: {fileID: 7400000, guid: 70c5a5329c138204ea7bb2517bcef821, type: 2}
   patrolRoute: {fileID: 0}
   onAttack: {fileID: 0}
 --- !u!135 &4448582869638053390

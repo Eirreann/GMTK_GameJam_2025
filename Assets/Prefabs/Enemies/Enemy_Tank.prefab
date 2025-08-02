@@ -219,6 +219,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy_Tank
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -271,8 +275,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.34979212, y: 0.7755789, z: 0.36537552}
-  m_Center: {x: 0, y: 0.39, z: 0}
+  m_Size: {x: 0.21772385, y: 0.7755789, z: 0.19044638}
+  m_Center: {x: -0.0034604312, y: 0.39, z: -0.018066978}
 --- !u!195 &1727432820846889609
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -312,8 +316,9 @@ MonoBehaviour:
   damage: 10
   detectionRange: 3
   attackSpd: 5
+  distToAttack: 1.5
   weapon: {fileID: 7656272096163609129}
-  attackAnim: {fileID: 7400000, guid: a5ad0e5bd77196c40930b5be0ddc5eb5, type: 2}
+  attackAnim: {fileID: 7400000, guid: 70c5a5329c138204ea7bb2517bcef821, type: 2}
   patrolRoute: {fileID: 0}
   onAttack: {fileID: 0}
 --- !u!135 &8503715092997780953

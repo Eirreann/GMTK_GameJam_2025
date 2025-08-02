@@ -10,14 +10,13 @@ namespace Enemies
     {
         [Header("Melee")]
         [SerializeField] protected float attackSpd = 3f;
+        [SerializeField] protected float distToAttack = 1.5f;
         [SerializeField] protected MeleeWeapon weapon;
         [SerializeField] protected AnimationClip attackAnim;
         [SerializeField] protected PatrolRoute patrolRoute;
         
         [Header("Audio")]
         [SerializeField] protected AudioClip onAttack;
-        
-        private const float DISTANCE_TO_ATTACK = 1.5f;
         
         private Animator _anim;
         private NavMeshAgent _agent;
@@ -38,7 +37,7 @@ namespace Enemies
             {
                 _anim.SetBool("isWalking", true);
                 float distance = Vector3.Distance(transform.position, player.transform.position);
-                if (distance > DISTANCE_TO_ATTACK)
+                if (distance > distToAttack)
                 {
                     if (IsTrapped)
                     {
@@ -46,9 +45,9 @@ namespace Enemies
                                 out RaycastHit hit, distance) && hit.collider.CompareTag("PlayerWall"))
                         {
                             float distanceToWall = Vector3.Distance(transform.position, hit.transform.position);
-                            if (distanceToWall > (DISTANCE_TO_ATTACK + 0.5f))
+                            if (distanceToWall > (distToAttack + 0.5))
                             {
-                                //Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
+                                Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
                                 _agent.isStopped = false;
                                 _agent.SetDestination((hit.transform.position));
                             }

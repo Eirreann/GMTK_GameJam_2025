@@ -113,12 +113,9 @@ public class Player_WallHandler : MonoBehaviour
 
     private void _buildWall(Vector3[] points)
     {
-        //Debug.Log($"Build wall with {points.Length} corners");
-
         int count = points.Length;
         if (count < 2) return;
 
-        //Transform wallParent = new GameObject("Wall").transform;
         WallParent wallParent = Instantiate(_wallParentPrefab);
         for (int i = 0; i < count; i++)
         {
