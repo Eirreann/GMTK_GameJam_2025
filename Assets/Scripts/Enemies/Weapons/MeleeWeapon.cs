@@ -36,7 +36,7 @@ namespace Enemies
             if (hit != null && _damageCooldownTimer <= 0)
             {
                 (hit as IDamageable).TakeDamage(_damage);
-                if (hit.transform.CompareTag("Player") && _hasKnockback)
+                if (other.CompareTag("Player") && _hasKnockback)
                 {
                     var dir = (hit.transform.position - transform.position).normalized;
                     var force = dir * _knockbackForce;
