@@ -36,6 +36,7 @@ namespace Enemies
         {
             if (hasTarget)
             {
+                _anim.SetBool("isWalking", true);
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > DISTANCE_TO_ATTACK)
                 {
@@ -70,7 +71,7 @@ namespace Enemies
                 if(IsTrapped)
                     _agent.isStopped = true;
                 else
-                    patrolRoute.Patrol(_agent);
+                    patrolRoute.Patrol(_agent, _anim);
                 _runCooldown();
             }
         }
