@@ -35,7 +35,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.03874, y: 1, z: -81.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5764127299342496211}
@@ -128,9 +128,9 @@ MonoBehaviour:
   playerSpeed: 16
   sprintMultiplier: 1
   desiredMoveDirection: {x: 0, y: 0, z: 0}
-  jumpForce: 32
+  jumpForce: 36
   wallJumpUpForce: 32
-  wallJumpSideForce: 80
+  wallJumpSideForce: 64
   _sensitivity: 0.1
   _yRotationLimit: 70
   isSliding: 0
@@ -168,8 +168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hud: {fileID: 0}
-  _currentWallJuice: 50
-  _maxWallJuice: 50
+  _currentWallJuice: 60
+  _maxWallJuice: 60
   _currentPlayerHealth: 25
   _maxPlayerHealth: 25
 --- !u!114 &8128099997728786182

@@ -11,7 +11,8 @@ namespace Game
         public Transform PlayerRespawnLocation;
         public Interactable ropePickup;
         public Interactable depositPoint;
-        
+
+        public GameObject startDoor;
         public GameObject endDoor;
 
         public List<Enemy_Base> enemies;
@@ -32,7 +33,7 @@ namespace Game
             ropePickup.Init(PickupRope);
             depositPoint.Init(DepositRope);
             
-            // GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
+            GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
         }
 
         public void Reset()

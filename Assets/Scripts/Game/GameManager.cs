@@ -16,7 +16,7 @@ namespace Game
         
         [SerializeField] private GameHUD _gameHUD;
 
-        private int _levelIndex = 0;
+        [SerializeField] private int _levelIndex = 0;
     
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         public override void Awake()
@@ -46,9 +46,14 @@ namespace Game
 
         public void ProgressToNextLevel()
         {
+            CurrentLevel.startDoor.SetActive(true);
+            
             _levelIndex++;
-            if(_levelIndex < Levels.Count)
+            if (_levelIndex < Levels.Count)
+            {
                 Levels[_levelIndex].StartLevel();
+                Levels[_levelIndex - 1].gameObject.SetActive(false);
+            }
             else
             {
                 // TODO: Game completion
