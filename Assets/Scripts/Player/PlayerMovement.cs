@@ -42,7 +42,7 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] private Transform lastWallJumped;
 
-    private const float RESET_COOLDOWN = 3f;
+    private const float RESET_COOLDOWN = 1f;
     
     private Transform _respawnLocation;
     private float _knockbackCooldown = 0f;
@@ -92,16 +92,12 @@ public class PlayerMovement : MonoBehaviour
     public void SetKnockback(Vector3 force)
     {
         _knockbackCooldown = RESET_COOLDOWN;
+        rb.linearVelocity = Vector3.zero;
         rb.AddForce(force, ForceMode.Impulse);
     }
     
     void Update()
     {
-        if (_knockbackCooldown > 0)
-        {
-            _knockbackCooldown -= Time.deltaTime;
-            return;
-        }
         
         if (transform.position.y < -2 || transform.position.y > 25)
         {
@@ -122,29 +118,38 @@ public class PlayerMovement : MonoBehaviour
             var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
 
             playerCamera.transform.localRotation = xQuat * yQuat;
-        
-            desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
-        
-            switch (_playerState)
+
+            
+            if (_knockbackCooldown > 0)
             {
-                case PlayerState.Standing:
-                    Standing();
-                    break;
-                case PlayerState.Running:
-                    Running();
-                    break;
-                case PlayerState.Falling:
-                    Falling();
-                    break;
-                case PlayerState.Crouching:
-                    Crouching();
-                    break;
-                case PlayerState.Sliding:
-                    Sliding();
-                    break;
-                case PlayerState.Jumping:
-                    Jumping();
-                    break;
+                _knockbackCooldown -= Time.deltaTime;
+            }
+            else
+            {
+                desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
+        
+                switch (_playerState)
+                {
+                    case PlayerState.Standing:
+                        Standing();
+                        break;
+                    case PlayerState.Running:
+                        Running();
+                        break;
+                    case PlayerState.Falling:
+                        Falling();
+                        break;
+                    case PlayerState.Crouching:
+                        Crouching();
+                        break;
+                    case PlayerState.Sliding:
+                        Sliding();
+                        break;
+                    case PlayerState.Jumping:
+                        Jumping();
+                        break;
+                }
+                
             }
         }
     }
