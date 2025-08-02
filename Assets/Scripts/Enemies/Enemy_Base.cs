@@ -12,17 +12,23 @@ public class Enemy_Base : MonoBehaviour
     [SerializeField] protected int detectionRange;
 
     protected AudioSource audioSource;
+    protected Vector3 startPos;
     protected Quaternion startRot;
     protected PlayerController player;
     protected bool hasTarget = false;
     
     private const string TAG_PLAYER = "Player";
-
     protected virtual void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        startPos = transform.position;
         startRot = rotationOrigin.localRotation;
         GetComponent<SphereCollider>().radius = detectionRange;
+    }
+
+    public virtual void ResetEnemy()
+    {
+        // Implemented in child classes
     }
 
     protected virtual void Update()

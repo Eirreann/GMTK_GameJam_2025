@@ -8,6 +8,7 @@ namespace Game
 {
     public class LevelManager : MonoBehaviour
     {
+        public Transform PlayerRespawnLocation;
         public Interactable ropePickup;
         public Interactable depositPoint;
         
@@ -29,6 +30,14 @@ namespace Game
             
             ropePickup.Init(PickupRope);
             depositPoint.Init(DepositRope);
+            GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
+        }
+
+        public void Reset()
+        {
+            if(playerHasRope)
+                ReturnRope();
+            enemies.ForEach(e => e.ResetEnemy());
         }
 
         public void RegisterEnemyCaptured()
@@ -57,8 +66,8 @@ namespace Game
             if (hasRope)
             {
                 playerHasRope = false;
-                endDoor.SetActive(false);
-                DestroyEnemies();
+                // TODO: Check if this deposit point is the final one, as opposed to a tether?
+                _endLevel();
             }
         }
 
@@ -80,7 +89,14 @@ namespace Game
             }
         }
 
-        private void DestroyEnemies()
+        private void _endLevel()
+        {
+            _destroyEnemies();
+            endDoor.SetActive(false);
+            GameManager.Instance.ProgressToNextLevel();
+        }
+
+        private void _destroyEnemies()
         {
             foreach (var e in enemies)
             {

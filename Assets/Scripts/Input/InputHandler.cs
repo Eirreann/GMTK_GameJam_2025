@@ -19,6 +19,8 @@ public class InputHandler : MonoBehaviour
 
     public bool _reset;
     
+    private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,7 +34,8 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _lookDirection = playerActions.Look.ReadValue<Vector2>();
+        var look = playerActions.Look.ReadValue<Vector2>();
+        _lookDirection = playerInput.currentControlScheme == "Gamepad" ? look * GAMEPAD_LOOK_SENSITIVITY : look;
         _moveDirection = playerActions.Move.ReadValue<Vector2>();
 
         _jump = playerActions.Jump.WasPressedThisFrame();
@@ -42,5 +45,7 @@ public class InputHandler : MonoBehaviour
         _drawWall = playerActions.Attack.IsPressed();
 
         _interact = playerActions.Interact.WasPressedThisFrame();
+
+        _reset = playerActions.Restart.WasPressedThisFrame();
     }
 }

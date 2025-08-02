@@ -75,6 +75,13 @@ namespace Enemies
             }
         }
 
+        public override void ResetEnemy()
+        {
+            player = null;
+            _agent.isStopped = true;
+            transform.position = startPos;
+        }
+
         protected override void lookAt(Transform target)
         {
             // NavMeshAgent does this for us, yay ^_^

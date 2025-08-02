@@ -39,6 +39,11 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private PlayerState _playerState = PlayerState.Standing;
 
     [SerializeField] private Transform lastWallJumped;
+
+    private const float RESET_COOLDOWN = 5f;
+    
+    private Transform _respawnLocation;
+    private float _resetCooldown = 0f;
     
     private enum PlayerState
     {
@@ -57,12 +62,16 @@ public class PlayerMovement : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void SetRespawn(Transform location)
+    {
+        _respawnLocation = location;
+    }
+    
     public void ResetPlayer()
     {
-        transform.position = new Vector3(-0.552f, 1f, -65f);
         rb.linearVelocity = Vector3.zero;
-            
         _playerState = PlayerState.Standing;
+        transform.position = _respawnLocation != null ? _respawnLocation.position : new Vector3(-0.552f, 1f, -65f);
         isJumping = false;
     }
     

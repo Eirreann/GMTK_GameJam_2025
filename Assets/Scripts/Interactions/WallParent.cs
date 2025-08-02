@@ -36,6 +36,13 @@ namespace Interactions
             _segments.Add(segment);
         }
 
+        public void DestroyWall()
+        {
+            // TODO: destroy visual effect?
+            _trappedEnemies.ForEach(e => e.SetTrapped(false));
+            Destroy(gameObject);
+        }
+
         private IEnumerator _buildAfterDelay()
         {
             yield return new WaitForSeconds(1f);
@@ -50,10 +57,7 @@ namespace Interactions
             {
                 GameManager.Instance.CurrentLevel.ReturnRope();
                 
-                // TODO: destroy visual effect?
-                _trappedEnemies.ForEach(e => e.SetTrapped(false));
-                Destroy(gameObject);
-                
+                DestroyWall();
             }
             
             Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");

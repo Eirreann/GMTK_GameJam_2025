@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,12 +23,22 @@ namespace Game
             Init(_isPersistent);
         }
 
-        public override void Init(bool isPersist = false)
+        private void Start()
         {
-            base.Init(isPersist);
-
             if (Levels.Count > 0)
                 Levels[_levelIndex].StartLevel();
+        }
+
+        private void Update()
+        {
+            if(inputHandler._reset)
+                ResetLevel();
+        }
+
+        public void ResetLevel()
+        {
+            CurrentLevel.Reset();
+            Player.Reset();
         }
 
         public void ProgressToNextLevel()
@@ -38,6 +49,7 @@ namespace Game
             else
             {
                 // TODO: Game completion
+                Debug.Log("No next level to start!");
             }
         }
     }
