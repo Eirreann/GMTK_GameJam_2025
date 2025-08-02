@@ -10,7 +10,6 @@ namespace Interactions
     {
         [SerializeField] public Rope rope;
         
-        
         public void PickupRope(bool status)
         {
             

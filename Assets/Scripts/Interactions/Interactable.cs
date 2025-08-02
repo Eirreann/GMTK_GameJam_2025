@@ -15,7 +15,6 @@ namespace Interactions
         {
             if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
             {
-                
                 if (GameManager.Instance.inputHandler._interact)
                 {
                     if(!triggered) Interact(true);

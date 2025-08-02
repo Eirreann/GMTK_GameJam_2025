@@ -70,4 +70,9 @@ public class PlayerStats : MonoBehaviour
     {
         _hud.UpdateInteractText(text);
     }
+
+    public void UpdateTooltipText(String text)
+    {
+        _hud.UpdateTooltipText(text);
+    }
 }
