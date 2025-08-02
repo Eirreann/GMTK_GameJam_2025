@@ -77,7 +77,7 @@ namespace Enemies
 
         public override void ResetEnemy()
         {
-            player = null;
+            base.ResetEnemy();
             _agent.isStopped = true;
             transform.position = startPos;
         }

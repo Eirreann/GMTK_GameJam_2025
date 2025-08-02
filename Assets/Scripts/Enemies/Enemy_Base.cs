@@ -28,7 +28,7 @@ public class Enemy_Base : MonoBehaviour
 
     public virtual void ResetEnemy()
     {
-        // Implemented in child classes
+        player = null;
     }
 
     protected virtual void Update()
