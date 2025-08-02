@@ -46,12 +46,13 @@ namespace Game
 
         public void ProgressToNextLevel()
         {
-            CurrentLevel.startDoor.SetActive(true);
-            
             _levelIndex++;
             if (_levelIndex < Levels.Count)
             {
+                CurrentLevel.startDoor.SetActive(true);
+                
                 Levels[_levelIndex].StartLevel();
+                
                 Levels[_levelIndex - 1].gameObject.SetActive(false);
             }
             else

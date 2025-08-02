@@ -26,6 +26,8 @@ namespace Game
 
         public void StartLevel()
         {
+            gameObject.SetActive(true);
+            
             // TODO
             _setRopeActive(allCaptured);
             depositPoint.gameObject.SetActive(false);
@@ -104,8 +106,8 @@ namespace Game
         private void _endLevel()
         {
             _destroyEnemies();
+            
             endDoor.SetActive(false);
-            //GameManager.Instance.ProgressToNextLevel();
         }
 
         private void _destroyEnemies()

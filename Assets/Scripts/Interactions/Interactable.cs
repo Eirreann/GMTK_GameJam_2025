@@ -6,7 +6,7 @@ namespace Interactions
 {
     public class Interactable : MonoBehaviour
     {
-        private const float INTERACT_DISTANCE = 3f;
+        private const float INTERACT_DISTANCE = 2.5f;
         public UnityAction<bool> interactableAction;
 
         public bool triggered = false;
@@ -30,6 +30,7 @@ namespace Interactions
         public virtual bool Interact(bool status)
         {
             triggered = status;
+            GameManager.Instance.Player.playerStats.UpdateInteractText("");
             
             interactableAction.Invoke(status);
             return status;
