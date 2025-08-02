@@ -60,7 +60,7 @@ namespace Interactions
                 DestroyWall();
             }
             
-            Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");
+            //Debug.Log($"Wall health: {_currentHealth}/{WALL_HEALTH}");
         }
 
         private void _checkIfEnemyIsCaptured()

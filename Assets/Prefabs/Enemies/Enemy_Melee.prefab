@@ -363,11 +363,11 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.08
-  m_Speed: 3.5
-  m_Acceleration: 8
+  m_Speed: 10
+  m_Acceleration: 14
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -387,6 +387,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b40605030c404071874dae5b071d36f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsTrapped: 0
   rotationOrigin: {fileID: 7124398832566965870}
   damage: 3
   detectionRange: 3
