@@ -371,7 +371,7 @@ NavMeshAgent:
   m_Acceleration: Infinity
   avoidancePriority: 50
   m_AngularSpeed: Infinity
-  m_StoppingDistance: 0.1
+  m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -398,7 +398,7 @@ MonoBehaviour:
   attackSpd: 2
   distToAttack: 1.5
   weapon: {fileID: 7396730887322276883}
-  attackAnim: {fileID: 7400000, guid: 70c5a5329c138204ea7bb2517bcef821, type: 2}
+  attackAnim: {fileID: 7400000, guid: 9676fd58bc1f1c342aec831e49751f89, type: 2}
   patrolRoute: {fileID: 0}
   onAttack: {fileID: 0}
 --- !u!135 &4448582869638053390

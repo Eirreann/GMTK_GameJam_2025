@@ -35,7 +35,6 @@ namespace Enemies
         {
             if (hasTarget)
             {
-                _anim.SetBool("isWalking", true);
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > distToAttack)
                 {
@@ -49,6 +48,7 @@ namespace Enemies
                             {
                                 Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
                                 _agent.isStopped = false;
+                                _anim.SetBool("isWalking", true);
                                 _agent.SetDestination((hit.transform.position));
                             }
                             else
@@ -58,6 +58,7 @@ namespace Enemies
                     else
                     {
                         _agent.isStopped = false;
+                        _anim.SetBool("isWalking", true);
                         _agent.SetDestination((player.transform.position));
                         _runCooldown();
                     }
@@ -92,7 +93,8 @@ namespace Enemies
             if (_attackCooldown == 0)
             {
                 _attackCooldown = attackSpd;
-                StartCoroutine(_swingWeapon());
+                _anim.SetBool("isWalking", false);
+                _anim.Play(attackAnim.name);
                 
                 if(onAttack != null)
                     audioSource.PlayOneShot(onAttack);
@@ -101,14 +103,6 @@ namespace Enemies
             {
                 _runCooldown();
             }
-        }
-
-        private IEnumerator _swingWeapon()
-        {
-            weapon.transform.parent.gameObject.SetActive(true); // TODO: Update with real model
-            _anim.Play(attackAnim.name);
-            yield return new WaitForSeconds(attackAnim.length);
-            weapon.transform.parent.gameObject.SetActive(false);
         }
 
         private void _runCooldown()

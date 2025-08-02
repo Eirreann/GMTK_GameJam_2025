@@ -38,7 +38,7 @@ namespace Enemies
                 (hit as IDamageable).TakeDamage(_damage);
                 if (other.CompareTag("Player") && _hasKnockback)
                 {
-                    var dir = transform.parent.forward;
+                    var dir = transform.forward;
                     var force = dir * _knockbackForce;
                     force.y = 0;
                     GameManager.Instance.Player.playerMovement.SetKnockback(force);
