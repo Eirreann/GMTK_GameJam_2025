@@ -8,6 +8,7 @@ namespace Game
 {
     public class LevelManager : MonoBehaviour
     {
+        public Transform PlayerRespawnLocation;
         public Interactable ropePickup;
         public Interactable depositPoint;
         
@@ -26,9 +27,19 @@ namespace Game
         {
             // TODO
             _setRopeActive(allCaptured);
+            depositPoint.gameObject.SetActive(false);
             
             ropePickup.Init(PickupRope);
             depositPoint.Init(DepositRope);
+            
+            // GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
+        }
+
+        public void Reset()
+        {
+            if(playerHasRope)
+                ReturnRope();
+            enemies.ForEach(e => e.ResetEnemy());
         }
 
         public void RegisterEnemyCaptured()
@@ -41,24 +52,33 @@ namespace Game
         {
             Debug.Log("Returning rope");
             
+            GameManager.Instance.Player.playerStats.SetRopeVisible(false);
             playerHasRope = false;
+            
             ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickup.transform;
+            ropePickup.GetComponent<RopePickup>().triggered = false;
         }
 
         public void PickupRope(bool hasRope)
         {
             playerHasRope = hasRope;
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
+            GameManager.Instance.Player.playerStats.SetRopeVisible(hasRope);
+            
+            depositPoint.gameObject.SetActive(true);
         }
 
         public void DepositRope(bool hasRope)
         {
-            ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
-            if (hasRope)
+            if (playerHasRope)
             {
+                ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
+                
+                GameManager.Instance.Player.playerStats.SetRopeVisible(false);
                 playerHasRope = false;
-                endDoor.SetActive(false);
-                DestroyEnemies();
+                
+                // TODO: Check if this deposit point is the final one, as opposed to a tether?
+                _endLevel();
             }
         }
 
@@ -80,7 +100,14 @@ namespace Game
             }
         }
 
-        private void DestroyEnemies()
+        private void _endLevel()
+        {
+            _destroyEnemies();
+            endDoor.SetActive(false);
+            //GameManager.Instance.ProgressToNextLevel();
+        }
+
+        private void _destroyEnemies()
         {
             foreach (var e in enemies)
             {

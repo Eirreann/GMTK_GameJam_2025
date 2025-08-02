@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2418554900736022803}
   - component: {fileID: 8128099997728786182}
   - component: {fileID: 4343155719611324924}
-  - component: {fileID: 7680020308343265341}
+  - component: {fileID: 6961860418548622104}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -48,7 +48,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168119540958964313}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 2534964839176971238, guid: d8b6747e5358a704d91967852d91e3c7, type: 3}
 --- !u!23 &3838994034315796008
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -108,6 +108,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement: {fileID: 0}
   playerStats: {fileID: 0}
+  playerInteractions: {fileID: 0}
+  wallHandler: {fileID: 0}
 --- !u!114 &541133255216557778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,6 +136,7 @@ MonoBehaviour:
   isSliding: 0
   isGrounded: 1
   isJumping: 0
+  isFalling: 0
   _playerState: 0
   lastWallJumped: {fileID: 0}
 --- !u!114 &7711792485344224027
@@ -181,7 +184,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9178bd639b4f4e86e7807585296d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  holding_rope: 0
+  interactablesInRange: []
 --- !u!54 &4343155719611324924
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -209,7 +212,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!65 &7680020308343265341
+--- !u!65 &6961860418548622104
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -228,8 +231,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.96, y: 0.9813156, z: 0.96}
+  m_Center: {x: 0, y: 0.46934217, z: 0}
 --- !u!1 &2193339842059782332
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,8 +292,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2984486309836767557}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.03874, y: 0.98, z: 0.016998291}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.956, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

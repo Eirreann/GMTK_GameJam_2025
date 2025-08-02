@@ -13,7 +13,9 @@ public class UIPlayerHud : MonoBehaviour
 
         [SerializeField] private Image _tooltipBackground;
         [SerializeField] private TextMeshProUGUI _tooltipText;
-
+    
+        [SerializeField] private Image _ropeIcon;
+        
         public void UpdateHealthUI(int current, int max)
         {
             _healthBarFill.fillAmount = (float)current / max;
@@ -34,5 +36,10 @@ public class UIPlayerHud : MonoBehaviour
         {
             _tooltipBackground.gameObject.SetActive(text != "");
             _tooltipText.text = text;
+        }
+
+        public void SetRopeVisible(bool visible)
+        {
+            _ropeIcon.enabled = visible;
         }
 }
