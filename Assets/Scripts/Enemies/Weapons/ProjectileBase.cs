@@ -16,7 +16,6 @@ namespace Enemies
         private bool _isFired = false;
         private float _despawnTimer = 3f;
         
-        private const string TAG_PLAYER = "Player";
         private const float DESPAWN_TIME = 3f;
 
         public void Init(ProjectilePool pool)
@@ -32,6 +31,15 @@ namespace Enemies
             _isFired = true;
         }
 
+        public virtual void ReturnToPool()
+        {
+            if (_isFired)
+            {
+                _isFired = false;
+                pool.ReturnToPool(this);
+            }
+        }
+
         private void FixedUpdate()
         {
             if (_isFired)
@@ -40,7 +48,7 @@ namespace Enemies
                 _despawnTimer -= Time.deltaTime;
                 
                 if(_despawnTimer <= 0)
-                    _returnToPool();
+                    ReturnToPool();
             }
         }
 
@@ -50,14 +58,8 @@ namespace Enemies
             if (hit != null)
             {
                 (hit as IDamageable).TakeDamage(damage);
-                _returnToPool();
+                ReturnToPool();
             }
-        }
-
-        protected virtual void _returnToPool()
-        {
-            _isFired = false;
-            pool.ReturnToPool(this);
         }
     }
 }

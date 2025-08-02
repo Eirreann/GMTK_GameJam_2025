@@ -45,6 +45,11 @@ public class Enemy_Ranged : Enemy_Base
         }
     }
 
+    public override void ResetEnemy()
+    {
+        _pool.ResetPool();
+    }
+
     protected override void lookAt(Transform target)
     {
         if (target != null)

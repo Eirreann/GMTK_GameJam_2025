@@ -10,6 +10,7 @@ namespace Enemies
         [SerializeField] private ProjectileBase _projectileTemplate;
 
         private Stack<ProjectileBase> _poolStack;
+        private List<ProjectileBase> _projectiles =  new List<ProjectileBase>();
         private List<Transform> _projectileParents;
         private int _parentIndex = 0;
 
@@ -44,6 +45,11 @@ namespace Enemies
             instance.gameObject.SetActive(false);
         }
 
+        public void ResetPool()
+        {
+            _projectiles.ForEach(p => p.ReturnToPool());
+        }
+
         private void _setupPool()
         {
             _poolStack = new Stack<ProjectileBase>();
@@ -61,6 +67,7 @@ namespace Enemies
             ProjectileBase instance = Instantiate(_projectileTemplate, _projectileParents[_parentIndex]);
             instance.Init(this);
             instance.transform.parent = transform;
+            _projectiles.Add(instance);
             return instance;
         }
 
