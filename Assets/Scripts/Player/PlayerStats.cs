@@ -75,4 +75,9 @@ public class PlayerStats : MonoBehaviour
     {
         _hud.UpdateTooltipText(text);
     }
+
+    public void SetRopeVisible(bool visible)
+    {
+        _hud.SetRopeVisible(visible);
+    }
 }

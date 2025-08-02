@@ -16,6 +16,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float playerSpeed = 2f;
     [SerializeField] private float sprintMultiplier = 1.1f;
     [SerializeField] private Vector3 desiredMoveDirection;
+
+    private bool playerCanMove;
     
     [Header("Jumping")]
     [SerializeField] private float jumpForce = 20f;
@@ -58,10 +60,17 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        playerCanMove = true;
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
+    public void DisablePlayerMovement()
+    {
+        playerCanMove = false;
+        Cursor.lockState = CursorLockMode.None;
+    }
+    
     public void SetRespawn(Transform location)
     {
         _respawnLocation = location;
@@ -69,10 +78,15 @@ public class PlayerMovement : MonoBehaviour
     
     public void ResetPlayer()
     {
+        gameObject.SetActive(false);
+        
         rb.linearVelocity = Vector3.zero;
         _playerState = PlayerState.Standing;
+        
         transform.position = _respawnLocation != null ? _respawnLocation.position : new Vector3(-0.552f, 1f, -65f);
+        
         isJumping = false;
+        gameObject.SetActive(true);
     }
     
     void Update()
@@ -80,42 +94,46 @@ public class PlayerMovement : MonoBehaviour
         if (transform.position.y < -2 || transform.position.y > 25)
         {
             ResetPlayer();
+            GameManager.Instance.CurrentLevel.ReturnRope();
         }
         
         playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(rb.linearVelocity.x, -0.2f, 0.2f), 0, 0);
-            
-        //Look Logic
-        rotation.x += GameManager.Instance.inputHandler._lookDirection.x * _sensitivity;
-        rotation.y += GameManager.Instance.inputHandler._lookDirection.y * _sensitivity;
-        rotation.y = Mathf.Clamp(rotation.y, -_yRotationLimit, _yRotationLimit);
 
-        var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
-        var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
-
-        playerCamera.transform.localRotation = xQuat * yQuat;
-        
-        desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
-        
-        switch (_playerState)
+        if (playerCanMove)
         {
-            case PlayerState.Standing:
-                Standing();
-                break;
-            case PlayerState.Running:
-                Running();
-                break;
-            case PlayerState.Falling:
-                Falling();
-                break;
-            case PlayerState.Crouching:
-                Crouching();
-                break;
-            case PlayerState.Sliding:
-                Sliding();
-                break;
-            case PlayerState.Jumping:
-                Jumping();
-                break;
+            //Look Logic
+            rotation.x += GameManager.Instance.inputHandler._lookDirection.x * _sensitivity;
+            rotation.y += GameManager.Instance.inputHandler._lookDirection.y * _sensitivity;
+            rotation.y = Mathf.Clamp(rotation.y, -_yRotationLimit, _yRotationLimit);
+
+            var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
+            var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
+
+            playerCamera.transform.localRotation = xQuat * yQuat;
+        
+            desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
+        
+            switch (_playerState)
+            {
+                case PlayerState.Standing:
+                    Standing();
+                    break;
+                case PlayerState.Running:
+                    Running();
+                    break;
+                case PlayerState.Falling:
+                    Falling();
+                    break;
+                case PlayerState.Crouching:
+                    Crouching();
+                    break;
+                case PlayerState.Sliding:
+                    Sliding();
+                    break;
+                case PlayerState.Jumping:
+                    Jumping();
+                    break;
+            }
         }
     }
     
@@ -131,12 +149,12 @@ public class PlayerMovement : MonoBehaviour
     
     void HandleStand()
     {
-        transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
     }
 
     void HandleCrouch()
     {
-        if (GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        if (GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
     }
 
     void CheckFalling()
@@ -175,7 +193,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1.5f))
             {
-                transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+                transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
                 _playerState = PlayerState.Standing;
             }
         }
@@ -200,7 +218,7 @@ public class PlayerMovement : MonoBehaviour
     void Sliding()
     {
         RaycastHit hit;
-        transform.localScale = new Vector3(transform.localScale.x, .5f, transform.localScale.z);
+        transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
 
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UI;
 using UnityEngine;
 
 namespace Game
@@ -12,6 +13,8 @@ namespace Game
         public LevelManager CurrentLevel => Levels[_levelIndex];
         public PlayerController Player;
         [HideInInspector] public InputHandler inputHandler;
+        
+        [SerializeField] private GameHUD _gameHUD;
 
         private int _levelIndex = 0;
     
@@ -50,6 +53,10 @@ namespace Game
             {
                 // TODO: Game completion
                 Debug.Log("No next level to start!");
+
+                Time.timeScale = 0;
+                Player.playerMovement.DisablePlayerMovement();
+                _gameHUD.ShowCompletionBackground();
             }
         }
     }
