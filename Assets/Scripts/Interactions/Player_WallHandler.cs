@@ -18,7 +18,6 @@ public class Player_WallHandler : MonoBehaviour
     private const float COOLDOWN = 1f;
     private const float DISTANCE_THRESHOLD = 2f;
     
-    private List<WallParent> _walls = new List<WallParent>();
     private TrailRenderer _trail;
     private float _drawCooldown = 0f;
     private bool _isDrawing = false;
@@ -30,12 +29,6 @@ public class Player_WallHandler : MonoBehaviour
         {
             _drawWall(false);
             _drawCooldown = COOLDOWN;
-        }
-        
-        if (_walls.Count > 0)
-        {
-            _walls.ForEach(w => w.DestroyWall());
-            _walls.Clear();
         }
     }
 
@@ -147,6 +140,6 @@ public class Player_WallHandler : MonoBehaviour
             wallParent.AddWallSegment(wallSegment);
         }
         wallParent.Init(points);
-        _walls.Add(wallParent);
+        GameManager.Instance.CurrentLevel.LevelWalls.Add(wallParent);
     }
 }

@@ -8,6 +8,8 @@ namespace Game
 {
     public class LevelManager : MonoBehaviour
     {
+        [HideInInspector] public List<WallParent> LevelWalls = new List<WallParent>();
+        
         public Transform PlayerRespawnLocation;
         public Interactable ropePickup;
         public Interactable depositPoint;
@@ -43,6 +45,9 @@ namespace Game
             if(playerHasRope)
                 ReturnRope();
             enemies.ForEach(e => e.ResetEnemy());
+            
+            LevelWalls.ForEach(w => w.DestroyWall());
+            LevelWalls.Clear();
         }
 
         public void RegisterEnemyCaptured()
