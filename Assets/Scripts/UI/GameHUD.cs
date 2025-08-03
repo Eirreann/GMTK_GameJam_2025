@@ -10,6 +10,7 @@ namespace UI
         [Header("Pause Menu")]
         [SerializeField] private GameObject _pauseMenu;
         [SerializeField] private Button _continueBtn;
+        [SerializeField] private Button _menuBtn;
         
         [Header("End Game")]
         [SerializeField] private GameObject _completionBackground;
@@ -27,6 +28,7 @@ namespace UI
         {
             _continueBtn.onClick.AddListener(ShowPauseMenu);
             _endGameButton.onClick.AddListener(Shutdown);
+            _menuBtn.onClick.AddListener(_returnToMenu);
         }
 
         public void ShowPauseMenu()
@@ -43,6 +45,11 @@ namespace UI
             GameManager.Instance.Player.playerMovement.DisablePlayerMovement(true);
             
             _completionBackground.SetActive(true);
+        }
+
+        private void _returnToMenu()
+        {
+            SceneManager.LoadScene(0);
         }
     }
 }

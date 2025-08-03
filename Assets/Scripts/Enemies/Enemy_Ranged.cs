@@ -72,7 +72,7 @@ public class Enemy_Ranged : Enemy_Base
             rotationOrigin.localRotation = Quaternion.Euler(startRot.eulerAngles.z, rotationOrigin.localRotation.eulerAngles.y, startRot.eulerAngles.z);
 
             // Rotate gun
-            gunRotation.LookAt(target.transform);
+            gunRotation.LookAt(Vector3.Lerp(target.transform.position, Camera.main.transform.position, 0.5f));
             gunRotation.localRotation = Quaternion.Euler(gunRotation.localRotation.eulerAngles.x, _startGunRot.eulerAngles.y, _startGunRot.eulerAngles.z);
         }
         else

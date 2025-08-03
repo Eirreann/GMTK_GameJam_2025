@@ -58,7 +58,7 @@ namespace Enemies
                             float distanceToWall = Vector3.Distance(transform.position, hit.transform.position);
                             if (distanceToWall > (distToAttack + 0.5))
                             {
-                                Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
+                                //Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
                                 _agent.isStopped = false;
                                 _anim.SetBool("isWalking", true);
                                 _agent.SetDestination((hit.transform.position));

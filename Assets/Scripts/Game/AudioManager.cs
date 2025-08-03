@@ -71,9 +71,9 @@ public class AudioManager : MonoSingleton<AudioManager>
     private IEnumerator _startMusic(AudioClip intro, AudioClip loop)
     {
         MusicStartSource.clip = intro;
-        MusicLoopSource.clip = loop;
         MusicStartSource.Play();
         yield return new WaitForSecondsRealtime(intro.length - 0.3f);
+        MusicLoopSource.clip = loop;
         MusicLoopSource.Play();
     }
 

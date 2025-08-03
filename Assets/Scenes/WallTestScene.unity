@@ -1144,6 +1144,7 @@ MonoBehaviour:
   _drawWall: 0
   _interact: 0
   _reset: 0
+  _pause: 0
 --- !u!114 &513786292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1788,6 +1789,7 @@ MonoBehaviour:
   onLevelStart:
     m_PersistentCalls:
       m_Calls: []
+  endDoorCollider: {fileID: 0}
 --- !u!4 &961924047
 Transform:
   m_ObjectHideFlags: 0
