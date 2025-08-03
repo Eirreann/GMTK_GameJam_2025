@@ -51,10 +51,9 @@ namespace Game
 
         public void Reset()
         {
-            if(playerHasRope)
-                ReturnRope();
-            enemies.ForEach(e => e.ResetEnemy());
+            if(playerHasRope) ReturnRope();
             
+            enemies.ForEach(e => e.ResetEnemy());
             LevelWalls.ForEach(w => w.DestroyWall());
             LevelWalls.Clear();
         }

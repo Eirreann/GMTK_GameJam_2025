@@ -28,8 +28,8 @@ namespace Game
         
         public void ResetLevel()
         {
-            CurrentLevel.Reset();
             Player.Reset();
+            CurrentLevel.Reset();
         }
 
         private void Update()
