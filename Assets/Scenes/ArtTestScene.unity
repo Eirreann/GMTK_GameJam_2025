@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: enemy_melee
       objectReference: {fileID: 0}
+    - target: {fileID: 6316661801115329813, guid: ce5e3768841c07b4ea4a4817d9bf5362, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 7ac4e4d057f9470448668144f5219f01, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -519,7 +523,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.78131884
+      value: -19.84
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -527,7 +531,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5572041
+      value: 26.447
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
       propertyPath: m_LocalRotation.w
@@ -557,6 +561,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8629621000722504249, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 62bc65a2d2c57f148a0b34e2dada37b6, type: 2}
     - target: {fileID: 919132149155446097, guid: 5bbe0bcd4d525ac478749474dd03460b, type: 3}
       propertyPath: m_Name
       value: enemy_tank
