@@ -67,6 +67,7 @@ namespace Game
             
             ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickup.transform;
             ropePickup.GetComponent<RopePickup>().triggered = false;
+            AudioManager.Instance.OnDropRope();
         }
 
         public void PickupRope(bool hasRope)
@@ -76,6 +77,7 @@ namespace Game
             GameManager.Instance.Player.playerStats.SetRopeVisible(hasRope);
             
             depositPoint.gameObject.SetActive(true);
+            AudioManager.Instance.OnPickupRope();
         }
 
         public void DepositRope(bool hasRope)
@@ -89,6 +91,8 @@ namespace Game
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?
                 _endLevel();
+                
+                AudioManager.Instance.OnDepositRope();
             }
         }
 
