@@ -45,7 +45,7 @@ namespace Interactions
 
         private IEnumerator _buildAfterDelay()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.8f);
             _segments.ForEach(s => s.BuildAfterDelay());
             _checkIfEnemyIsCaptured();
         }

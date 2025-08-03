@@ -32,10 +32,9 @@ public class PlayerMovement : MonoBehaviour
     Vector2 rotation = Vector2.zero;
 
     [Header("Is Doing?")]
-    [SerializeField] private bool isSliding = false;
     [SerializeField] private bool isGrounded = true;
+    [SerializeField] private bool canWallJump = false;
     [SerializeField] private bool isJumping = false;
-    [SerializeField] private bool isFalling = false;
     
     [Header("Player State Machine")]
     [SerializeField] private PlayerState _playerState = PlayerState.Standing;
@@ -87,9 +86,11 @@ public class PlayerMovement : MonoBehaviour
         playerCamera.transform.rotation = originalRotation;
         gameObject.SetActive(false);
         
+        canWallJump = false;
         rb.linearVelocity = Vector3.zero;
         _playerState = PlayerState.Standing;
 
+        lastWallJumped = null;
         
         transform.position = _respawnLocation != null ? _respawnLocation.position : new Vector3(-0.552f, 1f, -65f);
         
@@ -106,13 +107,6 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        
-        if (transform.position.y < RESPAWN_HEIGHT_MIN || transform.position.y > RESPAWN_HEIGHT_MAX)
-        {
-            ResetPlayer();
-            GameManager.Instance.CurrentLevel.ReturnRope();
-        }
-        
         playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(rb.linearVelocity.x, -0.2f, 0.2f), 0, 0);
 
         if (playerCanMove)
@@ -183,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckFalling()
     {
-        if (rb.linearVelocity.y < 0)
+        if (rb.linearVelocity.y < -0.1f)
         {
             _playerState = PlayerState.Falling;
         }
@@ -193,6 +187,7 @@ public class PlayerMovement : MonoBehaviour
     {
         ProcessMovement(playerSpeed);
         HandleStand();
+        canWallJump = false;
         
         //Jumping Logic
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
@@ -283,34 +278,14 @@ public class PlayerMovement : MonoBehaviour
 
         CheckFalling();
         HandleCrouch();
-        
-        Ray leftRay = new Ray(playerCamera.transform.position, -playerCamera.transform.right);
-        Ray rightRay = new Ray(playerCamera.transform.position, playerCamera.transform.right);
-        
-        RaycastHit hit;
-        if (GameManager.Instance.inputHandler._jump && isJumping)
-        {
-            const float wallrunRange = 3f;
-            if (Physics.Raycast(leftRay, out hit, wallrunRange) || Physics.Raycast(rightRay, out hit, wallrunRange))
-            {
-                if (hit.transform != lastWallJumped)
-                {
-                    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow); 
-                    
-                    rb.linearVelocity = Vector3.zero;
-                    Vector3 forceToApply = transform.up * wallJumpUpForce + playerCamera.transform.forward * wallJumpSideForce;
-                    rb.AddForce(forceToApply, ForceMode.Impulse);
-                    
-                    lastWallJumped = hit.transform;
-                }
-            }
-        }
+        HandleWallJump();
     }
     
     void Falling()
     {
         ProcessMovement(playerSpeed);
         HandleCrouch();
+        HandleWallJump();
         
         RaycastHit fallHit;
         if (Physics.Raycast(transform.position, Vector3.down, out fallHit, 1.25f))
@@ -331,6 +306,42 @@ public class PlayerMovement : MonoBehaviour
                 isJumping = false;
             }
         }
+    }
+
+    void HandleWallJump()
+    {
+        Ray leftRay = new Ray(playerCamera.transform.position, -playerCamera.transform.right);
+        Ray rightRay = new Ray(playerCamera.transform.position, playerCamera.transform.right);
+        
+        RaycastHit hit;
+        
+        const float wallrunRange = 3f;
+        if (Physics.Raycast(leftRay, out hit, wallrunRange) || Physics.Raycast(rightRay, out hit, wallrunRange))
+        {
+            canWallJump = true;
+            
+            Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(-playerCamera.transform.right) * hit.distance, Color.yellow);
+            Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(playerCamera.transform.right) * hit.distance, Color.yellow);
+            
+            if (GameManager.Instance.inputHandler._jump && isJumping)
+            {
+                if (hit.transform != lastWallJumped)
+                {
+                     
+                
+                    rb.linearVelocity = Vector3.zero;
+                    Vector3 forceToApply = transform.up * wallJumpUpForce + playerCamera.transform.forward * wallJumpSideForce;
+                    rb.AddForce(forceToApply, ForceMode.Impulse);
+                
+                    lastWallJumped = hit.transform;
+                }
+            }
+        }
+        else
+        {
+            canWallJump = false;
+        }
+        
     }
 
     void FixedUpdate()

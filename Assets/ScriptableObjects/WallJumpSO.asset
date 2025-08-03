@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
-  m_Name: DrawRopeTooltip
+  m_Name: WallJumpSO
   m_EditorClassIdentifier: 
-  tooltipText: Hold LMB/RT to start drawing rope. Release when enemy is encircled
-    to capture.
+  tooltipText: Press Space while jumping and next to a wall to perform a Wall Leap
+    forwards.

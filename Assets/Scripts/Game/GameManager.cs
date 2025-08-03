@@ -31,17 +31,23 @@ namespace Game
             if (Levels.Count > 0)
                 Levels[_levelIndex].StartLevel();
         }
+        
+        public void ResetLevel()
+        {
+            CurrentLevel.Reset();
+            Player.Reset();
+        }
 
         private void Update()
         {
             if(inputHandler._reset)
                 ResetLevel();
-        }
-
-        public void ResetLevel()
-        {
-            CurrentLevel.Reset();
-            Player.Reset();
+            
+            if (Player.transform.position.y < -5f || Player.transform.position.y > 20f)
+            {
+                ResetLevel();
+                GameManager.Instance.CurrentLevel.ReturnRope();
+            }
         }
 
         public void ProgressToNextLevel()
@@ -54,6 +60,8 @@ namespace Game
                 Levels[_levelIndex - 1].gameObject.SetActive(false);
 
                 Player.transform.position = Levels[_levelIndex].PlayerRespawnLocation.position;
+                
+                Player.playerStats.IncreaseMaxJuice(5);
                 
                 Player.playerStats.ReplenishAllHealth();
                 Player.playerStats.ReplenishAllJuice();

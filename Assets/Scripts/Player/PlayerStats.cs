@@ -46,6 +46,12 @@ public class PlayerStats : MonoBehaviour
         return _currentPlayerHealth;
     }
 
+    public void IncreaseMaxJuice(int increase)
+    {
+        _maxWallJuice += increase;
+        _updateUI();
+    }
+
     public void ReplenishAllJuice()
     {
         _currentWallJuice = _maxWallJuice;
