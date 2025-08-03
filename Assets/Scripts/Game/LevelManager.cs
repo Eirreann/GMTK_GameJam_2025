@@ -129,8 +129,7 @@ namespace Game
         private void _endLevel()
         {
             _destroyEnemies();
-            
-            endDoor.SetActive(false);
+            endDoorAnimator.Play("Door_Open");
         }
 
         private void _destroyEnemies()

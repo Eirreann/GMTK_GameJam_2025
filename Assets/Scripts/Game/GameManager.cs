@@ -67,6 +67,7 @@ namespace Game
                 Player.playerMovement.ResetPlayer();
                 Levels[_levelIndex].StartLevel();
 
+                Player.HUD.Fade(true);
                 CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.Init(CurrentLevel.EndGame);
             }
