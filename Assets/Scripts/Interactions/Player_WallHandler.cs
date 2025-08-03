@@ -119,9 +119,10 @@ public class Player_WallHandler : MonoBehaviour
         WallParent wallParent = Instantiate(_wallParentPrefab);
         for (int i = 0; i < count; i++)
         {
-            Vector3 start = new Vector3(points[i].x, points[i].y, points[i].z);
+            float yPos = points[0].y + 2f;
+            Vector3 start = new Vector3(points[i].x, yPos, points[i].z);
             Vector3 endPoint = points[(i + 1) % count];
-            Vector3 end = new Vector3(endPoint.x, points[0].y, endPoint.z);
+            Vector3 end = new Vector3(endPoint.x, yPos, endPoint.z);
 
             Vector3 direction = end - start;
             float distance = direction.magnitude;

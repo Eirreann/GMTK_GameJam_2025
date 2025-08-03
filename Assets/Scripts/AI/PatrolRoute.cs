@@ -9,7 +9,7 @@ namespace AI
     {
         [SerializeField] private List<Transform> _waypoints;
 
-        private const float PATROL_WAIT_TIME = 1f;
+        [SerializeField] private float _waitTime = 1f;
         
         private int _currentTargetIndex = 0;
         private float _patrolWaitCooldown = 0f;
@@ -21,7 +21,7 @@ namespace AI
             {
                 agent.isStopped = true;
                 anim.SetBool("isWalking", false);
-                _patrolWaitCooldown = PATROL_WAIT_TIME;
+                _patrolWaitCooldown = _waitTime;
                 _currentTargetIndex++;
                 if (_currentTargetIndex > _waypoints.Count - 1)
                     _currentTargetIndex = 0;
