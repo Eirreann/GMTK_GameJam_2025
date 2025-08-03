@@ -9,7 +9,7 @@ namespace Game
 {
     public class LevelManager : MonoBehaviour
     {
-        [HideInInspector] public List<WallParent> LevelWalls = new List<WallParent>();
+        public List<WallParent> LevelWalls = new List<WallParent>();
         
         public Transform PlayerRespawnLocation;
         public Interactable ropePickup;
@@ -32,7 +32,7 @@ namespace Game
         public bool playerHasRope = false;
 
         public UnityEvent onLevelStart;
-
+        public BoxCollider endDoorCollider;
 
         public void StartLevel()
         {
@@ -95,6 +95,8 @@ namespace Game
                 
                 GameManager.Instance.Player.HUD.SetRopeVisible(false);
                 playerHasRope = false;
+                
+                endDoorCollider.enabled = false;
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?
                 _endLevel();

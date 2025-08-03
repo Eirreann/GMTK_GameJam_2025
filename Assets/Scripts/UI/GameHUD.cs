@@ -1,5 +1,6 @@
 ﻿using Game;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace UI
@@ -12,6 +13,7 @@ namespace UI
         private void Shutdown()
         {
             GameManager.Instance.Player.HUD.Fade(true);
+            SceneManager.LoadScene(0);
         }
         
         public void Start()

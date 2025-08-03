@@ -500,6 +500,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6888504285840665013}
+  - component: {fileID: 6799296921386113944}
   m_Layer: 0
   m_Name: EnterDoorPrefab
   m_TagString: Untagged
@@ -527,6 +528,27 @@ Transform:
   - {fileID: 1508607312066707958}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &6799296921386113944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5612852252340300188}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.424464, y: 5.105293, z: 0.99785614}
+  m_Center: {x: 0.1514349, y: 2.052646, z: 2.5516014}
 --- !u!1 &5960294558431660634
 GameObject:
   m_ObjectHideFlags: 0
