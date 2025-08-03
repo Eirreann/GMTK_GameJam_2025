@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2418554900736022803}
   - component: {fileID: 8128099997728786182}
   - component: {fileID: 4343155719611324924}
-  - component: {fileID: 6961860418548622104}
+  - component: {fileID: 5272580061708722290}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -56,7 +56,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168119540958964313}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70f68b8aad85e0441a3313ca1e046467, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HUD: {fileID: 0}
   playerMovement: {fileID: 0}
   playerStats: {fileID: 0}
   playerInteractions: {fileID: 0}
@@ -129,14 +130,13 @@ MonoBehaviour:
   sprintMultiplier: 1
   desiredMoveDirection: {x: 0, y: 0, z: 0}
   jumpForce: 36
-  wallJumpUpForce: 32
-  wallJumpSideForce: 64
+  wallJumpUpForce: 28
+  wallJumpSideForce: 48
   _sensitivity: 0.1
   _yRotationLimit: 70
-  isSliding: 0
   isGrounded: 1
+  canWallJump: 0
   isJumping: 0
-  isFalling: 0
   _playerState: 0
   lastWallJumped: {fileID: 0}
 --- !u!114 &7711792485344224027
@@ -167,7 +167,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90568b4b1e2e16641bbe6b95f210a67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hud: {fileID: 0}
   _currentWallJuice: 60
   _maxWallJuice: 60
   _currentPlayerHealth: 25
@@ -212,14 +211,14 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
---- !u!65 &6961860418548622104
+--- !u!65 &5272580061708722290
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168119540958964313}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: eb51ffa6432021143a4b6b40c516fc7a, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -231,8 +230,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.96, y: 0.9813156, z: 0.96}
-  m_Center: {x: 0, y: 0.46934217, z: 0}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2193339842059782332
 GameObject:
   m_ObjectHideFlags: 0
