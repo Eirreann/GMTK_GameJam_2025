@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Camera playerCamera;
+    public Camera playerCamera;
     [SerializeField] private Transform leanTransform;
     private Rigidbody rb;
 

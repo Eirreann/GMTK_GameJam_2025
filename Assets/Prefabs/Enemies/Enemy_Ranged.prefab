@@ -460,7 +460,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsTrapped: 0
   rotationOrigin: {fileID: 8862744363008121915}
-  damage: 4
+  damage: 2
   detectionRange: 3
   fireRate: 0.5
   gunRotation: {fileID: 3223051467527315569}
