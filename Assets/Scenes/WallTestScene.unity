@@ -668,6 +668,37 @@ Transform:
   - {fileID: 832575519}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &255817897
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 255817898}
+  m_Layer: 0
+  m_Name: Audio Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &255817898
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255817897}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.50476, y: -0.08699, z: 2.37578}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &270904445
 GameObject:
   m_ObjectHideFlags: 0
@@ -781,6 +812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggered: 0
+  isEnabled: 0
   rope: {fileID: 1664081958}
 --- !u!65 &346934802
 BoxCollider:
@@ -1155,7 +1187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0eec5b03fab054bbda5178fe872e04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isPersistent: 1
+  _isPersistent: 0
   Levels:
   - {fileID: 961924046}
   Player: {fileID: 1997613094}
@@ -1770,6 +1802,7 @@ MonoBehaviour:
   PlayerRespawnLocation: {fileID: 397908413}
   ropePickup: {fileID: 346934801}
   depositPoint: {fileID: 1549081555}
+  finalTerminal: {fileID: 0}
   startDoor: {fileID: 0}
   endDoor: {fileID: 661238746}
   enemies:
@@ -3039,6 +3072,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggered: 0
+  isEnabled: 0
   rope: {fileID: 1664081958}
 --- !u!65 &1549081556
 BoxCollider:
@@ -5188,6 +5222,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 513786293}
+  - {fileID: 255817898}
   - {fileID: 163526277}
   - {fileID: 6863056}
   - {fileID: 686917969809708289}
