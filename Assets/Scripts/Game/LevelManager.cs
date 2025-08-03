@@ -14,6 +14,8 @@ namespace Game
         public Interactable ropePickup;
         public Interactable depositPoint;
 
+        public Interactable finalTerminal;
+
         public GameObject startDoor;
         public GameObject endDoor;
 
@@ -90,6 +92,11 @@ namespace Game
             }
         }
 
+        public void EndGame(bool isEnd)
+        {
+            Debug.Log("Ending game.");
+        }
+
         private void _setRopeActive(bool isActive)
         {
             if (isActive)
@@ -113,12 +120,6 @@ namespace Game
             _destroyEnemies();
             
             endDoor.SetActive(false);
-            
-            if (GameManager.Instance._levelIndex < GameManager.Instance.Levels.Count)
-            {
-                GameManager.Instance.Levels[GameManager.Instance._levelIndex + 1].gameObject.SetActive(true);
-            }
-            
         }
 
         private void _destroyEnemies()

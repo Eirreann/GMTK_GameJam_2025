@@ -28,6 +28,7 @@ namespace Game
 
         private void Start()
         {
+            Levels[_levelIndex].finalTerminal.Init(CurrentLevel.EndGame);
             if (Levels.Count > 0)
                 Levels[_levelIndex].StartLevel();
         }
@@ -68,12 +69,11 @@ namespace Game
             }
             else
             {
-                // TODO: Game completion
-                Debug.Log("No next level to start!");
+                _levelIndex = 0;
+                Player.playerMovement.SetRespawn(CurrentLevel.PlayerRespawnLocation);
+                Player.playerMovement.ResetPlayer();
 
-                Time.timeScale = 0;
-                Player.playerMovement.DisablePlayerMovement();
-                _gameHUD.ShowCompletionBackground();
+                CurrentLevel.finalTerminal.Init(CurrentLevel.EndGame);
             }
         }
     }

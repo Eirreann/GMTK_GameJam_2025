@@ -10,6 +10,7 @@ namespace Interactions
         public UnityAction<bool> interactableAction;
 
         public bool triggered = false;
+        public bool isEnabled = false;
 
         public void Update()
         {
@@ -27,18 +28,28 @@ namespace Interactions
             interactableAction = uAction;
         }
 
+        public virtual void ToggleEnabled()
+        {
+            enabled = !enabled;
+            isEnabled = enabled;
+        }
+
         public virtual bool Interact(bool status)
         {
-            triggered = status;
-            GameManager.Instance.Player.playerStats.UpdateInteractText("");
+            if (isEnabled)
+            {
+                triggered = status;
+                GameManager.Instance.Player.playerStats.UpdateInteractText("");
             
-            interactableAction.Invoke(status);
+                interactableAction.Invoke(status);
+                return status;
+            }
             return status;
         }
 
         public void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player" && !triggered)
+            if (other.tag == "Player" && isEnabled && !triggered)
             {
                 GameManager.Instance.Player.playerStats.UpdateInteractText("Interact");
             }
