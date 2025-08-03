@@ -66,7 +66,7 @@ namespace Game
         {
             Debug.Log("Returning rope");
             
-            GameManager.Instance.Player.playerStats.SetRopeVisible(false);
+            GameManager.Instance.Player.HUD.SetRopeVisible(false);
             playerHasRope = false;
             
             ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickup.transform;
@@ -78,7 +78,7 @@ namespace Game
         {
             playerHasRope = hasRope;
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
-            GameManager.Instance.Player.playerStats.SetRopeVisible(hasRope);
+            GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
             
             depositPoint.gameObject.SetActive(true);
             AudioManager.Instance.OnPickupRope();
@@ -90,7 +90,7 @@ namespace Game
             {
                 ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
                 
-                GameManager.Instance.Player.playerStats.SetRopeVisible(false);
+                GameManager.Instance.Player.HUD.SetRopeVisible(false);
                 playerHasRope = false;
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?

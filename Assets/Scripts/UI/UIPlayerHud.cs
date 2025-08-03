@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,6 +17,9 @@ public class UIPlayerHud : MonoBehaviour
         [SerializeField] private TextMeshProUGUI _tooltipText;
     
         [SerializeField] private Image _ropeIcon;
+        
+        [SerializeField] private Image _damagePanel;
+        [SerializeField] private Image _fadePanel;
         
         public void UpdateHealthUI(int current, int max)
         {
@@ -41,5 +46,25 @@ public class UIPlayerHud : MonoBehaviour
         public void SetRopeVisible(bool visible)
         {
             _ropeIcon.enabled = visible;
+        }
+
+        public void Fade(bool state)
+        {
+            var color = _fadePanel.color;
+            _fadePanel.color = new Color(color.r, color.g, color.b, state ? 0 : 1);
+            _fadePanel.raycastTarget = state;
+            _fadePanel.DOFade(state ? 1 : 0, 1f);
+        }
+
+        public void DamageFlash()
+        {
+            StartCoroutine(_takeDamage());
+        }
+
+        private IEnumerator _takeDamage()
+        {
+            _damagePanel.gameObject.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            _damagePanel.gameObject.SetActive(false);
         }
 }

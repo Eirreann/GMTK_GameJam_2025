@@ -1,10 +1,12 @@
 using System;
+using Game;
 using Player;
 using UnityEngine;
 using Utilities;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
+    public UIPlayerHud HUD;
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public PlayerStats playerStats;
     [HideInInspector] public PlayerInteractions playerInteractions;
@@ -18,6 +20,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         wallHandler = GetComponent<Player_WallHandler>();
     }
 
+    private void Start()
+    {
+        HUD.Fade(false);
+    }
+
     public void Reset()
     {
         wallHandler.ResetWalls();
@@ -25,16 +32,16 @@ public class PlayerController : MonoBehaviour, IDamageable
         
         playerStats.ReplenishAllHealth();
         playerStats.ReplenishAllJuice();
-        // TODO: Fade in/out?
+        HUD.Fade(false);
     }
 
     public void TakeDamage(int damage)
     {
         var health = playerStats.DamagePlayer(damage);
-        // TODO: Trigger some sort of effect on the player?
+        HUD.DamageFlash();
         if (health <= 0)
         {
-            // TODO: Game Over logic
+            GameManager.Instance.ResetLevel();
         }
     }
 }

@@ -1,10 +1,9 @@
 using System;
+using Game;
 using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
-    [SerializeField] private UIPlayerHud _hud;
-    
     [SerializeField] private int _currentWallJuice;
     [SerializeField] private int _maxWallJuice;
 
@@ -66,24 +65,7 @@ public class PlayerStats : MonoBehaviour
 
     private void _updateUI()
     {
-        if(_hud == null) return;
-        
-        _hud.UpdateHealthUI(_currentPlayerHealth, _maxPlayerHealth);
-        _hud.UpdateWallJuiceUI(_currentWallJuice, _maxWallJuice);
-    }
-
-    public void UpdateInteractText(String text)
-    {
-        _hud.UpdateInteractText(text);
-    }
-
-    public void UpdateTooltipText(String text)
-    {
-        _hud.UpdateTooltipText(text);
-    }
-
-    public void SetRopeVisible(bool visible)
-    {
-        _hud.SetRopeVisible(visible);
+        GameManager.Instance.Player.HUD.UpdateHealthUI(_currentPlayerHealth, _maxPlayerHealth);
+        GameManager.Instance.Player.HUD.UpdateWallJuiceUI(_currentWallJuice, _maxWallJuice);
     }
 }

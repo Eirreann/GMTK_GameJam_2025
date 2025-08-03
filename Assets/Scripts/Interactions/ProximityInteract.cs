@@ -27,7 +27,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.Player.playerStats.UpdateTooltipText(_text);
+                GameManager.Instance.Player.HUD.UpdateTooltipText(_text);
             }
         }
         
@@ -35,7 +35,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.Player.playerStats.UpdateTooltipText("");
+                GameManager.Instance.Player.HUD.UpdateTooltipText("");
             }
         }
     }

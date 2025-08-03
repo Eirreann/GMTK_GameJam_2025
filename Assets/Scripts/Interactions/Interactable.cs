@@ -39,7 +39,7 @@ namespace Interactions
             if (isEnabled)
             {
                 triggered = status;
-                GameManager.Instance.Player.playerStats.UpdateInteractText("");
+                GameManager.Instance.Player.HUD.UpdateInteractText("");
             
                 interactableAction.Invoke(status);
                 return status;
@@ -51,7 +51,7 @@ namespace Interactions
         {
             if (other.tag == "Player" && isEnabled && !triggered)
             {
-                GameManager.Instance.Player.playerStats.UpdateInteractText("Interact");
+                GameManager.Instance.Player.HUD.UpdateInteractText("Interact");
             }
         }
         
@@ -59,7 +59,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.Player.playerStats.UpdateInteractText("");
+                GameManager.Instance.Player.HUD.UpdateInteractText("");
             }
         }
     }
