@@ -370,7 +370,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
+  MinDistance: 1
   MaxDistance: 30
   Pan2D: 0
   rolloffMode: 0
@@ -458,6 +458,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90fa90e5dad42544daf993bf518cb92d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  IsTrapped: 0
   rotationOrigin: {fileID: 8862744363008121915}
   damage: 1
   detectionRange: 3
@@ -469,7 +470,8 @@ MonoBehaviour:
   - {fileID: 5093967349301763596}
   - {fileID: 460381105929602387}
   idleAnim: {fileID: 7400000, guid: 1440cf53e0db42345b2f30e7cb0ee30d, type: 2}
-  onFire: {fileID: 0}
+  onDetect: {fileID: 8300000, guid: 8e70ab48742ee924a95eff1249deb1ad, type: 3}
+  onFire: {fileID: 8300000, guid: d7f80bceb7f419c448d5130d521af73c, type: 3}
 --- !u!114 &4376036286061344190
 MonoBehaviour:
   m_ObjectHideFlags: 0

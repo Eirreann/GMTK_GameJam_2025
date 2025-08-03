@@ -11,6 +11,7 @@ public class Enemy_Ranged : Enemy_Base
     [SerializeField] protected AnimationClip idleAnim;
     
     [Header("Audio")]
+    [SerializeField] protected AudioClip onDetect;
     [SerializeField] protected AudioClip onFire;
     
     protected bool isFiring = false;
@@ -20,8 +21,9 @@ public class Enemy_Ranged : Enemy_Base
     private ProjectilePool _pool;
     private float _fireCooldown = 0;
     
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _anim = GetComponent<Animator>();
         _pool = GetComponent<ProjectilePool>();
         
@@ -33,9 +35,18 @@ public class Enemy_Ranged : Enemy_Base
     {
         base.Update();
         if (hasTarget)
+        {
             _fireWeapon();
+            if (!isFiring)
+            {
+                if(onDetect != null)
+                    audioSource.PlayOneShot(onDetect);
+                isFiring = true;
+            }
+        }
         else
         {
+            isFiring = false;
             if (_fireCooldown > 0)
             {
                 _fireCooldown -= Time.deltaTime;

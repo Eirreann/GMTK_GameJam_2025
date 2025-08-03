@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using AI;
 using UnityEngine;
 using UnityEngine.AI;
@@ -14,13 +15,17 @@ namespace Enemies
         [SerializeField] protected MeleeWeapon weapon;
         [SerializeField] protected AnimationClip attackAnim;
         [SerializeField] protected PatrolRoute patrolRoute;
-        
+
         [Header("Audio")]
+        [SerializeField] protected AudioClip onDetect;
         [SerializeField] protected AudioClip onAttack;
+        [SerializeField] protected List<AudioClip> footsteps;
         
         private Animator _anim;
         private NavMeshAgent _agent;
         private float _attackCooldown = 0f;
+        private bool _isPursuing = false;
+        private int _footstepIndex = 0;
 
         protected override void Start()
         {
@@ -35,6 +40,13 @@ namespace Enemies
         {
             if (hasTarget)
             {
+                if (!_isPursuing)
+                {
+                    if(onDetect != null)
+                        audioSource.PlayOneShot(onDetect);
+                    _isPursuing = true;
+                }
+                
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > distToAttack)
                 {
@@ -68,6 +80,7 @@ namespace Enemies
             }
             else
             {
+                _isPursuing = false;
                 if(IsTrapped)
                     _agent.isStopped = true;
                 else
@@ -81,6 +94,14 @@ namespace Enemies
             base.ResetEnemy();
             _agent.isStopped = true;
             transform.position = startPos;
+        }
+
+        public void PlayFootstep()
+        {
+            audioSource.PlayOneShot(footsteps[_footstepIndex]);
+            _footstepIndex++;
+            if(_footstepIndex >= footsteps.Count)
+                _footstepIndex = 0;
         }
 
         protected override void lookAt(Transform target)
