@@ -875,7 +875,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8500446d189165348944c9da75706889, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 8500446d189165348944c9da75706889, type: 3}
       propertyPath: m_Name
       value: floor_fulllevel
@@ -1160,7 +1160,7 @@ Transform:
   m_GameObject: {fileID: 195685210}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.0000004768371, z: -0, w: 1}
-  m_LocalPosition: {x: -8.1, y: 2.21, z: 22.2}
+  m_LocalPosition: {x: -8.1, y: 2.234, z: 22.2}
   m_LocalScale: {x: 0.64792657, y: 0.64792657, z: 0.64792657}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2585,7 +2585,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &418218393
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3741,7 +3741,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: m_Name
       value: wall_fulllevel
@@ -5719,7 +5719,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: m_Name
       value: wall_fulllevel (3)
@@ -6855,7 +6855,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: m_Name
       value: wall_fulllevel (2)
@@ -6974,7 +6974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &915405265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7344,7 +7344,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: adf26592e28cec44ea0f92ca66f715e0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: adf26592e28cec44ea0f92ca66f715e0, type: 3}
       propertyPath: m_Name
       value: wall_large
@@ -9699,7 +9699,7 @@ PrefabInstance:
       objectReference: {fileID: 195685212}
     - target: {fileID: 7124398832566965870, guid: 63ca1a2aebca9bd4080f42641d0510e9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.140087
+      value: 8.86
       objectReference: {fileID: 0}
     - target: {fileID: 7124398832566965870, guid: 63ca1a2aebca9bd4080f42641d0510e9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9707,7 +9707,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7124398832566965870, guid: 63ca1a2aebca9bd4080f42641d0510e9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 48.140503
+      value: 47.73
       objectReference: {fileID: 0}
     - target: {fileID: 7124398832566965870, guid: 63ca1a2aebca9bd4080f42641d0510e9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -10336,7 +10336,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: m_Name
       value: wall_fulllevel (1)
@@ -10729,7 +10729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1435836170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10841,7 +10841,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 0fcd68bafd9077146b37f398b9414d1c, type: 3}
       propertyPath: m_Name
       value: wall_fulllevel (4)
@@ -11815,7 +11815,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 8500446d189165348944c9da75706889, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 74e95e8812d515c4d903eb9a9c79bb26, type: 2}
+      objectReference: {fileID: 2100000, guid: 3490b52739463b54f9322ecf2da50665, type: 2}
     - target: {fileID: 919132149155446097, guid: 8500446d189165348944c9da75706889, type: 3}
       propertyPath: m_Name
       value: floor_fulllevel (1)
@@ -13618,7 +13618,7 @@ Transform:
   m_GameObject: {fileID: 1941003942}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.7071071, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: 8.83, y: 4.88, z: 47.58}
+  m_LocalPosition: {x: 8.83, y: 4.916, z: 47.58}
   m_LocalScale: {x: 0.64792657, y: 0.64792657, z: 0.64792657}
   m_ConstrainProportionsScale: 1
   m_Children:
