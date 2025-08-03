@@ -43,11 +43,17 @@ namespace Game
                 GameManager.Instance.CurrentLevel.ReturnRope();
             }
         }
+        
+        public void EndGame(bool isEnd)
+        {
+            Debug.Log("Ending game.");
+            _gameHUD.ShowCompletionBackground();
+        }
 
         public void ProgressToNextLevel()
         {
             _levelIndex++;
-            if (_levelIndex < Levels.Count)
+            if (_levelIndex == -1) //< Levels.Count)
             {
                 CurrentLevel.startDoor.SetActive(true);
                 Levels[_levelIndex].StartLevel();
@@ -67,9 +73,10 @@ namespace Game
                 Player.playerMovement.ResetPlayer();
                 Levels[_levelIndex].StartLevel();
 
-                Player.HUD.Fade(true);
+
                 CurrentLevel.finalTerminal.isEnabled = true;
-                CurrentLevel.finalTerminal.Init(CurrentLevel.EndGame);
+                CurrentLevel.finalTerminal.SetReadyForCompletion();
+                CurrentLevel.finalTerminal.Init(EndGame);
             }
         }
     }

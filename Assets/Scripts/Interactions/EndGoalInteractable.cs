@@ -43,7 +43,9 @@ namespace Interactions
 
         private IEnumerator _activateOnDelay()
         {
-            yield return new WaitForSeconds(_activateAnim.length + 1f);
+            yield return new WaitForSeconds(_activateAnim.length);
+            
+            isEnabled = true;
             base.Interact(true);
         }
     }

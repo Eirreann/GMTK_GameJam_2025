@@ -15,7 +15,7 @@ namespace Game
         public Interactable ropePickup;
         public Interactable depositPoint;
 
-        public Interactable finalTerminal;
+        public EndGoalInteractable finalTerminal;
 
         public GameObject startDoor;
         public GameObject endDoor;
@@ -101,11 +101,6 @@ namespace Game
                 
                 AudioManager.Instance.OnDepositRope();
             }
-        }
-
-        public void EndGame(bool isEnd)
-        {
-            Debug.Log("Ending game.");
         }
 
         private void _setRopeActive(bool isActive)

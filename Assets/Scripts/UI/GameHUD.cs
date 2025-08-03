@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Game;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UI
@@ -10,7 +11,7 @@ namespace UI
 
         private void Shutdown()
         {
-            Application.Quit();
+            GameManager.Instance.Player.HUD.Fade(true);
         }
         
         public void Start()
@@ -20,6 +21,9 @@ namespace UI
         
         public void ShowCompletionBackground()
         {
+            Cursor.lockState = CursorLockMode.None;
+            GameManager.Instance.Player.playerMovement.DisablePlayerMovement();
+            
             _completionBackground.SetActive(true);
         }
     }
