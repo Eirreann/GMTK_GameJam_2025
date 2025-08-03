@@ -18,6 +18,8 @@ public class InputHandler : MonoBehaviour
     public bool _interact;
 
     public bool _reset;
+
+    public bool _pause;
     
     private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
     
@@ -47,5 +49,7 @@ public class InputHandler : MonoBehaviour
         _interact = playerActions.Interact.WasPressedThisFrame();
 
         _reset = playerActions.Restart.WasPressedThisFrame();
+        
+        _pause = playerActions.Pause.WasPressedThisFrame();
     }
 }

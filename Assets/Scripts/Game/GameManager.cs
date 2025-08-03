@@ -36,6 +36,9 @@ namespace Game
         {
             if(inputHandler._reset)
                 ResetLevel();
+
+            if (inputHandler._pause)
+                _gameHUD.ShowPauseMenu();
             
             if (Player.transform.position.y < -5f || Player.transform.position.y > 20f)
             {

@@ -70,10 +70,10 @@ public class PlayerMovement : MonoBehaviour
         originalRotation = transform.rotation;
     }
 
-    public void DisablePlayerMovement()
+    public void DisablePlayerMovement(bool state)
     {
-        playerCanMove = false;
-        Cursor.lockState = CursorLockMode.None;
+        playerCanMove = !state;
+        Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
     }
     
     public void SetRespawn(Transform location)
