@@ -677,6 +677,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 255817898}
+  - component: {fileID: 255817899}
   m_Layer: 0
   m_Name: Audio Manager
   m_TagString: Untagged
@@ -699,6 +700,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &255817899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255817897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b438efc0a7d272147b3d6205ee6c1f6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Mixer: {fileID: 24100000, guid: e5cf3d6383d7de6479e919dcfe5166ef, type: 2}
+  MusicStartSource: {fileID: 0}
+  MusicLoopSource: {fileID: 0}
+  SFXSource: {fileID: 0}
+  TakeDamage: {fileID: 0}
 --- !u!1 &270904445
 GameObject:
   m_ObjectHideFlags: 0
@@ -1192,7 +1210,7 @@ MonoBehaviour:
   - {fileID: 961924046}
   Player: {fileID: 1997613094}
   inputHandler: {fileID: 0}
-  _gameHUD: {fileID: 0}
+  _gameHUD: {fileID: 1809551119}
   _levelIndex: 0
 --- !u!4 &513786293
 Transform:
@@ -3611,6 +3629,17 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1755274437}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1809551119 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1968689273434526061, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
+  m_PrefabInstance: {fileID: 686917969809708289}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787fb5ffa7b545518ec7a0b143423827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1900287123
 GameObject:
   m_ObjectHideFlags: 0
