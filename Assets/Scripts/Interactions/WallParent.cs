@@ -12,7 +12,7 @@ namespace Interactions
     {
         private List<WallSegment> _segments = new List<WallSegment>();
 
-        private const int WALL_HEALTH = 40;
+        private const int WALL_HEALTH = 45;
         
         private Vector3[] _points;
         private List<Enemy_Base> _trappedEnemies = new List<Enemy_Base>();

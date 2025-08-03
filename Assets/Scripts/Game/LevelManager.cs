@@ -84,6 +84,8 @@ namespace Game
             GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
             
             depositPoint.gameObject.SetActive(true);
+            depositPoint.triggered = false;
+            
             AudioManager.Instance.OnPickupRope();
         }
 
