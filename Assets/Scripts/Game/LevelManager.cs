@@ -19,6 +19,8 @@ namespace Game
 
         public GameObject startDoor;
         public GameObject endDoor;
+        
+        public Animator endDoorAnimator;
 
         public List<Enemy_Base> enemies;
 
@@ -30,6 +32,7 @@ namespace Game
         public bool playerHasRope = false;
 
         public UnityEvent onLevelStart;
+
 
         public void StartLevel()
         {
