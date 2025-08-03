@@ -3,6 +3,7 @@ using GogoGaga.OptimizedRopesAndCables;
 using Interactions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Game
 {
@@ -28,9 +29,12 @@ namespace Game
 
         public bool playerHasRope = false;
 
+        public UnityEvent onLevelStart;
+
         public void StartLevel()
         {
             gameObject.SetActive(true);
+            if(onLevelStart != null) onLevelStart.Invoke();
             
             // TODO
             _setRopeActive(allCaptured);
