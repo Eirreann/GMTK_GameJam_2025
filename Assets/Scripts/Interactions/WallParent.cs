@@ -39,8 +39,6 @@ namespace Interactions
         public void DestroyWall()
         {
             // TODO: destroy visual effect?
-
-            GameManager.Instance.CurrentLevel.LevelWalls.Remove(this);
             _trappedEnemies.ForEach(e => e.SetTrapped(false));
             Destroy(gameObject);
         }
@@ -58,7 +56,7 @@ namespace Interactions
             if (_currentHealth <= 0)
             {
                 GameManager.Instance.CurrentLevel.ReturnRope();
-                
+                GameManager.Instance.CurrentLevel.LevelWalls.Remove(this);
                 DestroyWall();
             }
             

@@ -50,6 +50,7 @@ namespace Game
         public void EndGame(bool isEnd)
         {
             Debug.Log("Ending game.");
+            inputHandler.OnGameOver();
             _gameHUD.ShowCompletionBackground();
         }
 

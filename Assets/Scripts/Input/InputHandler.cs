@@ -33,6 +33,11 @@ public class InputHandler : MonoBehaviour
         playerActions.Enable();
     }
 
+    public void OnGameOver()
+    {
+        playerActions.Disable();
+    }
+
     // Update is called once per frame
     void Update()
     {
