@@ -49,6 +49,8 @@ namespace UI
 
         private void _returnToMenu()
         {
+            Time.timeScale = 1;
+            GameManager.Instance.inputHandler.OnGameOver();
             SceneManager.LoadScene(0);
         }
     }
