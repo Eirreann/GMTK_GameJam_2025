@@ -28,7 +28,6 @@ namespace Game
 
         private void Start()
         {
-            Levels[_levelIndex].finalTerminal.Init(CurrentLevel.EndGame);
             if (Levels.Count > 0)
                 Levels[_levelIndex].StartLevel();
         }
@@ -72,7 +71,9 @@ namespace Game
                 _levelIndex = 0;
                 Player.playerMovement.SetRespawn(CurrentLevel.PlayerRespawnLocation);
                 Player.playerMovement.ResetPlayer();
+                Levels[_levelIndex].StartLevel();
 
+                CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.Init(CurrentLevel.EndGame);
             }
         }
