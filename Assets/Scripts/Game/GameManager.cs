@@ -17,6 +17,7 @@ namespace Game
         [SerializeField] private GameHUD _gameHUD;
 
         [SerializeField] public int _levelIndex = 0;
+        [SerializeField] private AudioManager _audioManager;
 
         private void Start()
         {
@@ -57,6 +58,12 @@ namespace Game
         public void ProgressToNextLevel()
         {
             _levelIndex++;
+
+            if (_levelIndex == 2)
+            {
+                _audioManager.ProgressMusic();  
+            }
+            
             if (_levelIndex < Levels.Count)
             {
                 CurrentLevel.startDoor.SetActive(true);

@@ -233,7 +233,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   IsTrapped: 0
   rotationOrigin: {fileID: 253756444982526730}
-  damage: 20
+  damage: 30
   detectionRange: 3
   attackSpd: 6
   distToAttack: 3

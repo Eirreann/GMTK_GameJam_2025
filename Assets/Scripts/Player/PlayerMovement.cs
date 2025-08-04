@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 using Game;
 using UnityEngine;
 
@@ -49,6 +50,8 @@ public class PlayerMovement : MonoBehaviour
     
     private Transform _respawnLocation;
     private float _knockbackCooldown = 0f;
+
+    public float gravityScale = 5f;
     
     private enum PlayerState
     {
@@ -112,8 +115,9 @@ public class PlayerMovement : MonoBehaviour
         if (playerCanMove)
         {
             //Look Logic
-            rotation.x += GameManager.Instance.inputHandler._lookDirection.x * _sensitivity;
-            rotation.y += GameManager.Instance.inputHandler._lookDirection.y * _sensitivity;
+            rotation.x += GameManager.Instance.inputHandler._lookDirection.x * _sensitivity * Time.unscaledDeltaTime;
+            rotation.y += GameManager.Instance.inputHandler._lookDirection.y * _sensitivity * Time.unscaledDeltaTime;
+            
             rotation.y = Mathf.Clamp(rotation.y, -_yRotationLimit, _yRotationLimit);
 
             var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
@@ -183,22 +187,32 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    void CheckIfMoving()
+    {
+        RaycastHit hit;
+        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 && !Physics.Raycast(playerCamera.transform.position,  desiredMoveDirection, out hit, 1f))
+        {
+            Debug.DrawRay(playerCamera.transform.position, desiredMoveDirection * hit.distance, Color.red);
+            _playerState = PlayerState.Running;
+        }
+        else
+        {
+            _playerState = PlayerState.Standing;
+        }
+    }
+
     void Standing()
     {
         ProcessMovement(playerSpeed);
         HandleStand();
+        CheckIfMoving();
+        
         canWallJump = false;
         
         //Jumping Logic
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
         
         if(GameManager.Instance.inputHandler._crouch) _playerState = PlayerState.Crouching;
-
-        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 && rb.linearVelocity.magnitude > (playerSpeed / 2))
-        {
-            _playerState = PlayerState.Running;
-        }
-
     }
     
     void Crouching()
@@ -220,6 +234,8 @@ public class PlayerMovement : MonoBehaviour
     void Running()
     {
         ProcessMovement(playerSpeed);
+        CheckIfMoving();
+        CheckFalling();
         
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
@@ -228,8 +244,6 @@ public class PlayerMovement : MonoBehaviour
             rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
             _playerState = PlayerState.Sliding;
         }
-        
-        if (GameManager.Instance.inputHandler._moveDirection.magnitude < 0.1f) _playerState = PlayerState.Standing;
     }
     
     void Sliding()
@@ -239,7 +253,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
-        if (rb.linearVelocity.magnitude <= 0)
+        if (rb.linearVelocity.magnitude <= 1f)
         {
             if (!GameManager.Instance.inputHandler._crouch)
             {
@@ -287,8 +301,11 @@ public class PlayerMovement : MonoBehaviour
         HandleCrouch();
         HandleWallJump();
         
+        // TODO: Crouch to fall faster
+        rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
+        
         RaycastHit fallHit;
-        if (Physics.Raycast(transform.position, Vector3.down, out fallHit, 1.25f))
+        if (Physics.Raycast(transform.position, Vector3.down, out fallHit, .25f))
         {
             Debug.DrawRay(fallHit.point, fallHit.normal, Color.red);
             if (GameManager.Instance.inputHandler._crouch)
@@ -325,13 +342,19 @@ public class PlayerMovement : MonoBehaviour
             
             if (GameManager.Instance.inputHandler._jump && isJumping)
             {
+                _playerState = PlayerState.Jumping;
                 if (hit.transform != lastWallJumped)
                 {
-                     
-                
                     rb.linearVelocity = Vector3.zero;
                     Vector3 forceToApply = transform.up * wallJumpUpForce + playerCamera.transform.forward * wallJumpSideForce;
-                    rb.AddForce(forceToApply, ForceMode.Impulse);
+                    rb.AddForce(
+                        new Vector3(
+                            forceToApply.x,
+                            Mathf.Clamp(forceToApply.y, 45f, 80f),
+                            forceToApply.z
+                        ), 
+                        ForceMode.Impulse
+                    );
                 
                     lastWallJumped = hit.transform;
                 }

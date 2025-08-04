@@ -22,6 +22,7 @@ public class AudioManager : MonoSingleton<AudioManager>
     [Header("Music")]
     public AudioClip Part1Intro;
     public AudioClip Part1Loop;
+    
     public AudioClip Part2Intro;
     public AudioClip Part2Loop;
 
@@ -34,13 +35,16 @@ public class AudioManager : MonoSingleton<AudioManager>
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
         
         _musicVolume = MusicStartSource.volume;
+        
         StartCoroutine(_startMusic(Part1Intro, Part1Loop));
     }
 
-    public void ProgressMusic()
+    private void Update()
     {
-        StartCoroutine(_transitionMusic());
+        
     }
+
+    
 
     public void OnTakeDamage(AudioSource source)
     {
@@ -67,23 +71,36 @@ public class AudioManager : MonoSingleton<AudioManager>
         SFXSource.Stop();
         SFXSource.PlayOneShot(Deposit);
     }
+    
+    public void ProgressMusic()
+    {
+        StartCoroutine(_transitionMusic());
+    }
 
     private IEnumerator _startMusic(AudioClip intro, AudioClip loop)
     {
         MusicStartSource.clip = intro;
-        MusicStartSource.Play();
-        yield return new WaitForSecondsRealtime(intro.length - 0.3f);
         MusicLoopSource.clip = loop;
+        
+        MusicStartSource.Play();
+        
+        yield return new WaitForSecondsRealtime(intro.length - .5f);
+        
+        Debug.Log("Switching to loop track.");
+        
+        MusicStartSource.DOFade(0, 1.5f);
+        MusicLoopSource.DOFade(_musicVolume, 1.5f);
+        
         MusicLoopSource.Play();
     }
 
     private IEnumerator _transitionMusic()
     {
-        MusicLoopSource.DOFade(0, 3f);
+        MusicLoopSource.DOFade(0, 2f);
         yield return new WaitForSecondsRealtime(2f);
         
-        MusicStartSource.volume = 0;
-        MusicStartSource.DOFade(_musicVolume, 1f);
+        MusicStartSource.DOFade(_musicVolume, 2f);
+        
         StartCoroutine(_startMusic(Part2Intro, Part2Loop));
     }
 }
