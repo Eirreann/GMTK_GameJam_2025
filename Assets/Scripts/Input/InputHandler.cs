@@ -44,7 +44,6 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         usingGamepad = playerInput.currentControlScheme == "Gamepad";
-        
         var _bufferedLook = playerActions.Look.ReadValue<Vector2>();
         if (_bufferedLook.magnitude > 0.2f)
         {
@@ -54,8 +53,6 @@ public class InputHandler : MonoBehaviour
         {
             _lookDirection = Vector2.zero;
         }
-        
-        
         
         var _bufferedMove = playerActions.Move.ReadValue<Vector2>();
         if (_bufferedMove.magnitude > 0.2f)

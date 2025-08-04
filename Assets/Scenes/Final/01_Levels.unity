@@ -15194,7 +15194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2418554900736022803, guid: c1e0492e81d45ae4381196865b267946, type: 3}
       propertyPath: _currentPlayerHealth
-      value: 8
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 5842370707650886671, guid: c1e0492e81d45ae4381196865b267946, type: 3}
       propertyPath: m_Dithering

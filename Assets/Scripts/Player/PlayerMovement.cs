@@ -52,6 +52,8 @@ public class PlayerMovement : MonoBehaviour
     private float _knockbackCooldown = 0f;
 
     public float gravityScale = 5f;
+
+    private Quaternion desiredRotation;
     
     private enum PlayerState
     {
@@ -110,7 +112,7 @@ public class PlayerMovement : MonoBehaviour
     
     void Update()
     {
-        playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(rb.linearVelocity.x, -0.2f, 0.2f), 0, 0);
+        //playerCamera.transform.rotation = Quaternion.Euler(Mathf.Clamp(rb.linearVelocity.x, -0.2f, 0.2f), 0, 0);
 
         if (playerCanMove)
         {

@@ -21,6 +21,9 @@ namespace Game
 
         private void Start()
         {
+            Application.targetFrameRate = 60;
+            QualitySettings.vSyncCount = 1;
+            
             inputHandler = GetComponent<InputHandler>();
 
             if (Levels.Count > 0)
