@@ -36,15 +36,8 @@ public class AudioManager : MonoSingleton<AudioManager>
         
         _musicVolume = MusicStartSource.volume;
         
-        StartCoroutine(_startMusic(Part1Intro, Part1Loop));
+        StartCoroutine(_startMusic(Part1Intro, Part1Loop, true));
     }
-
-    private void Update()
-    {
-        
-    }
-
-    
 
     public void OnTakeDamage(AudioSource source)
     {
@@ -77,28 +70,27 @@ public class AudioManager : MonoSingleton<AudioManager>
         StartCoroutine(_transitionMusic());
     }
 
-    private IEnumerator _startMusic(AudioClip intro, AudioClip loop)
+    private IEnumerator _startMusic(AudioClip intro, AudioClip loop, bool firstLoad = false)
     {
+        if(firstLoad)
+            yield return new WaitForSeconds(1f); // give audio time to initialise
+        
         MusicStartSource.clip = intro;
-        MusicLoopSource.clip = loop;
-        
         MusicStartSource.Play();
+
+        yield return new WaitForSeconds(intro.length);
         
-        yield return new WaitForSecondsRealtime(intro.length - .5f);
-        
-        Debug.Log("Switching to loop track.");
-        
-        MusicStartSource.DOFade(0, 1.5f);
-        MusicLoopSource.DOFade(_musicVolume, 1.5f);
-        
+        MusicLoopSource.clip = loop;
+        MusicLoopSource.volume = _musicVolume;
         MusicLoopSource.Play();
     }
 
     private IEnumerator _transitionMusic()
     {
-        MusicLoopSource.DOFade(0, 2f);
-        yield return new WaitForSecondsRealtime(2f);
+        MusicLoopSource.DOFade(0, 3f);
+        yield return new WaitForSeconds(1f);
         
+        MusicStartSource.volume = 0;
         MusicStartSource.DOFade(_musicVolume, 2f);
         
         StartCoroutine(_startMusic(Part2Intro, Part2Loop));
