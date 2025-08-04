@@ -125,20 +125,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 47698364035874897}
   leanTransform: {fileID: 5764127299342496211}
-  currentSpeed: 16
-  playerSpeed: 16
+  currentSpeed: 14
+  playerSpeed: 14
   sprintMultiplier: 1
   desiredMoveDirection: {x: 0, y: 0, z: 0}
-  jumpForce: 36
-  wallJumpUpForce: 28
-  wallJumpSideForce: 48
-  _sensitivity: 0.1
+  jumpForce: 40
+  wallJumpUpForce: 32
+  wallJumpSideForce: 32
+  _sensitivity: 8
   _yRotationLimit: 70
   isGrounded: 1
   canWallJump: 0
   isJumping: 0
   _playerState: 0
   lastWallJumped: {fileID: 0}
+  gravityScale: 2
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,7 +317,7 @@ Camera:
   m_ShutterSpeed: 0.005
   m_Aperture: 16
   m_FocusDistance: 10
-  m_FocalLength: 50
+  m_FocalLength: 12
   m_BladeCount: 5
   m_Curvature: {x: 2, y: 11}
   m_BarrelClipping: 0.25
@@ -380,7 +381,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
+  m_RenderPostProcessing: 1
   m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0

@@ -24,6 +24,8 @@ public class UIPlayerHud : MonoBehaviour
         public void UpdateHealthUI(int current, int max)
         {
             _healthBarFill.fillAmount = (float)current / max;
+
+            _healthBarFill.color = (float)current / max < 0.4 ? Color.red : Color.green;
         }
         
         public void UpdateWallJuiceUI(int current, int max)

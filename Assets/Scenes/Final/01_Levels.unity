@@ -9500,53 +9500,9 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_Pivot.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_Pivot.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchorMin.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 164.46002
-      objectReference: {fileID: 0}
-    - target: {fileID: 1051287791422029871, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -110.56
-      objectReference: {fileID: 0}
-    - target: {fileID: 1553018874167710589, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1785285624829963057, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: _glitchScreen
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 3565485223515428212, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Name
       value: Player HUD
-      objectReference: {fileID: 0}
-    - target: {fileID: 3565485223515428212, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5560269473801433113, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Pivot.x
@@ -9627,18 +9583,6 @@ PrefabInstance:
     - target: {fileID: 5560269473801433113, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7513146772793290726, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_Material
-      value: 
-      objectReference: {fileID: 2100000, guid: 41565e95274eb4546bca7c05ae67da6e, type: 2}
-    - target: {fileID: 7577824352961732893, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_text
-      value: Menu
-      objectReference: {fileID: 0}
-    - target: {fileID: 7889802614016633669, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
-      propertyPath: m_Material
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
