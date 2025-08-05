@@ -8,7 +8,10 @@ namespace Interactions
     public class EndGoalInteractable : Interactable
     {
         [SerializeField] private SkinnedMeshRenderer _renderer;
+        
         [SerializeField] private Material _activeMat;
+        [SerializeField] private Material _risingMat;
+        
         [SerializeField] private AnimationClip _activateAnim;
         
         private Animator _anim;
@@ -33,6 +36,8 @@ namespace Interactions
             {
                 isEnabled = false;
                 _anim.Play(_activateAnim.name);
+                _renderer.material = _risingMat;
+                
                 StartCoroutine(_activateOnDelay());
                 return true;
             }

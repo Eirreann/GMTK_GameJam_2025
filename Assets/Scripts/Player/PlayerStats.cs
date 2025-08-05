@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using Game;
 using UnityEngine;
 
@@ -11,6 +13,19 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] private int _maxPlayerHealth;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public void Start()
+    {
+        //Debug.Log("Memory leak.");
+        //StartCoroutine(_JOTEffect());
+    }
+
+    private IEnumerator _JOTEffect()
+    {
+        DrainJuice(1);
+        yield return new WaitForSeconds(2f);
+        
+        StartCoroutine(_JOTEffect());
+    }
 
     public int DrainJuice(int drain)
     {
