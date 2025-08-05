@@ -33,8 +33,6 @@ public class PlayerStats : MonoBehaviour
 
     public int DamagePlayer(int damage)
     {
-        GameManager.Instance._audioManager.OnTakeDamage();
-        
         _currentPlayerHealth -= damage;
         _updateUI();
         return _currentPlayerHealth;

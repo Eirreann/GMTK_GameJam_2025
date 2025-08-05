@@ -39,6 +39,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         var health = playerStats.DamagePlayer(damage);
         HUD.DamageFlash();
+        
+        GameManager.Instance._audioManager.OnTakeDamage();
+        
         if (health <= 0)
         {
             GameManager.Instance.ResetLevel();

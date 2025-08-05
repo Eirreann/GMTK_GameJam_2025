@@ -192,7 +192,10 @@ public class PlayerMovement : MonoBehaviour
     void CheckIfMoving()
     {
         RaycastHit hit;
-        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 && !Physics.Raycast(playerCamera.transform.position,  desiredMoveDirection, out hit, 1f))
+        if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 
+            && !Physics.Raycast(playerCamera.transform.position,  desiredMoveDirection, out hit, 1f)
+            && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .25f, playerCamera.transform.position.z),  desiredMoveDirection, out hit, 1f)
+        )
         {
             Debug.DrawRay(playerCamera.transform.position, desiredMoveDirection * hit.distance, Color.red);
             _playerState = PlayerState.Running;
@@ -231,6 +234,10 @@ public class PlayerMovement : MonoBehaviour
                 _playerState = PlayerState.Standing;
             }
         }
+        else
+        {
+            transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        }
     }
 
     void Running()
@@ -252,6 +259,8 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hit;
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        
+        rb.AddForce(-rb.linearVelocity, ForceMode.Force);
 
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
