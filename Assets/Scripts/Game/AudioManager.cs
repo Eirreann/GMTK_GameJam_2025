@@ -70,6 +70,12 @@ public class AudioManager : MonoSingleton<AudioManager>
         StartCoroutine(_transitionMusic());
     }
 
+    public void FadeOutMusic()
+    {
+        //MusicStartSource.DOFade(0, 2f);
+        MusicLoopSource.DOFade(0, 2f);
+    }
+
     private IEnumerator _startMusic(AudioClip intro, AudioClip loop, bool firstLoad = false)
     {
         if(firstLoad)
@@ -94,11 +100,5 @@ public class AudioManager : MonoSingleton<AudioManager>
         MusicStartSource.DOFade(_musicVolume, 2f);
         
         StartCoroutine(_startMusic(Part2Intro, Part2Loop));
-    }
-
-    public void _fadeOutMusic()
-    {
-        MusicStartSource.DOFade(0, 2f);
-        MusicLoopSource.DOFade(0, 2f);
     }
 }

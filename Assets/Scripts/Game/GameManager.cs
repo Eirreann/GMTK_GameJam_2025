@@ -17,7 +17,6 @@ namespace Game
         [SerializeField] private GameHUD _gameHUD;
 
         [SerializeField] public int _levelIndex = 0;
-        [SerializeField] public AudioManager _audioManager;
 
         private void Start()
         {
@@ -65,7 +64,7 @@ namespace Game
 
             if (_levelIndex == 2)
             {
-                _audioManager.ProgressMusic();  
+                AudioManager.Instance.ProgressMusic();  
             }
             
             if (_levelIndex < Levels.Count)
@@ -89,7 +88,7 @@ namespace Game
                 Player.playerMovement.ResetPlayer();
                 Levels[_levelIndex].StartLevel();
 
-                _audioManager._fadeOutMusic();
+                AudioManager.Instance.FadeOutMusic();
 
                 CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.SetReadyForCompletion();

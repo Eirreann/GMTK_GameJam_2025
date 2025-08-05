@@ -40,7 +40,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         var health = playerStats.DamagePlayer(damage);
         HUD.DamageFlash();
         
-        GameManager.Instance._audioManager.OnTakeDamage();
+        AudioManager.Instance.OnTakeDamage();
         
         if (health <= 0)
         {
