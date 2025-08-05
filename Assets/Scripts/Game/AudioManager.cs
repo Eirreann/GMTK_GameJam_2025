@@ -39,7 +39,7 @@ public class AudioManager : MonoSingleton<AudioManager>
         StartCoroutine(_startMusic(Part1Intro, Part1Loop, true));
     }
 
-    public void OnTakeDamage(AudioSource source)
+    public void OnTakeDamage()
     {
         SFXSource.PlayOneShot(TakeDamage);
     }
