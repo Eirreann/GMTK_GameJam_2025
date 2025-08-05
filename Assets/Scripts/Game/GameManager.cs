@@ -21,7 +21,7 @@ namespace Game
 
         private void Start()
         {
-            Application.targetFrameRate = 60;
+            Application.targetFrameRate = 120;
             QualitySettings.vSyncCount = 1;
             
             inputHandler = GetComponent<InputHandler>();
@@ -47,7 +47,7 @@ namespace Game
             if (Player.transform.position.y < -5f || Player.transform.position.y > 20f)
             {
                 ResetLevel();
-                GameManager.Instance.CurrentLevel.ReturnRope();
+                CurrentLevel.ReturnRope();
             }
         }
         
@@ -84,10 +84,12 @@ namespace Game
             else
             {
                 _levelIndex = 0;
+                
                 Player.playerMovement.SetRespawn(CurrentLevel.PlayerRespawnLocation);
                 Player.playerMovement.ResetPlayer();
                 Levels[_levelIndex].StartLevel();
 
+                _audioManager._fadeOutMusic();
 
                 CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.SetReadyForCompletion();

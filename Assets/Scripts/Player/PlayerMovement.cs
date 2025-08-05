@@ -228,7 +228,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
-            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 2.25f))
+            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, out hit, 2.25f))
             {
                 transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
                 _playerState = PlayerState.Standing;
@@ -331,7 +331,7 @@ public class PlayerMovement : MonoBehaviour
         
         RaycastHit hit;
         
-        const float wallrunRange = 3f;
+        const float wallrunRange = 2f;
         if (Physics.Raycast(leftRay, out hit, wallrunRange) || Physics.Raycast(rightRay, out hit, wallrunRange))
         {
             canWallJump = true;

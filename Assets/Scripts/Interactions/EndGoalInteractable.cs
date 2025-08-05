@@ -23,6 +23,8 @@ namespace Interactions
         {
             triggered = false;
             _isGameComplete = true;
+            
+            _renderer.material = _activeMat;
         }
 
         public override bool Interact(bool status)
@@ -30,7 +32,6 @@ namespace Interactions
             if (_isGameComplete)
             {
                 isEnabled = false;
-                _renderer.material = _activeMat;
                 _anim.Play(_activateAnim.name);
                 StartCoroutine(_activateOnDelay());
                 return true;

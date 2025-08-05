@@ -95,4 +95,10 @@ public class AudioManager : MonoSingleton<AudioManager>
         
         StartCoroutine(_startMusic(Part2Intro, Part2Loop));
     }
+
+    public void _fadeOutMusic()
+    {
+        MusicStartSource.DOFade(0, 2f);
+        MusicLoopSource.DOFade(0, 2f);
+    }
 }
