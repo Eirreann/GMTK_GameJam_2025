@@ -167,4 +167,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _builtWall: {fileID: 2100000, guid: 6a66347b1baa1004e83a9758547c37a0, type: 2}
-  _hitMat: {fileID: 2100000, guid: 38e9e2c6f1a714549b99429aece05d60, type: 2}
+  _hitMat: {fileID: 2100000, guid: cf8edaaad1f62ba4fb64315be8c8bf72, type: 2}
