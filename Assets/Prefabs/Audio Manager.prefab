@@ -51,7 +51,7 @@ MonoBehaviour:
   MusicStartSource: {fileID: 268328586129880024}
   MusicLoopSource: {fileID: 7081510655307724321}
   SFXSource: {fileID: 5915221951779027480}
-  TakeDamage: {fileID: 0}
+  TakeDamage: {fileID: 8300000, guid: c5e3c84116eff6d45a8bef8340fab1bb, type: 3}
   Pickup: {fileID: 8300000, guid: 008b924be7057d34d9e383151e65b60d, type: 3}
   CarryLoop: {fileID: 8300000, guid: 4a86a8f88d345ed4f877af96bfa3f65d, type: 3}
   Deposit: {fileID: 8300000, guid: 04b9e5f68a929794a8668cab44c9ade0, type: 3}
@@ -362,7 +362,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 86afbcccdcc826948ab96ec441b55add, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.25
+  m_Volume: 0
   m_Pitch: 1
   Loop: 1
   Mute: 0

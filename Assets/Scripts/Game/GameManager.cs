@@ -17,7 +17,7 @@ namespace Game
         [SerializeField] private GameHUD _gameHUD;
 
         [SerializeField] public int _levelIndex = 0;
-        [SerializeField] private AudioManager _audioManager;
+        [SerializeField] public AudioManager _audioManager;
 
         private void Start()
         {
@@ -60,6 +60,7 @@ namespace Game
 
         public void ProgressToNextLevel()
         {
+            Debug.Log("Progressing to next level.");
             _levelIndex++;
 
             if (_levelIndex == 2)

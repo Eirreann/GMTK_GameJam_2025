@@ -5,9 +5,14 @@ namespace Interactions
 {
     public class EndDoorTrigger : MonoBehaviour
     {
+        private bool triggered = false;
         public void OnTriggerEnter(Collider other)
         {
-            GameManager.Instance.ProgressToNextLevel();
+            if (!triggered)
+            {
+                GameManager.Instance.ProgressToNextLevel();
+                triggered = true;
+            }
         }
     }
 }

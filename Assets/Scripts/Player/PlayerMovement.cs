@@ -225,7 +225,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
-            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1f))
+            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 2.25f))
             {
                 transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
                 _playerState = PlayerState.Standing;
@@ -270,7 +270,7 @@ public class PlayerMovement : MonoBehaviour
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
-            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1.5f))
+            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 2.25f))
             {
                 HandleStand();
                 _playerState = PlayerState.Standing;
@@ -307,23 +307,11 @@ public class PlayerMovement : MonoBehaviour
         rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
         
         RaycastHit fallHit;
-        if (Physics.Raycast(transform.position, Vector3.down, out fallHit, .25f))
+        if (Physics.Raycast(transform.position, Vector3.down, out fallHit, .05f))
         {
-            Debug.DrawRay(fallHit.point, fallHit.normal, Color.red);
-            if (GameManager.Instance.inputHandler._crouch)
-            {
-                lastWallJumped = null;
-
-                _playerState = PlayerState.Crouching;
-                isJumping = false;
-            }
-            else
-            {
-                lastWallJumped = null;
-
-                _playerState = PlayerState.Standing;
-                isJumping = false;
-            }
+            _playerState = PlayerState.Standing;
+            lastWallJumped = null;
+            isJumping = false;
         }
     }
 

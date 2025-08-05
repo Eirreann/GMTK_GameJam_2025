@@ -20,12 +20,14 @@ public class UIPlayerHud : MonoBehaviour
         
         [SerializeField] private Image _damagePanel;
         [SerializeField] private Image _fadePanel;
+
+        private const float LOW_HEALTH_THRESHOLD = 0.25f;
         
         public void UpdateHealthUI(int current, int max)
         {
             _healthBarFill.fillAmount = (float)current / max;
 
-            _healthBarFill.color = (float)current / max < 0.4 ? Color.red : Color.green;
+            _healthBarFill.color = (float)current / max < LOW_HEALTH_THRESHOLD ? Color.red : Color.green;
         }
         
         public void UpdateWallJuiceUI(int current, int max)
