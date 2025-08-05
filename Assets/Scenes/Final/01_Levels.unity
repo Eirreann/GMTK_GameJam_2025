@@ -2589,7 +2589,7 @@ MonoBehaviour:
   - {fileID: 788324577}
   - {fileID: 517649936}
   - {fileID: 2032059476}
-  allCaptured: 1
+  allCaptured: 0
   pickupCubeRend: {fileID: 972891974}
   depositPointCubeRend: {fileID: 1872612512}
   playerHasRope: 0
@@ -7053,7 +7053,7 @@ MonoBehaviour:
   - {fileID: 788882814}
   - {fileID: 1068189504}
   - {fileID: 817737961}
-  allCaptured: 1
+  allCaptured: 0
   pickupCubeRend: {fileID: 1254064942}
   depositPointCubeRend: {fileID: 779994698}
   playerHasRope: 0
@@ -8708,7 +8708,7 @@ MonoBehaviour:
   endDoorAnimator: {fileID: 714473475}
   enemies:
   - {fileID: 123121142}
-  allCaptured: 1
+  allCaptured: 0
   pickupCubeRend: {fileID: 1958553243}
   depositPointCubeRend: {fileID: 892775595}
   playerHasRope: 0
@@ -10885,7 +10885,7 @@ MonoBehaviour:
   - {fileID: 923260217}
   - {fileID: 487445251}
   - {fileID: 235368616}
-  allCaptured: 1
+  allCaptured: 0
   pickupCubeRend: {fileID: 118546638}
   depositPointCubeRend: {fileID: 613541867}
   playerHasRope: 0
