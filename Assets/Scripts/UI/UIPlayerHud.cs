@@ -22,6 +22,14 @@ public class UIPlayerHud : MonoBehaviour
         [SerializeField] private Image _fadePanel;
 
         private const float LOW_HEALTH_THRESHOLD = 0.25f;
+
+        public void FixedUpdate()
+        {
+            if (_ropeIcon.enabled)
+            {
+                _ropeIcon.rectTransform.Rotate(Vector3.forward * (Time.deltaTime * 100f));
+            }
+        }
         
         public void UpdateHealthUI(int current, int max)
         {

@@ -41,6 +41,10 @@ Material:
         m_Texture: {fileID: 10900, guid: 0000000000000000f000000000000000, type: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_d24f03364949438c9ac373591be152dd_Texture_1_Texture2D:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -57,7 +61,7 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Strength: 8.6
+    - _Strength: 0.5
     m_Colors:
     - _WallColour: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []

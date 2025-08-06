@@ -12,8 +12,12 @@ namespace Game
         public List<WallParent> LevelWalls = new List<WallParent>();
         
         public Transform PlayerRespawnLocation;
+        
         public Interactable ropePickup;
-        public Interactable depositPoint;
+        public Interactable ropeDeposit;
+
+        public Transform ropePickupLocation;
+        public Transform ropeDepositLocation;
 
         public EndGoalInteractable finalTerminal;
 
@@ -29,6 +33,9 @@ namespace Game
         [SerializeField] private MeshRenderer pickupCubeRend;
         [SerializeField] private MeshRenderer depositPointCubeRend;
 
+        [SerializeField] private Material _disabledMat;
+        [SerializeField] private Material _enabledMat;
+
         public bool playerHasRope = false;
 
         public UnityEvent onLevelStart;
@@ -41,10 +48,9 @@ namespace Game
             
             // TODO
             _setRopeActive(allCaptured);
-            depositPoint.gameObject.SetActive(false);
             
             ropePickup.Init(PickupRope);
-            depositPoint.Init(DepositRope);
+            ropeDeposit.Init(DepositRope);
             
             GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
         }
@@ -61,38 +67,26 @@ namespace Game
         public void RegisterEnemyCaptured()
         {
             allCaptured = enemies.TrueForAll(e => e.IsTrapped);
+            
             _setRopeActive(allCaptured);
         }
-
-        public void ReturnRope()
-        {
-            Debug.Log("Returning rope");
-            
-            GameManager.Instance.Player.HUD.SetRopeVisible(false);
-            playerHasRope = false;
-            
-            ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickup.transform;
-            ropePickup.GetComponent<RopePickup>().triggered = false;
-            AudioManager.Instance.OnDropRope();
-        }
-
+        
         public void PickupRope(bool hasRope)
         {
             playerHasRope = hasRope;
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
             GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
             
-            depositPoint.gameObject.SetActive(true);
-            depositPoint.triggered = false;
+            ropeDeposit.triggered = false;
             
             AudioManager.Instance.OnPickupRope();
         }
-
+        
         public void DepositRope(bool hasRope)
         {
             if (playerHasRope)
             {
-                ropePickup.GetComponent<RopePickup>().rope.endPoint = depositPoint.transform;
+                ropePickup.GetComponent<RopePickup>().rope.endPoint = ropeDepositLocation;
                 
                 GameManager.Instance.Player.HUD.SetRopeVisible(false);
                 playerHasRope = false;
@@ -106,22 +100,26 @@ namespace Game
             }
         }
 
+        public void ReturnRope()
+        {
+            Debug.Log("Returning rope");
+            
+            GameManager.Instance.Player.HUD.SetRopeVisible(false);
+            playerHasRope = false;
+            
+            ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickupLocation;
+            ropePickup.GetComponent<RopePickup>().triggered = false;
+            AudioManager.Instance.OnDropRope();
+        }
+
+
         private void _setRopeActive(bool isActive)
         {
-            if (isActive)
-            {
-                ropePickup.gameObject.SetActive(true);
-                
-                pickupCubeRend.material.color = Color.green;
-                depositPointCubeRend.material.color = Color.green;
-            }
-            else
-            {
-                ropePickup.gameObject.SetActive(false);
-                
-                pickupCubeRend.material.color = Color.red;
-                depositPointCubeRend.material.color = Color.red;
-            }
+            ropePickup.isEnabled = isActive;
+            ropeDeposit.isEnabled = isActive;
+            
+            pickupCubeRend.material = isActive ? _enabledMat : _disabledMat;
+            depositPointCubeRend.material = isActive ? _enabledMat : _disabledMat;
         }
 
         private void _endLevel()

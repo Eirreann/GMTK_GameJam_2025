@@ -114,7 +114,9 @@ namespace Enemies
             if (_attackCooldown == 0)
             {
                 _attackCooldown = attackSpd;
+                
                 _anim.SetBool("isWalking", false);
+                
                 _anim.Play(attackAnim.name);
                 
                 if(onAttack != null)

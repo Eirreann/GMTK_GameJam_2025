@@ -20,7 +20,7 @@ public class Player_WallHandler : MonoBehaviour
     
     private TrailRenderer _trail;
     private float _drawCooldown = 0f;
-    private bool _isDrawing = false;
+    public bool _isDrawing = false;
     private int _currentPoints = 0;
 
     public void ResetWalls()

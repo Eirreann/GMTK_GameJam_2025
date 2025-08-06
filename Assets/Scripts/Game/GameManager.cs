@@ -20,7 +20,7 @@ namespace Game
 
         private void Start()
         {
-            Application.targetFrameRate = 120;
+            Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 1;
             
             inputHandler = GetComponent<InputHandler>();

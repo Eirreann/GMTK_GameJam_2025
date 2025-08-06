@@ -14,7 +14,7 @@ namespace Interactions
 
         public void Update()
         {
-            if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
+            if (isEnabled && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
             {
                 if (GameManager.Instance.inputHandler._interact)
                 {
