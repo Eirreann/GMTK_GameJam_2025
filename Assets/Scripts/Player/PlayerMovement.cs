@@ -169,7 +169,7 @@ public class PlayerMovement : MonoBehaviour
     {
         currentSpeed = desiredSpeed;
 
-        if (GameManager.Instance.Player.wallHandler._isDrawing) rb.linearDamping = 2f;
+        if (GameManager.Instance.Player.wallHandler.IsDrawing) rb.linearDamping = 2f;
         
         rb.AddForce(desiredMoveDirection * (currentSpeed * 10f), ForceMode.Force);
         

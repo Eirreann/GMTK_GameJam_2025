@@ -16,7 +16,7 @@ namespace Game
         
         [SerializeField] private GameHUD _gameHUD;
 
-        [SerializeField] public int _levelIndex = 0;
+        [SerializeField] private int _levelIndex = 0;
 
         private void Start()
         {
