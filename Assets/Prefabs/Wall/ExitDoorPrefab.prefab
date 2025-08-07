@@ -572,7 +572,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggered: 0
-  isEnabled: 1
+  isEnabled: 0
   rope: {fileID: 0}
 --- !u!135 &8128166700644280212
 SphereCollider:

@@ -8,6 +8,8 @@ public class InputHandler : MonoBehaviour
     public InputSystem_Actions inputSystem;
     private InputSystem_Actions.PlayerActions playerActions;
 
+    [SerializeField] private TooltipHandler tooltipHandler;
+
     public Vector2 _moveDirection;
     public Vector2 _lookDirection;
 
@@ -22,7 +24,6 @@ public class InputHandler : MonoBehaviour
     public bool _pause;
     
     private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
-
     public bool usingGamepad;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,6 +34,8 @@ public class InputHandler : MonoBehaviour
 
         playerActions = inputSystem.Player;
         playerActions.Enable();
+
+        playerInput.onControlsChanged += tooltipHandler.ChangeTextAsset;
     }
 
     public void OnGameOver()
@@ -44,6 +47,7 @@ public class InputHandler : MonoBehaviour
     void Update()
     {
         usingGamepad = playerInput.currentControlScheme == "Gamepad";
+        
         var _bufferedLook = playerActions.Look.ReadValue<Vector2>();
         if (_bufferedLook.magnitude > 0.2f)
         {
