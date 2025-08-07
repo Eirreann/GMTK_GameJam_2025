@@ -5889,7 +5889,6 @@ MonoBehaviour:
   _reset: 0
   _pause: 0
   usingGamepad: 0
-  _lastControlScheme: 
 --- !u!114 &716631533
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9999,7 +9998,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 386048966331826681, guid: 01fcd2fdcc6323449917dbb0a427cb25, type: 3}
       propertyPath: isEnabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 386048966331826681, guid: 01fcd2fdcc6323449917dbb0a427cb25, type: 3}
       propertyPath: _risingMat
@@ -16840,6 +16839,10 @@ PrefabInstance:
     - target: {fileID: 541133255216557778, guid: c1e0492e81d45ae4381196865b267946, type: 3}
       propertyPath: _playerSpeed
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 541133255216557778, guid: c1e0492e81d45ae4381196865b267946, type: 3}
+      propertyPath: gravityScale
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 541133255216557778, guid: c1e0492e81d45ae4381196865b267946, type: 3}
       propertyPath: _currentSpeed
