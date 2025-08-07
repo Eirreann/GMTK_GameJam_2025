@@ -25,6 +25,8 @@ public class InputHandler : MonoBehaviour
     
     private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
     public bool usingGamepad;
+
+    private string _lastControlScheme = "";
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,8 +36,6 @@ public class InputHandler : MonoBehaviour
 
         playerActions = inputSystem.Player;
         playerActions.Enable();
-
-        playerInput.onControlsChanged += tooltipHandler.ChangeTextAsset;
     }
 
     public void OnGameOver()
@@ -46,6 +46,12 @@ public class InputHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // TODO: Add listener functionality rather than per-frame update
+        if(playerInput.currentControlScheme != _lastControlScheme){
+            tooltipHandler.ChangeTextAsset(playerInput.currentControlScheme);
+            _lastControlScheme = playerInput.currentControlScheme;
+        }
+        
         usingGamepad = playerInput.currentControlScheme == "Gamepad";
         
         var _bufferedLook = playerActions.Look.ReadValue<Vector2>();

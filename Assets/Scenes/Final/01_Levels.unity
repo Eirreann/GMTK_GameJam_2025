@@ -5889,6 +5889,7 @@ MonoBehaviour:
   _reset: 0
   _pause: 0
   usingGamepad: 0
+  _lastControlScheme: 
 --- !u!114 &716631533
 MonoBehaviour:
   m_ObjectHideFlags: 0

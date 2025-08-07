@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,16 +21,16 @@ public class TooltipHandler : MonoBehaviour
     {
     }
 
-    public void ChangeTextAsset(PlayerInput playerInput)
+    public void ChangeTextAsset(String currentControlScheme)
     {
         Debug.Log("Changing text asset.");
         tooltipText.text = tooltipText.text;
         
-        if (playerInput.currentControlScheme == "Gamepad")
+        if (currentControlScheme == "Gamepad")
         {
             tooltipText.spriteAsset = gamepadAsset;
         }
-        else if(playerInput.currentControlScheme == "Keyboard")
+        else if(currentControlScheme == "Keyboard&Mouse")
         {
             tooltipText.spriteAsset = keyboardAsset;
         }
