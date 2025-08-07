@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: BasicsSO
   m_EditorClassIdentifier: 
-  tooltipText: Use WASD/Left Stick to move. Mouse/Right Stick to look. Press [Key:R]/[Gamepad:Y]
-    to reset current level.
+  tooltipText: Use <sprite=5> to move. <sprite=6> to look. Press <sprite=4> to reset
+    current level.

@@ -9,6 +9,8 @@ public class TooltipHandler : MonoBehaviour
     [SerializeField] private TMP_SpriteAsset gamepadAsset;
 
     [SerializeField] private TextMeshProUGUI tooltipText;
+    [SerializeField] private TextMeshProUGUI controlMapText;
+    [SerializeField] private TextMeshProUGUI contextPopup;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,15 +26,19 @@ public class TooltipHandler : MonoBehaviour
     public void ChangeTextAsset(String currentControlScheme)
     {
         Debug.Log("Changing text asset.");
-        tooltipText.text = tooltipText.text;
+
+        TMP_SpriteAsset asset = keyboardAsset;
         
         if (currentControlScheme == "Gamepad")
         {
-            tooltipText.spriteAsset = gamepadAsset;
+            asset = gamepadAsset;
         }
         else if(currentControlScheme == "Keyboard&Mouse")
         {
-            tooltipText.spriteAsset = keyboardAsset;
+            asset = keyboardAsset;
         }
+
+        tooltipText.spriteAsset = asset;
+        contextPopup.spriteAsset = asset;
     }
 }

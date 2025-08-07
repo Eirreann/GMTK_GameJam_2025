@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: DepositRopeTooltip
   m_EditorClassIdentifier: 
-  tooltipText: Press [Key:E]/[Gamepad:X] to deposit rope when all enemies have been
-    captured. Return to the start to pick up the rope.
+  tooltipText: Press <sprite=1> to deposit rope when all enemies have been captured.
+    Return to the start to pick up the rope.

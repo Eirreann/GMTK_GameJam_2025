@@ -337,6 +337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c286ac770da44478ae9d5a3b9a5fa171, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _text: Interact
   triggered: 0
   isEnabled: 1
   rope: {fileID: 8502831014548363400}

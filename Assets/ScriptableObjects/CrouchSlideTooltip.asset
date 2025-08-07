@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: CrouchSlideTooltip
   m_EditorClassIdentifier: 
-  tooltipText: Hold [Key:C]/[Gamepad:LT] to crouch. Hold crouch when moving to perform
+  tooltipText: Hold <sprite=3> to crouch. Hold <sprite=3> when moving to perform
     a slide.

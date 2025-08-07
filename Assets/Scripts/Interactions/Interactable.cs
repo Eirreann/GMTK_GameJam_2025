@@ -9,6 +9,9 @@ namespace Interactions
         private const float INTERACT_DISTANCE = 3.75f;
         public UnityAction<bool> interactableAction;
 
+        private string _buttonNumber = "1";
+        [SerializeField] private string _interactText = "Interact";
+
         public bool triggered = false;
         public bool isEnabled = false;
 
@@ -51,7 +54,7 @@ namespace Interactions
         {
             if (other.tag == "Player" && isEnabled && !triggered)
             {
-                GameManager.Instance.Player.HUD.UpdateInteractText("Interact");
+                GameManager.Instance.Player.HUD.UpdateInteractText($"<sprite={_buttonNumber}> {_interactText}");
             }
         }
         

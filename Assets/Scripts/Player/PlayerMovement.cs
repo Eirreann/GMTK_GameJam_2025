@@ -83,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
+                if(!_isGrounded) _isGrounded = Physics.Raycast(transform.position, Vector3.down, .05f);
+                
                 RotatePlayer();
                 
                 _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
@@ -133,12 +135,16 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         _playerState = PlayerState.Standing;
 
+
         _lastWallJumped = null;
         
         transform.position = _respawnLocation != null ? _respawnLocation.position : new Vector3(-0.552f, 1f, -65f);
        
         _isJumping = false;
         gameObject.SetActive(true);
+        
+        playerCamera.transform.rotation = transform.rotation;
+        playerCamera.transform.localRotation = transform.localRotation;
     }
 
     public void SetKnockback(Vector3 force)
@@ -147,8 +153,6 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(force, ForceMode.Impulse);
     }
-    
-    
     
     void ProcessMovement(float desiredSpeed)
     {
@@ -194,7 +198,24 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleCrouch()
     {
-        if (GameManager.Instance.inputHandler._crouch) transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        if (GameManager.Instance.inputHandler._crouch) 
+            transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
+        else
+            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, 2.25f))
+            {
+                transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
+            }
+    }
+
+    void HandleJump()
+    {
+        if (_isGrounded)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
+
+            _isJumping = true;
+            _isGrounded = false;
+        }
     }
 
     void CheckFalling()
@@ -240,8 +261,8 @@ public class PlayerMovement : MonoBehaviour
     void Crouching()
     {
         ProcessMovement(_playerSpeed / 2);
-        HandleCrouch();
         
+        HandleCrouch();
         if (!GameManager.Instance.inputHandler._crouch)
         {
             if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, 2.25f))
@@ -313,30 +334,19 @@ public class PlayerMovement : MonoBehaviour
         
         CheckFalling();
         HandleCrouch();
+        HandleJump();
         HandleWallJump();
-        
-        if (!_isJumping)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-            
-            _isJumping = true;
-        }
     }
     
     void Falling()
     {
-        RaycastHit hit;
-        
         ProcessMovement(_playerSpeed);
         HandleCrouch();
         HandleWallJump();
         
-        Ray ray = new Ray(playerCamera.transform.position, Vector3.down);
-        
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, .25f))
+        if (_isGrounded)
         {
-            Debug.DrawRay(playerCamera.transform.position, Vector3.down, Color.red, hit.distance);
+            
             if (GameManager.Instance.inputHandler._crouch)
             {
                 _playerState = PlayerState.Crouching;
@@ -369,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(-playerCamera.transform.right) * hit.distance, Color.yellow);
             Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(playerCamera.transform.right) * hit.distance, Color.yellow);
             
-            if (GameManager.Instance.inputHandler._jump && _isJumping)
+            if (GameManager.Instance.inputHandler._jump && !_isGrounded)
             {
                 _playerState = PlayerState.Jumping;
                 if (hit.transform != _lastWallJumped)
@@ -386,7 +396,6 @@ public class PlayerMovement : MonoBehaviour
                         ForceMode.Impulse
                     );
                     
-                
                     _lastWallJumped = hit.transform;
                 }
             }
@@ -400,6 +409,10 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        
+        if (_isJumping)
+        {
+            rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+            _isJumping = false;
+        }
     }
 }

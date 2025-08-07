@@ -1,29 +1,52 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UIMenu : MonoBehaviour
 {
     public AudioMixer Mixer;
+    public PlayerInput playerInput;
     
     [Header("Panels")]
     public GameObject SettingsPanel;
     public GameObject CreditsPanel;
+    public GameObject ControlsPanel;
     public GameObject IntroPanel;
     
     [Header("Buttons")]
     public Button StartBtn;
+    public Button ExitBtn;
+
+    public Button ControlsBtn;
     public Button SettingsBtn;
     public Button CreditsBtn;
     public Button ContinueBtn;
-    public Button ExitBtn;
+
+    [Header("Back Buttons")]
+    public Button SettingsBackBtn;
+    public Button ControlsBackBtn;
+    public Button CreditsBackBtn;
+
+    [SerializeField] private GameObject _lastVisitedButton;
+    [SerializeField] private GameObject _lastSelectedButton;
+    [SerializeField] private String _lastControlScheme;
 
     private void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
+        
+        EventSystem.current.SetSelectedGameObject(StartBtn.gameObject);
+        
+        _lastVisitedButton = StartBtn.gameObject;
+        _lastSelectedButton = StartBtn.gameObject;
+        
         StartBtn.onClick.AddListener(_start);
         SettingsBtn.onClick.AddListener(_settings);
+        ControlsBtn.onClick.AddListener(_controls);
         CreditsBtn.onClick.AddListener(_credits);
         ContinueBtn.onClick.AddListener(_continue);
         ExitBtn.onClick.AddListener(_exit);
@@ -31,21 +54,69 @@ public class UIMenu : MonoBehaviour
         Mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master", 1f)) * 20);
         Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
+        
+        
+    }
+
+    public void SetLastVisited(GameObject lastVisitedButton)
+    {
+        _lastVisitedButton = lastVisitedButton;
+    }
+
+    private void Update()
+    {
+        if (playerInput.currentControlScheme != _lastControlScheme)
+        {
+            EventSystem.current.SetSelectedGameObject(_lastVisitedButton);
+            _lastControlScheme = playerInput.currentControlScheme;
+        }
+    }
+    
+    public void SetMenuButtons(bool _state)
+    {
+        StartBtn.enabled = _state;
+        ExitBtn.enabled = _state;
+        
+        ControlsBtn.enabled = _state;
+        SettingsBtn.enabled = _state;
+        CreditsBtn.enabled = _state;
+    }
+
+    public void ReturnToLastButton()
+    {
+        EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
     }
 
     private void _start()
     {
         IntroPanel.SetActive(true);
+        
+        _lastSelectedButton = StartBtn.gameObject;
+        EventSystem.current.SetSelectedGameObject(ContinueBtn.gameObject);
+    }
+
+    private void _controls()
+    {
+        ControlsPanel.SetActive(true);
+        
+        _lastSelectedButton = ControlsBtn.gameObject;
+        EventSystem.current.SetSelectedGameObject(ControlsBackBtn.gameObject);
     }
 
     private void _settings()
     {
         SettingsPanel.SetActive(true);
+        
+        _lastSelectedButton = SettingsBtn.gameObject;
+        EventSystem.current.SetSelectedGameObject(SettingsBackBtn.gameObject);
     }
 
     private void _credits()
     {
         CreditsPanel.SetActive(true);
+        
+        _lastSelectedButton = CreditsBtn.gameObject;
+        EventSystem.current.SetSelectedGameObject(CreditsBackBtn.gameObject);
     }
 
     private void _continue()

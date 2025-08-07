@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: DrawRopeTooltip
   m_EditorClassIdentifier: 
-  tooltipText: Hold LMB/RT to start drawing rope. Release when enemy is encircled
-    to capture.
+  tooltipText: Hold <sprite=2> to start drawing a wall. Release <sprite=2> at the
+    starting point to build the wall.
