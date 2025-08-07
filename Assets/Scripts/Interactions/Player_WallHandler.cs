@@ -8,6 +8,8 @@ using Game;
 
 public class Player_WallHandler : MonoBehaviour
 {
+    public bool IsDrawing => _isDrawing;
+    
     [SerializeField] private WallParent _wallParentPrefab;
     [SerializeField] private WallSegment _wallPrefab;
     
