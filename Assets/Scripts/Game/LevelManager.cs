@@ -57,29 +57,37 @@ namespace Game
 
         public void Reset()
         {
-            if(playerHasRope) ReturnRope();
+            if (playerHasRope) ReturnRope();
+            if (allCaptured) _setRopeActive(false);
             
             enemies.ForEach(e => e.ResetEnemy());
-            LevelWalls.ForEach(w => w.DestroyWall());
-            LevelWalls.Clear();
+            
+            DestroyLevelWalls();
         }
 
         public void RegisterEnemyCaptured()
         {
             allCaptured = enemies.TrueForAll(e => e.IsTrapped);
-            
             _setRopeActive(allCaptured);
         }
         
         public void PickupRope(bool hasRope)
         {
             playerHasRope = hasRope;
+            
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
             GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
-            
             ropeDeposit.triggered = false;
+
+            _setRopeActive(hasRope);
             
             AudioManager.Instance.OnPickupRope();
+        }
+
+        public void DestroyLevelWalls()
+        {
+            LevelWalls.ForEach(w => Destroy(w.gameObject));
+            LevelWalls.Clear();
         }
         
         public void DepositRope(bool hasRope)
@@ -92,6 +100,8 @@ namespace Game
                 playerHasRope = false;
                 
                 endDoorCollider.enabled = false;
+                
+                DestroyLevelWalls();
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?
                 _endLevel();
@@ -116,10 +126,12 @@ namespace Game
         private void _setRopeActive(bool isActive)
         {
             ropePickup.isEnabled = isActive;
-            ropeDeposit.isEnabled = isActive;
-            
             pickupCubeRend.material = isActive ? _enabledMat : _disabledMat;
-            depositPointCubeRend.material = isActive ? _enabledMat : _disabledMat;
+
+            if (playerHasRope)
+            {
+                
+            }
         }
 
         private void _endLevel()

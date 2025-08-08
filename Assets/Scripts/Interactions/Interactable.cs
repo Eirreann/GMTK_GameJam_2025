@@ -6,7 +6,7 @@ namespace Interactions
 {
     public class Interactable : MonoBehaviour
     {
-        private const float INTERACT_DISTANCE = 3.75f;
+        private bool _playerInRange = false;
         public UnityAction<bool> interactableAction;
 
         private string _buttonNumber = "1";
@@ -17,7 +17,7 @@ namespace Interactions
 
         public void Update()
         {
-            if (isEnabled && Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
+            if (isEnabled && _playerInRange)
             {
                 if (GameManager.Instance.inputHandler._interact)
                 {
@@ -54,6 +54,7 @@ namespace Interactions
         {
             if (other.tag == "Player" && isEnabled && !triggered)
             {
+                _playerInRange = true;
                 GameManager.Instance.Player.HUD.UpdateInteractText($"<sprite={_buttonNumber}> {_interactText}");
             }
         }
@@ -62,6 +63,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
+                _playerInRange = false;
                 GameManager.Instance.Player.HUD.UpdateInteractText("");
             }
         }

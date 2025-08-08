@@ -18,15 +18,14 @@ namespace Game
 
         [SerializeField] private int _levelIndex = 0;
 
+        private void Awake()
+        {
+            inputHandler = GetComponent<InputHandler>();
+        }
+        
         private void Start()
         {
-            Application.targetFrameRate = 90;
-            QualitySettings.vSyncCount = 1;
-            
-            inputHandler = GetComponent<InputHandler>();
-
-            if (Levels.Count > 0)
-                Levels[_levelIndex].StartLevel();
+            if (Levels.Count > 0) Levels[_levelIndex].StartLevel();
         }
         
         public void ResetLevel()
