@@ -27,6 +27,7 @@ public class AudioManager : MonoSingleton<AudioManager>
     public AudioClip Part2Loop;
 
     private float _musicVolume;
+    private Coroutine _startToLoop;
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class AudioManager : MonoSingleton<AudioManager>
         
         _musicVolume = MusicStartSource.volume;
         
-        StartCoroutine(_startMusic(Part1Intro, Part1Loop, true));
+        _startToLoop = StartCoroutine(_startMusic(Part1Intro, Part1Loop, true));
     }
 
     public void OnTakeDamage()
@@ -72,7 +73,10 @@ public class AudioManager : MonoSingleton<AudioManager>
 
     public void FadeOutMusic()
     {
-        //MusicStartSource.DOFade(0, 2f);
+        if(_startToLoop != null)
+            StopCoroutine(_startToLoop);
+        
+        MusicStartSource.DOFade(0, 2f);
         MusicLoopSource.DOFade(0, 2f);
     }
 
@@ -84,21 +88,22 @@ public class AudioManager : MonoSingleton<AudioManager>
         MusicStartSource.clip = intro;
         MusicStartSource.Play();
 
-        yield return new WaitForSeconds(intro.length);
+        yield return new WaitForSecondsRealtime(intro.length);
         
         MusicLoopSource.clip = loop;
         MusicLoopSource.volume = _musicVolume;
         MusicLoopSource.Play();
+        _startToLoop = null;
     }
 
     private IEnumerator _transitionMusic()
     {
         MusicLoopSource.DOFade(0, 3f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSecondsRealtime(1f);
         
         MusicStartSource.volume = 0;
         MusicStartSource.DOFade(_musicVolume, 2f);
         
-        StartCoroutine(_startMusic(Part2Intro, Part2Loop));
+        _startToLoop = StartCoroutine(_startMusic(Part2Intro, Part2Loop));
     }
 }

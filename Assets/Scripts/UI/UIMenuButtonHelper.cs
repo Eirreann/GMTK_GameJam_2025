@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -7,13 +8,11 @@ namespace UI
 {
     public class UIMenuButtonHelper : MonoBehaviour, ISelectHandler
     {
-        [SerializeField] private UIMenu _uiMenu;
-        private Button _button;
+        private UIMenu _uiMenu;
 
-        private void Start()
+        private void Awake()
         {
-            _uiMenu = FindObjectsByType<UIMenu>(FindObjectsSortMode.None).First();
-            _button = GetComponent<Button>();
+            _uiMenu = FindFirstObjectByType<UIMenu>(FindObjectsInactive.Exclude);
         }
 
         public void OnSelect(BaseEventData eventData)
