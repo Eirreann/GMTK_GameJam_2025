@@ -58,7 +58,9 @@ namespace Game
         public void Reset()
         {
             if (playerHasRope) ReturnRope();
-            if (allCaptured) _setRopeActive(false);
+            
+            _setRopeActive(false);
+            _setRopeMaterials(ropePickup.triggered, ropeDeposit.triggered);
             
             enemies.ForEach(e => e.ResetEnemy());
             
@@ -68,7 +70,9 @@ namespace Game
         public void RegisterEnemyCaptured()
         {
             allCaptured = enemies.TrueForAll(e => e.IsTrapped);
+            
             _setRopeActive(allCaptured);
+            _setRopeMaterials(allCaptured, false);
         }
         
         public void PickupRope(bool hasRope)
@@ -77,9 +81,11 @@ namespace Game
             
             ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
             GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
+            
             ropeDeposit.triggered = false;
 
             _setRopeActive(hasRope);
+            _setRopeMaterials(hasRope, hasRope);
             
             AudioManager.Instance.OnPickupRope();
         }
@@ -118,7 +124,7 @@ namespace Game
             playerHasRope = false;
             
             ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickupLocation;
-            ropePickup.GetComponent<RopePickup>().triggered = false;
+            ropePickup.triggered = false;
             AudioManager.Instance.OnDropRope();
         }
 
@@ -126,13 +132,13 @@ namespace Game
         private void _setRopeActive(bool isActive)
         {
             ropePickup.isEnabled = isActive;
-            pickupCubeRend.material = isActive ? _enabledMat : _disabledMat;
+            ropeDeposit.isEnabled = isActive;
+        }
 
-            if (playerHasRope)
-            {
-                ropeDeposit.isEnabled = isActive;
-                depositPointCubeRend.material = isActive ? _enabledMat : _disabledMat;
-            }
+        private void _setRopeMaterials(bool pickupActive, bool depositActive)
+        {
+            pickupCubeRend.material = pickupActive ? _enabledMat : _disabledMat;
+            depositPointCubeRend.material = depositActive ? _enabledMat : _disabledMat;
         }
 
         private void _endLevel()

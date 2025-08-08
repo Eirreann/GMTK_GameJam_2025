@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Is Doing?")]
     [SerializeField] private bool _isGrounded;
+    [SerializeField] private bool _hasJumped;
     [SerializeField] private bool _canWallJump;
     private bool _playerCanMove;
     
@@ -60,22 +61,26 @@ public class PlayerMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        _playerCanMove = true;
         
         rb = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         
         _xRotation = 0f;
         _yRotation = 0f;
+        
+        _playerCanMove = true;
     }
 
     void Update()
     {
+        RaycastHit hit;
         if (_playerCanMove)
         {
-            
+            _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, out hit, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y, transform.position.z);
             RotatePlayer();
+            
+            rb.linearDamping = _playerState == PlayerState.Sliding ? 1f : 0f;
             
             if (_knockbackCooldown > 0)
             {
@@ -83,7 +88,6 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                RaycastHit hit;
                 
                 _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
                 _desiredMoveDirection = new Vector3(_desiredMoveDirection.x, 0, _desiredMoveDirection.z).normalized;
@@ -191,7 +195,7 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.Instance.inputHandler._crouch) 
             transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         else
-            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, 2.25f))
+            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, .5f))
             {
                 transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
             }
@@ -199,13 +203,7 @@ public class PlayerMovement : MonoBehaviour
 
     void HandleJump()
     {
-        if (_isGrounded)
-        {
-            rb.linearVelocity = new Vector3(rb.linearVelocity.x, 0, rb.linearVelocity.z);
-            rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
-
-            _isGrounded = false;
-        }
+        _hasJumped = true;
     }
 
     void CheckFalling()
@@ -225,7 +223,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 
                 && !Physics.Raycast(playerCamera.transform.position,  _desiredMoveDirection, out hitUpper, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
-                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .25f, playerCamera.transform.position.z),  _desiredMoveDirection, out hitLower, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
+                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .05f, playerCamera.transform.position.z),  _desiredMoveDirection, out hitLower, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
                ) {
                 _playerState = PlayerState.Running;
             }
@@ -246,9 +244,32 @@ public class PlayerMovement : MonoBehaviour
         _canWallJump = false;
         
         //Jumping Logic
-        if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
+        if (GameManager.Instance.inputHandler._jump)
+        {
+            _playerState = PlayerState.Jumping; 
+            HandleJump();
+        }
         
         if(GameManager.Instance.inputHandler._crouch) _playerState = PlayerState.Crouching;
+    }
+    
+    void Running()
+    {
+        ProcessMovement(_playerSpeed);
+        CheckIfMoving();
+        CheckFalling();
+        
+        if (GameManager.Instance.inputHandler._jump)
+        {
+            _playerState = PlayerState.Jumping; 
+            HandleJump();
+        }
+
+        if (GameManager.Instance.inputHandler._crouch)
+        {
+            rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
+            _playerState = PlayerState.Sliding;
+        }
     }
     
     void Crouching()
@@ -270,27 +291,12 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void Running()
-    {
-        ProcessMovement(_playerSpeed);
-        CheckIfMoving();
-        CheckFalling();
-        
-        if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
-
-        if (GameManager.Instance.inputHandler._crouch)
-        {
-            rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
-            _playerState = PlayerState.Sliding;
-        }
-    }
-    
     void Sliding()
     {
         RaycastHit hit;
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         
-        
+        if(!_isGrounded) rb.AddForce(Vector3.down * (gravityScale * 2), ForceMode.Acceleration);
 
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
@@ -326,10 +332,7 @@ public class PlayerMovement : MonoBehaviour
         ProcessMovement(_playerSpeed);
         
         CheckFalling();
-        
         HandleCrouch();
-        HandleJump();
-        
         HandleWallJump();
     }
     
@@ -342,11 +345,8 @@ public class PlayerMovement : MonoBehaviour
         
         HandleWallJump();
         
-        _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, out hit, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
-        
         if (_isGrounded)
         {
-            Debug.Log(hit.collider.name);
             _lastWallJumped = null;
             
             if (GameManager.Instance.inputHandler._crouch)
@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
             Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(-playerCamera.transform.right) * hit.distance, Color.yellow);
             Debug.DrawRay(playerCamera.transform.position, transform.TransformDirection(playerCamera.transform.right) * hit.distance, Color.yellow);
             
-            if (GameManager.Instance.inputHandler._jump && !_isGrounded)
+            if (GameManager.Instance.inputHandler._jump && !_isGrounded && !hit.collider.CompareTag("Enemy"))
             {
                 _playerState = PlayerState.Jumping;
                 
@@ -408,8 +408,12 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        if(_playerState == PlayerState.Sliding) rb.AddForce(-rb.linearVelocity.normalized * (_currentSpeed * 1f), ForceMode.Force);
+        if (_hasJumped)
+        {
+            rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
+            _hasJumped = false;
+        }
     }
 }
