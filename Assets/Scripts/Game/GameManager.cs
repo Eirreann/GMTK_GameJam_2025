@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UI;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace Game
 {
@@ -15,16 +16,15 @@ namespace Game
         [HideInInspector] public InputHandler inputHandler;
         
         [SerializeField] private GameHUD _gameHUD;
-
         [SerializeField] private int _levelIndex = 0;
-
-        private void Awake()
-        {
-            inputHandler = GetComponent<InputHandler>();
-        }
+ 
         
         private void Start()
         {
+            Application.targetFrameRate = PlayerPrefs.GetInt("TargetFrameRate", 60);
+            QualitySettings.vSyncCount = PlayerPrefs.GetInt("VSyncCount", 1);
+            
+            inputHandler = GetComponent<InputHandler>();
             if (Levels.Count > 0) Levels[_levelIndex].StartLevel();
         }
         

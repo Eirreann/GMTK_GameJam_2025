@@ -966,7 +966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 798134317724505147, guid: 20bf47fde59dc3b49821aae76983e2cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.6947097
+      value: -1.553
       objectReference: {fileID: 0}
     - target: {fileID: 798134317724505147, guid: 20bf47fde59dc3b49821aae76983e2cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1003,6 +1003,10 @@ PrefabInstance:
     - target: {fileID: 2223753791761945042, guid: 20bf47fde59dc3b49821aae76983e2cc, type: 3}
       propertyPath: m_Name
       value: Tooltipper
+      objectReference: {fileID: 0}
+    - target: {fileID: 8408997518657195760, guid: 20bf47fde59dc3b49821aae76983e2cc, type: 3}
+      propertyPath: m_Radius
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 9121432316706849741, guid: 20bf47fde59dc3b49821aae76983e2cc, type: 3}
       propertyPath: tooltipObj

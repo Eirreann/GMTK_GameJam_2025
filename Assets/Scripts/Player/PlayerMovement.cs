@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Movement")]
     [SerializeField] private float _currentSpeed = 2f;
-    [SerializeField] private float _playerSpeed = 2f;
+    [Range(12f, 24f)][SerializeField] private float _playerSpeed = 2f;
     [SerializeField] private float _sprintMultiplier = 1.1f;
     [SerializeField] private Vector3 _desiredMoveDirection;
 
@@ -84,7 +84,6 @@ public class PlayerMovement : MonoBehaviour
             else
             {
                 RaycastHit hit;
-                
                 
                 _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
                 _desiredMoveDirection = new Vector3(_desiredMoveDirection.x, 0, _desiredMoveDirection.z).normalized;
@@ -221,7 +220,7 @@ public class PlayerMovement : MonoBehaviour
     {
         RaycastHit hitUpper;
         RaycastHit hitLower;
-
+        
         if (_isGrounded)
         {
             if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 

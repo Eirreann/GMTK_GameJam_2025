@@ -130,7 +130,8 @@ namespace Game
 
             if (playerHasRope)
             {
-                
+                ropeDeposit.isEnabled = isActive;
+                depositPointCubeRend.material = isActive ? _enabledMat : _disabledMat;
             }
         }
 

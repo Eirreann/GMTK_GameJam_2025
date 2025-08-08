@@ -83,7 +83,7 @@ public class AudioManager : MonoSingleton<AudioManager>
     private IEnumerator _startMusic(AudioClip intro, AudioClip loop, bool firstLoad = false)
     {
         if(firstLoad)
-            yield return new WaitForSeconds(1f); // give audio time to initialise
+            yield return new WaitForSecondsRealtime(1f); // give audio time to initialise
         
         MusicStartSource.clip = intro;
         MusicStartSource.Play();

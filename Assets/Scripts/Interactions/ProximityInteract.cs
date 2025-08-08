@@ -8,7 +8,6 @@ namespace Interactions
     {
         [SerializeField] private TooltipSO tooltipObj;
         private String _text;
-        private const float INTERACT_DISTANCE = 3f;
 
         public void Start()
         {
@@ -17,10 +16,7 @@ namespace Interactions
         
         public void Update()
         {
-            if (Vector3.Distance(transform.position, GameManager.Instance.Player.transform.position) < INTERACT_DISTANCE)
-            {
-                
-            }
+            
         }
         
         public void OnTriggerEnter(Collider other)
