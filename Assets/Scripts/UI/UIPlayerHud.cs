@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class UIPlayerHud : MonoBehaviour
 {
+        
         [SerializeField] private Image _healthBarFill;
         [SerializeField] private Image _wallJuiceBarFill;
 
@@ -21,13 +22,14 @@ public class UIPlayerHud : MonoBehaviour
         [SerializeField] private Image _damagePanel;
         [SerializeField] private Image _fadePanel;
 
-        private const float LOW_HEALTH_THRESHOLD = 0.25f;
+        private const float LOW_HEALTH_THRESHOLD = 0.4f;
+        private const float ROPE_ICON_ROTATION_SPEED = 125f;
 
         public void FixedUpdate()
         {
             if (_ropeIcon.enabled)
             {
-                _ropeIcon.rectTransform.Rotate(Vector3.forward * (Time.deltaTime * 100f));
+                _ropeIcon.rectTransform.Rotate(Vector3.forward * (ROPE_ICON_ROTATION_SPEED * Time.deltaTime));
             }
         }
         

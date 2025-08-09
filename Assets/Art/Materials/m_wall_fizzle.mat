@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: m_Fizzle
+  m_Name: m_wall_fizzle
   m_Shader: {fileID: -6465566751694194690, guid: 4196ad9479f4367439260ea539d37247, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

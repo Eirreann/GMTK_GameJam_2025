@@ -10,8 +10,17 @@ public class UIMenu : MonoBehaviour
 {
     public AudioMixer Mixer;
     public PlayerInput playerInput;
+
+    public GameObject scrollingGround;
+    public GameObject threeDimensionalBackground;
     
-    [Header("Panels")]
+    public InputSystem_Actions _inputSystem;
+    public InputSystem_Actions.UIActions _uiActions;
+
+    [Header("Panels")] 
+    public GameObject _activePanel;
+
+    public GameObject MainMenuContainer;
     public GameObject SettingsPanel;
     public GameObject CreditsPanel;
     public GameObject ControlsPanel;
@@ -38,6 +47,9 @@ public class UIMenu : MonoBehaviour
     private void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+        _inputSystem = new InputSystem_Actions();
+
+        _inputSystem.UI.Enable();
         
         EventSystem.current.SetSelectedGameObject(StartBtn.gameObject);
         
@@ -54,8 +66,6 @@ public class UIMenu : MonoBehaviour
         Mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master", 1f)) * 20);
         Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
-        
-        
     }
 
     public void SetLastVisited(GameObject lastVisitedButton)
@@ -65,6 +75,22 @@ public class UIMenu : MonoBehaviour
 
     private void Update()
     {
+        //Move the 3D backdrop
+        scrollingGround.transform.Translate(new Vector3(-0.10f * Time.deltaTime, 0, 0));
+        threeDimensionalBackground.transform.Translate(new Vector3(-0.05f * Time.deltaTime, 0, 0));
+        
+        if (scrollingGround.transform.position.x < -48) scrollingGround.transform.Translate(96f, 0, 0);
+        if (threeDimensionalBackground.transform.position.x < -11.66f) threeDimensionalBackground.transform.Translate(11.66f, 0, 0);
+        
+        Debug.Log(threeDimensionalBackground.transform.position.x);
+        
+        if (!StartBtn.enabled && _inputSystem.UI.Cancel.WasPressedThisFrame())
+        {
+            _activePanel.SetActive(false);
+            SetMenuButtons(true);
+            ReturnToLastButton();
+        }
+        
         if (playerInput.currentControlScheme != _lastControlScheme)
         {
             EventSystem.current.SetSelectedGameObject(_lastVisitedButton);
@@ -74,12 +100,14 @@ public class UIMenu : MonoBehaviour
     
     public void SetMenuButtons(bool _state)
     {
-        StartBtn.enabled = _state;
-        ExitBtn.enabled = _state;
+        //StartBtn.enabled = _state;
+        //ExitBtn.enabled = _state;
         
-        ControlsBtn.enabled = _state;
-        SettingsBtn.enabled = _state;
-        CreditsBtn.enabled = _state;
+        //ControlsBtn.enabled = _state;
+        //SettingsBtn.enabled = _state;
+        //CreditsBtn.enabled = _state;
+        
+        MainMenuContainer.SetActive(_state);
     }
 
     public void ReturnToLastButton()
@@ -90,6 +118,7 @@ public class UIMenu : MonoBehaviour
     private void _start()
     {
         IntroPanel.SetActive(true);
+        _activePanel = IntroPanel;
         
         _lastSelectedButton = StartBtn.gameObject;
         EventSystem.current.SetSelectedGameObject(ContinueBtn.gameObject);
@@ -98,6 +127,7 @@ public class UIMenu : MonoBehaviour
     private void _controls()
     {
         ControlsPanel.SetActive(true);
+        _activePanel = ControlsPanel;
         
         _lastSelectedButton = ControlsBtn.gameObject;
         EventSystem.current.SetSelectedGameObject(ControlsBackBtn.gameObject);
@@ -106,6 +136,7 @@ public class UIMenu : MonoBehaviour
     private void _settings()
     {
         SettingsPanel.SetActive(true);
+        _activePanel = SettingsPanel;
         
         _lastSelectedButton = SettingsBtn.gameObject;
         EventSystem.current.SetSelectedGameObject(SettingsBackBtn.gameObject);
@@ -114,6 +145,7 @@ public class UIMenu : MonoBehaviour
     private void _credits()
     {
         CreditsPanel.SetActive(true);
+        _activePanel = CreditsPanel;
         
         _lastSelectedButton = CreditsBtn.gameObject;
         EventSystem.current.SetSelectedGameObject(CreditsBackBtn.gameObject);
@@ -121,6 +153,7 @@ public class UIMenu : MonoBehaviour
 
     private void _continue()
     {
+        _inputSystem.UI.Disable();
         SceneManager.LoadScene(1);
     }
 

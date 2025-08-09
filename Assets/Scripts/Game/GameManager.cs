@@ -21,11 +21,17 @@ namespace Game
         
         private void Start()
         {
-            Application.targetFrameRate = PlayerPrefs.GetInt("TargetFrameRate", 60);
+            Application.targetFrameRate = PlayerPrefs.GetInt("TargetFrameRate", 120);
             QualitySettings.vSyncCount = PlayerPrefs.GetInt("VSyncCount", 1);
             
             inputHandler = GetComponent<InputHandler>();
-            if (Levels.Count > 0) Levels[_levelIndex].StartLevel();
+
+            if (Levels.Count > 0)
+            {
+                Levels.ForEach(lvl => lvl.gameObject.SetActive(lvl == CurrentLevel));
+                
+                Levels[_levelIndex].StartLevel();
+            }
         }
         
         public void ResetLevel()

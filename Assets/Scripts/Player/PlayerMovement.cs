@@ -8,14 +8,20 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rb;
 
     [Header("Movement")]
-    [SerializeField] private float _currentSpeed = 2f;
-    [Range(12f, 24f)][SerializeField] private float _playerSpeed = 2f;
+    [Range(0f, 24f)] [SerializeField] private float _currentSpeed = 2f;
+    [Range(0f, 24f)] [SerializeField] private float _playerSpeed = 2f;
     [SerializeField] private float _sprintMultiplier = 1.1f;
     [SerializeField] private Vector3 _desiredMoveDirection;
-
     
+    [Header("Ramp Values")]
+    [Range(0f, 2f)] [SerializeField] private float _speedRampUp = 12f;
+    [Range(0f, 2f)] [SerializeField] private float _speedRampDown = 15f;
+
     [Header("Jumping")]
     [SerializeField] private float _jumpForce = 20f;
+    
+    [Header("Sliding")]
+    [Range(0f, 5f)] [SerializeField] private float _slideForce = 2.5f;
     
     [Header("Wall Jumping")]
     [SerializeField] private float _wallJumpUpForce = 20f;
@@ -31,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
     [Header("Is Doing?")]
     [SerializeField] private bool _isGrounded;
     [SerializeField] private bool _hasJumped;
+    [SerializeField] private bool _hasSlid;
+    
     [SerializeField] private bool _canWallJump;
     private bool _playerCanMove;
     
@@ -43,10 +51,10 @@ public class PlayerMovement : MonoBehaviour
     private const float RESET_COOLDOWN = 1f;
     
     private Transform _respawnLocation;
-    private float _knockbackCooldown = 0f;
+    private float _knockbackCooldown;
 
     public float gravityScale = 5f;
-    private Quaternion desiredRotation;
+    private Quaternion _desiredRotation;
     
     private enum PlayerState
     {
@@ -73,10 +81,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        RaycastHit hit;
         if (_playerCanMove)
         {
-            _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, out hit, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
+            _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y, transform.position.z);
             RotatePlayer();
             
@@ -118,10 +125,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
-    }
-
     public void DisablePlayerMovement(bool state)
     {
         _playerCanMove = !state;
@@ -160,10 +163,36 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = Vector3.zero;
         rb.AddForce(force, ForceMode.Impulse);
     }
+
+    void AdjustPlayerSpeed(float desiredSpeed)
+    {
+        if (_desiredMoveDirection != Vector3.zero)
+        {
+            if (_currentSpeed <= desiredSpeed)
+            {
+                _currentSpeed += desiredSpeed * _speedRampUp * Time.deltaTime;
+            }
+            else if (_currentSpeed > desiredSpeed)
+            {
+                _currentSpeed -= desiredSpeed * _speedRampDown * Time.deltaTime;
+            }
+        }
+        else
+        {
+            if (_currentSpeed > 0f)
+            {
+                _currentSpeed -= desiredSpeed * _speedRampDown * Time.deltaTime;
+                return;
+            }
+            _currentSpeed = 0f;
+        }
+    }
     
     void ProcessMovement(float desiredSpeed)
     {
-        _currentSpeed = desiredSpeed;
+        AdjustPlayerSpeed(desiredSpeed);
+        
+        // _currentSpeed = desiredSpeed;
         
         rb.linearVelocity = new Vector3(
             _desiredMoveDirection.x * _currentSpeed,
@@ -195,7 +224,7 @@ public class PlayerMovement : MonoBehaviour
         if (GameManager.Instance.inputHandler._crouch) 
             transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         else
-            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, .5f))
+            if (!Physics.Raycast(playerCamera.transform.position, Vector3.up, 1.25f))
             {
                 transform.localScale = new Vector3(transform.localScale.x, 2f, transform.localScale.z);
             }
@@ -204,6 +233,11 @@ public class PlayerMovement : MonoBehaviour
     void HandleJump()
     {
         _hasJumped = true;
+    }
+
+    void HandleSlide()
+    {
+        _hasSlid = true;
     }
 
     void CheckFalling()
@@ -216,14 +250,11 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckIfMoving()
     {
-        RaycastHit hitUpper;
-        RaycastHit hitLower;
-        
         if (_isGrounded)
         {
             if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 
-                && !Physics.Raycast(playerCamera.transform.position,  _desiredMoveDirection, out hitUpper, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
-                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .05f, playerCamera.transform.position.z),  _desiredMoveDirection, out hitLower, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
+                && !Physics.Raycast(playerCamera.transform.position,  _desiredMoveDirection, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
+                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .05f, playerCamera.transform.position.z),  _desiredMoveDirection, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
                ) {
                 _playerState = PlayerState.Running;
             }
@@ -267,7 +298,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (GameManager.Instance.inputHandler._crouch)
         {
-            rb.AddForce(new Vector3(rb.linearVelocity.x * 5f, rb.linearVelocity.y, rb.linearVelocity.z * 5f), ForceMode.Impulse);
+            HandleSlide();
             _playerState = PlayerState.Sliding;
         }
     }
@@ -293,10 +324,9 @@ public class PlayerMovement : MonoBehaviour
 
     void Sliding()
     {
-        RaycastHit hit;
         transform.localScale = new Vector3(transform.localScale.x, 1f, transform.localScale.z);
         
-        if(!_isGrounded) rb.AddForce(Vector3.down * (gravityScale * 2), ForceMode.Acceleration);
+        if(!_isGrounded) rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
 
         if (GameManager.Instance.inputHandler._jump) _playerState = PlayerState.Jumping;
 
@@ -310,12 +340,17 @@ public class PlayerMovement : MonoBehaviour
             {
                 _playerState = PlayerState.Crouching;
             }
-
+        }
+        
+        if (GameManager.Instance.inputHandler._jump)
+        {
+            _playerState = PlayerState.Jumping; 
+            HandleJump();
         }
         
         if (!GameManager.Instance.inputHandler._crouch)
         {
-            if (!Physics.Raycast(transform.position, Vector3.up, out hit, 1f))
+            if (!Physics.Raycast(transform.position, Vector3.up, 1f))
             {
                 HandleStand();
                 _playerState = PlayerState.Standing;
@@ -338,14 +373,12 @@ public class PlayerMovement : MonoBehaviour
     
     void Falling()
     {
-        RaycastHit hit;
-        
         ProcessMovement(_playerSpeed);
         HandleCrouch();
         
         HandleWallJump();
         
-        if (_isGrounded)
+        if (!_isGrounded)
         {
             _lastWallJumped = null;
             
@@ -357,11 +390,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 _playerState = PlayerState.Standing;
             }
+
+            return;
         }
-        else
-        {
-            rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
-        }
+        
+        rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
     }
 
     void HandleWallJump()
@@ -414,6 +447,12 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(transform.up * _jumpForce, ForceMode.Impulse);
             _hasJumped = false;
+        }
+
+        if (_hasSlid)
+        {
+            rb.AddForce(new Vector3(rb.linearVelocity.x * _slideForce, rb.linearVelocity.y, rb.linearVelocity.z * _slideForce), ForceMode.Impulse);
+            _hasSlid = false;
         }
     }
 }
