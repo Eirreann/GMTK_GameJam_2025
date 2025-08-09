@@ -31,6 +31,7 @@ namespace Game
                 Levels.ForEach(lvl => lvl.gameObject.SetActive(lvl == CurrentLevel));
                 
                 Levels[_levelIndex].StartLevel();
+                Player.Reset();
             }
         }
         

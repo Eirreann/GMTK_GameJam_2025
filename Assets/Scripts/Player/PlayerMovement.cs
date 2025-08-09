@@ -81,9 +81,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        RaycastHit hit;
         if (_playerCanMove)
         {
-            _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
+            _isGrounded = Physics.Raycast(playerCamera.transform.position, Vector3.down, out hit, transform.localScale.y + 0.25f, _groundLayer, QueryTriggerInteraction.Ignore);
             playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + transform.localScale.y, transform.position.z);
             RotatePlayer();
             
@@ -192,8 +193,6 @@ public class PlayerMovement : MonoBehaviour
     {
         AdjustPlayerSpeed(desiredSpeed);
         
-        // _currentSpeed = desiredSpeed;
-        
         rb.linearVelocity = new Vector3(
             _desiredMoveDirection.x * _currentSpeed,
             rb.linearVelocity.y,
@@ -250,16 +249,20 @@ public class PlayerMovement : MonoBehaviour
 
     void CheckIfMoving()
     {
-        if (_isGrounded)
+        RaycastHit hitUpper;
+        RaycastHit hitLower;
+        
+        if (_isGrounded && _playerState != PlayerState.Falling && _playerState != PlayerState.Jumping)
         {
             if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0 
-                && !Physics.Raycast(playerCamera.transform.position,  _desiredMoveDirection, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
-                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .05f, playerCamera.transform.position.z),  _desiredMoveDirection, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
+                && !Physics.Raycast(playerCamera.transform.position,  _desiredMoveDirection, out hitUpper, 1f,  _groundLayer, QueryTriggerInteraction.Ignore)
+                && !Physics.Raycast(new Vector3(playerCamera.transform.position.x, transform.position.y + .05f, playerCamera.transform.position.z),  _desiredMoveDirection, out hitLower, 1f, _groundLayer, QueryTriggerInteraction.Ignore)
                ) {
                 _playerState = PlayerState.Running;
             }
             else
             {
+                
                 _playerState = PlayerState.Standing;
             }
         }
@@ -378,7 +381,7 @@ public class PlayerMovement : MonoBehaviour
         
         HandleWallJump();
         
-        if (!_isGrounded)
+        if (_isGrounded)
         {
             _lastWallJumped = null;
             
@@ -390,11 +393,12 @@ public class PlayerMovement : MonoBehaviour
             {
                 _playerState = PlayerState.Standing;
             }
-
-            return;
+        }
+        else
+        {
+            rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
         }
         
-        rb.AddForce(Vector3.down * gravityScale, ForceMode.Acceleration);
     }
 
     void HandleWallJump()

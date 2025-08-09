@@ -3335,7 +3335,7 @@ MonoBehaviour:
   - {fileID: 788324577}
   - {fileID: 517649936}
   - {fileID: 2032059476}
-  allCaptured: 0
+  allCaptured: 1
   pickupCubeRend: {fileID: 972891974}
   depositPointCubeRend: {fileID: 1872612512}
   _disabledMat: {fileID: 2100000, guid: f83f6a49f0b2fb348b5631c9ba075a30, type: 2}
@@ -8994,7 +8994,7 @@ MonoBehaviour:
   - {fileID: 788882814}
   - {fileID: 1068189504}
   - {fileID: 817737961}
-  allCaptured: 0
+  allCaptured: 1
   pickupCubeRend: {fileID: 1254064942}
   depositPointCubeRend: {fileID: 779994698}
   _disabledMat: {fileID: 2100000, guid: f83f6a49f0b2fb348b5631c9ba075a30, type: 2}
@@ -11177,7 +11177,7 @@ MonoBehaviour:
   endDoorAnimator: {fileID: 714473475}
   enemies:
   - {fileID: 1454818400}
-  allCaptured: 0
+  allCaptured: 1
   pickupCubeRend: {fileID: 1958553243}
   depositPointCubeRend: {fileID: 892775595}
   _disabledMat: {fileID: 2100000, guid: f83f6a49f0b2fb348b5631c9ba075a30, type: 2}
@@ -12282,15 +12282,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4070051651061802316, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Color.a
-      value: 0.5019608
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4070051651061802316, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Color.b
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4070051651061802316, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Color.g
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4070051651061802316, guid: ea52c5eda48d5154c892e4bb30bb1383, type: 3}
       propertyPath: m_Color.r
@@ -14205,7 +14205,7 @@ MonoBehaviour:
   - {fileID: 923260217}
   - {fileID: 487445251}
   - {fileID: 235368616}
-  allCaptured: 0
+  allCaptured: 1
   pickupCubeRend: {fileID: 118546638}
   depositPointCubeRend: {fileID: 613541867}
   _disabledMat: {fileID: 2100000, guid: f83f6a49f0b2fb348b5631c9ba075a30, type: 2}
