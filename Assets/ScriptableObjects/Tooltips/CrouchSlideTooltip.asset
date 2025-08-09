@@ -10,6 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
-  m_Name: RopePickupTooltip
+  m_Name: CrouchSlideTooltip
   m_EditorClassIdentifier: 
-  tooltipText: Press <sprite=1> to pick up rope when all enemies have been captured.
+  tooltipText: Hold [BP_0] to crouch. Hold [BP_1] when moving to perform a slide.
+  bindingsList:
+  - Crouch
+  - Crouch

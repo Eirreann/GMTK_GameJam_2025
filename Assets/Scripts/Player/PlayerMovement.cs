@@ -14,8 +14,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Vector3 _desiredMoveDirection;
     
     [Header("Ramp Values")]
-    [Range(0f, 2f)] [SerializeField] private float _speedRampUp = 12f;
-    [Range(0f, 2f)] [SerializeField] private float _speedRampDown = 15f;
+    [Range(0f, 5f)] [SerializeField] private float _speedRampUp = 12f;
+    [Range(0f, 5f)] [SerializeField] private float _speedRampDown = 15f;
 
     [Header("Jumping")]
     [SerializeField] private float _jumpForce = 20f;

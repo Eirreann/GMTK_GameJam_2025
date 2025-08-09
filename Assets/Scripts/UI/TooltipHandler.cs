@@ -1,16 +1,21 @@
 using System;
 using TMPro;
+using UI;
 using UnityEngine;
-using UnityEngine.InputSystem;
+
+
 
 public class TooltipHandler : MonoBehaviour
 {
-    [SerializeField] private TMP_SpriteAsset keyboardAsset;
-    [SerializeField] private TMP_SpriteAsset gamepadAsset;
+    [SerializeField] private TMP_SpriteAsset _keyboardAsset;
+    [SerializeField] private TMP_SpriteAsset _gamepadAsset;
 
-    [SerializeField] private TextMeshProUGUI tooltipText;
-    [SerializeField] private TextMeshProUGUI controlMapText;
-    [SerializeField] private TextMeshProUGUI contextPopup;
+    [SerializeField] private TextMeshProUGUI _tooltipText;
+    [SerializeField] private TextMeshProUGUI _controlMapText;
+    [SerializeField] private TextMeshProUGUI _contextPopup;
+
+    [SerializeField] private SetPromptText _tooltipPromptSetter;
+    
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,19 +31,18 @@ public class TooltipHandler : MonoBehaviour
     public void ChangeTextAsset(String currentControlScheme)
     {
         Debug.Log("Changing text asset.");
-
-        TMP_SpriteAsset asset = keyboardAsset;
+        TMP_SpriteAsset asset = _keyboardAsset;
         
         if (currentControlScheme == "Gamepad")
         {
-            asset = gamepadAsset;
+            asset = _gamepadAsset;
         }
-        else if(currentControlScheme == "Keyboard&Mouse")
+        else if(currentControlScheme == "Keyboard")
         {
-            asset = keyboardAsset;
+            asset = _keyboardAsset;
         }
 
-        tooltipText.spriteAsset = asset;
-        contextPopup.spriteAsset = asset;
+        _tooltipText.spriteAsset = asset;
+        _contextPopup.spriteAsset = asset;
     }
 }

@@ -84,7 +84,7 @@ public class UIMenu : MonoBehaviour
         
         Debug.Log(threeDimensionalBackground.transform.position.x);
         
-        if (!StartBtn.enabled && _inputSystem.UI.Cancel.WasPressedThisFrame())
+        if (!MainMenuContainer.activeSelf && _inputSystem.UI.Cancel.WasPressedThisFrame())
         {
             _activePanel.SetActive(false);
             SetMenuButtons(true);

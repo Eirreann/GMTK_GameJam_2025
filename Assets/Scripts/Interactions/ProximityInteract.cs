@@ -23,7 +23,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.Player.HUD.UpdateTooltipText(_text);
+                GameManager.Instance.Player.HUD.UpdateTooltipText(tooltipObj);
             }
         }
         
@@ -31,7 +31,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                GameManager.Instance.Player.HUD.UpdateTooltipText("");
+                GameManager.Instance.Player.HUD.UpdateTooltipText(null);
             }
         }
     }

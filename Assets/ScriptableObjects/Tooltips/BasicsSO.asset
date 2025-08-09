@@ -10,7 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
-  m_Name: DepositRopeTooltip
+  m_Name: BasicsSO
   m_EditorClassIdentifier: 
-  tooltipText: Press <sprite=1> to deposit rope when all enemies have been captured.
-    Return to the start to pick up the rope.
+  tooltipText: Use [BP_0] to move. [BP_1] to look. Press [BP_2] to reset current
+    level.
+  bindingsList:
+  - Move
+  - Look
+  - Reset

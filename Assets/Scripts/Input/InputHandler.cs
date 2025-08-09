@@ -1,8 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputHandler : MonoBehaviour
+namespace Input
 {
+    public class InputHandler : MonoBehaviour
+{
+    public const string KEYBOARD_INPUT_NAME = "Keyboard";
+    public const string GAMEPAD_INPUT_NAME = "Gamepad";
+    
     public PlayerInput playerInput;
     
     public InputSystem_Actions inputSystem;
@@ -25,6 +30,7 @@ public class InputHandler : MonoBehaviour
     
     private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
     public bool usingGamepad;
+    
 
     private string _lastControlScheme = "";
     
@@ -86,4 +92,5 @@ public class InputHandler : MonoBehaviour
         
         _pause = playerActions.Pause.WasPressedThisFrame();
     }
+}
 }

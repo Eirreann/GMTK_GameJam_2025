@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Input;
 using UI;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -31,7 +32,6 @@ namespace Game
                 Levels.ForEach(lvl => lvl.gameObject.SetActive(lvl == CurrentLevel));
                 
                 Levels[_levelIndex].StartLevel();
-                Player.Reset();
             }
         }
         

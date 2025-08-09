@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: WallJumpSO
   m_EditorClassIdentifier: 
-  tooltipText: Press <sprite=0> while jumping and next to a wall to perform a Wall
-    Leap forwards.
+  tooltipText: Press [BP_0] while jumping and adjacent to a wall to perform a Leap.
+  bindingsList:
+  - Jump
