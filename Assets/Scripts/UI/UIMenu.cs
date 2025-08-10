@@ -14,6 +14,8 @@ public class UIMenu : MonoBehaviour
     public GameObject scrollingGround;
     public GameObject threeDimensionalBackground;
     
+    [SerializeField] private Image _tint;
+    
     public InputSystem_Actions _inputSystem;
     public InputSystem_Actions.UIActions _uiActions;
 
@@ -77,7 +79,7 @@ public class UIMenu : MonoBehaviour
     {
         //Move the 3D backdrop
         scrollingGround.transform.Translate(new Vector3(-0.10f * Time.deltaTime, 0, 0));
-        threeDimensionalBackground.transform.Translate(new Vector3(-0.05f * Time.deltaTime, 0, 0));
+        threeDimensionalBackground.transform.Translate(new Vector3(-0.075f * Time.deltaTime, 0, 0));
         
         if (scrollingGround.transform.position.x < -48) scrollingGround.transform.Translate(96f, 0, 0);
         if (threeDimensionalBackground.transform.position.x < -11.66f) threeDimensionalBackground.transform.Translate(11.66f, 0, 0);
@@ -106,7 +108,7 @@ public class UIMenu : MonoBehaviour
         //ControlsBtn.enabled = _state;
         //SettingsBtn.enabled = _state;
         //CreditsBtn.enabled = _state;
-        
+        _tint.enabled = !_state;
         MainMenuContainer.SetActive(_state);
     }
 

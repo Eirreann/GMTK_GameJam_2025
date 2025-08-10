@@ -35,14 +35,14 @@ namespace UI
         {
             _pauseActive = !_pauseActive;
             _pauseMenu.SetActive(_pauseActive);
-            GameManager.Instance.Player.playerMovement.DisablePlayerMovement(_pauseActive);
+            GameManager.Instance.Player.DisablePlayerMovement(_pauseActive);
             Time.timeScale = _pauseActive ? 0 : 1;
         }
         
         public void ShowCompletionBackground()
         {
             Cursor.lockState = CursorLockMode.None;
-            GameManager.Instance.Player.playerMovement.DisablePlayerMovement(true);
+            GameManager.Instance.Player.DisablePlayerMovement(true);
             
             _completionBackground.SetActive(true);
         }

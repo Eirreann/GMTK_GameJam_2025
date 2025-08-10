@@ -1,23 +1,60 @@
 using System;
 using Game;
 using Player;
+using Player.PlayerStates;
 using UnityEngine;
 using Utilities;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
     public UIPlayerHud HUD;
+    
     [HideInInspector] public PlayerMovement playerMovement;
     [HideInInspector] public PlayerStats playerStats;
     [HideInInspector] public PlayerInteractions playerInteractions;
     [HideInInspector] public Player_WallHandler wallHandler;
+
+    public PlayerStateMachine _playerStateMachine;
+
+    public Camera playerCamera;
+    public Rigidbody rb;
+
+    public String stateString = "";
+    
+    public bool playerCanMove = true;
+    private Transform _respawnLocation = null;
+    
+    public Transform lastWallJumped;
     
     public void Awake() 
     {
+        rb = GetComponent<Rigidbody>();
+        
         playerMovement = GetComponent<PlayerMovement>();
         playerStats = GetComponent<PlayerStats>();
         playerInteractions = GetComponent<PlayerInteractions>();
         wallHandler = GetComponent<Player_WallHandler>();
+
+        _playerStateMachine = new PlayerStateMachine(this);
+        if (_playerStateMachine != null)
+        {
+            _playerStateMachine.Initialize(_playerStateMachine.idleState);
+        }
+    }
+
+    private void Update()
+    {
+        stateString = _playerStateMachine.CurrentState.ToString();
+        if (playerCanMove)
+        {
+            playerMovement.RotatePlayer();
+            _playerStateMachine.Update();
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        if(playerCanMove) _playerStateMachine.FixedUpdate();
     }
 
     private void Start()
@@ -28,11 +65,24 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void Reset()
     {
         wallHandler.ResetWalls();
-        playerMovement.ResetPlayer();
+        
+        gameObject.SetActive(false);
+        
+        transform.position = _respawnLocation.position;
+        playerMovement.xRotation = 0f;
+        playerMovement.yRotation = 0f;
+        
+        gameObject.SetActive(true);
         
         playerStats.ReplenishAllHealth();
         playerStats.ReplenishAllJuice();
         HUD.Fade(false);
+    }
+    
+    public void DisablePlayerMovement(bool state)
+    {
+        playerCanMove = !state;
+        Cursor.lockState = state ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     public void TakeDamage(int damage)
@@ -46,5 +96,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             GameManager.Instance.ResetLevel();
         }
+    }
+
+    public void SetRespawnLocation(Transform respawnLocation)
+    {
+        _respawnLocation = respawnLocation;
     }
 }

@@ -52,7 +52,7 @@ namespace Game
             ropePickup.Init(PickupRope);
             ropeDeposit.Init(DepositRope);
             
-            GameManager.Instance.Player.playerMovement.SetRespawn(PlayerRespawnLocation);
+            GameManager.Instance.Player.SetRespawnLocation(PlayerRespawnLocation);
         }
 
         public void Reset()

@@ -1,4 +1,5 @@
-﻿using Game;
+﻿using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -42,7 +43,7 @@ namespace Interactions
             if (isEnabled)
             {
                 triggered = status;
-                GameManager.Instance.Player.HUD.UpdateInteractText("");
+                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
             
                 interactableAction.Invoke(status);
                 return status;
@@ -55,7 +56,7 @@ namespace Interactions
             if (other.tag == "Player" && isEnabled && !triggered)
             {
                 _playerInRange = true;
-                GameManager.Instance.Player.HUD.UpdateInteractText($"<sprite={_buttonNumber}> {_interactText}");
+                GameManager.Instance.Player.HUD.UpdateInteractText($"[BP_0] {_interactText}", new List<string>() { "Interact" });
             }
         }
         
@@ -64,7 +65,7 @@ namespace Interactions
             if (other.tag == "Player")
             {
                 _playerInRange = false;
-                GameManager.Instance.Player.HUD.UpdateInteractText("");
+                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
             }
         }
     }

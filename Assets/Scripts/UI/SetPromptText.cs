@@ -22,12 +22,11 @@ namespace UI
         private InputSystem_Actions _inputActions;
         private TMP_Text _textBox;
         
-        private Dictionary<String, InputAction> _bindingsLookup;
-        private Dictionary<String, int> _deviceType;
+        public Dictionary<String, InputAction> _bindingsLookup;
+        public Dictionary<String, int> _deviceType;
 
         private void Awake()
         {
-            
             _inputActions = new InputSystem_Actions();
             _textBox = GetComponent<TMP_Text>();
             _bindingsList = new List<InputAction>();
@@ -49,15 +48,11 @@ namespace UI
                 { "Gamepad", 1 },
             };
         }
-
-        private void Start()
-        {
-            
-        }
-
-
+        
         public void ReplaceMessage(string message, string currentControlScheme, List<string> bindingsList)
         {
+            if (bindingsList.Count <= 0) return;
+            
             _message = message;
             _bindingsList.Clear();
 

@@ -53,6 +53,8 @@ namespace Game
             {
                 ResetLevel();
                 CurrentLevel.ReturnRope();
+                
+                Player.TakeDamage(0);
             }
         }
         
@@ -90,8 +92,9 @@ namespace Game
             {
                 _levelIndex = 0;
                 
-                Player.playerMovement.SetRespawn(CurrentLevel.PlayerRespawnLocation);
-                Player.playerMovement.ResetPlayer();
+                Player.SetRespawnLocation(CurrentLevel.PlayerRespawnLocation);
+                Player.Reset();
+                
                 Levels[_levelIndex].StartLevel();
 
                 AudioManager.Instance.FadeOutMusic();

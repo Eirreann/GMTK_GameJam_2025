@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using DG.Tweening;
 using Game;
 using TMPro;
@@ -17,12 +18,16 @@ public class UIPlayerHud : MonoBehaviour
 
         [SerializeField] private Image _tooltipBackground;
         [SerializeField] private TextMeshProUGUI _tooltipText;
+        
         [SerializeField] private SetPromptText _setPromptText;
+        [SerializeField] private SetPromptText _interactTextPromptSetter;
     
         [SerializeField] private Image _ropeIcon;
         
         [SerializeField] private Image _damagePanel;
         [SerializeField] private Image _fadePanel;
+        
+        [SerializeField] private TextMeshProUGUI _damageText;
         
         [SerializeField] private TooltipSO _tooltipStorage;
 
@@ -49,10 +54,14 @@ public class UIPlayerHud : MonoBehaviour
             _wallJuiceBarFill.fillAmount = (float)current / max;
         }
 
-        public void UpdateInteractText(String text)
+        public void UpdateInteractText(String text, List<string> bindings)
         {
+            
+            
             _textPopupBackground.gameObject.SetActive(text != "");
-            _interactText.text = text;
+            if (!_interactText.gameObject.activeSelf) return;
+            
+            _interactTextPromptSetter.ReplaceMessage(text, "", bindings);
         }
 
         public void UpdateTooltipText(TooltipSO tooltip)
@@ -66,14 +75,26 @@ public class UIPlayerHud : MonoBehaviour
             
             _tooltipStorage = tooltip;
             
+            
             _tooltipBackground.gameObject.SetActive(tooltip.tooltipText != "");
+            if (!_tooltipText.gameObject.activeSelf) return;
+            
             _setPromptText.ReplaceMessage(tooltip.tooltipText, "", tooltip.bindingsList);
         }
 
         public void RefreshTooltipText()
         {
+            if (!_tooltipText.gameObject.activeSelf) return;
+            
             if (_tooltipStorage == null) return;
             _setPromptText.ReplaceMessage(_tooltipStorage.tooltipText, "", _tooltipStorage.bindingsList);
+        }
+
+        public void RefreshInteractText()
+        {
+            if (!_interactText.gameObject.activeSelf) return;
+            
+            _interactTextPromptSetter.ReplaceMessage("[BP_0] Interact", "", new List<string>() { "Interact" });
         }
 
         public void SetRopeVisible(bool visible)
