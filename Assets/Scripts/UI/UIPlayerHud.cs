@@ -6,6 +6,7 @@ using Game;
 using TMPro;
 using UI;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIPlayerHud : MonoBehaviour
@@ -34,6 +35,12 @@ public class UIPlayerHud : MonoBehaviour
         private const float LOW_HEALTH_THRESHOLD = 0.4f;
         private const float ROPE_ICON_ROTATION_SPEED = 125f;
 
+        public void Start()
+        {
+            GameManager.Instance.inputHandler.playerInput.onControlsChanged += RefreshTooltipText;
+            GameManager.Instance.inputHandler.playerInput.onControlsChanged += RefreshInteractText;
+        }
+        
         public void FixedUpdate()
         {
             if (_ropeIcon.enabled)
@@ -56,8 +63,6 @@ public class UIPlayerHud : MonoBehaviour
 
         public void UpdateInteractText(String text, List<string> bindings)
         {
-            
-            
             _textPopupBackground.gameObject.SetActive(text != "");
             if (!_interactText.gameObject.activeSelf) return;
             
@@ -82,7 +87,7 @@ public class UIPlayerHud : MonoBehaviour
             _setPromptText.ReplaceMessage(tooltip.tooltipText, "", tooltip.bindingsList);
         }
 
-        public void RefreshTooltipText()
+        public void RefreshTooltipText(PlayerInput playerInput)
         {
             if (!_tooltipText.gameObject.activeSelf) return;
             
@@ -90,7 +95,7 @@ public class UIPlayerHud : MonoBehaviour
             _setPromptText.ReplaceMessage(_tooltipStorage.tooltipText, "", _tooltipStorage.bindingsList);
         }
 
-        public void RefreshInteractText()
+        public void RefreshInteractText(PlayerInput playerInput)
         {
             if (!_interactText.gameObject.activeSelf) return;
             

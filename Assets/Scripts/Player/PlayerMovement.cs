@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
          
         xRotation = Mathf.Clamp(xRotation, -_yRotationLimit, _yRotationLimit);
          
-        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
     
     public void ProcessMovement(float desiredSpeed)

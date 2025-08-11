@@ -1,5 +1,6 @@
 ﻿using Game;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -15,8 +16,22 @@ namespace UI
         [Header("End Game")]
         [SerializeField] private GameObject _completionBackground;
         [SerializeField] private Button _endGameButton;
+        
+        [Header("Panels")]
+        [SerializeField] private GameObject _menuPanel;
+        [SerializeField] private GameObject _controlsPanel;
+        [SerializeField] private GameObject _settingsPanel;
+        
+        [Header("Buttons")]
+        [SerializeField] private Button _openControlsButton;
+        [SerializeField] private Button _openSettingsButton;
+        
+        [SerializeField] private Button _closeControlsButton;
+        [SerializeField] private Button _closeSettingsButton;
+        
 
         private bool _pauseActive = false;
+        public UISelectionHelper uiSelectionHelper;
         
         private void Shutdown()
         {
@@ -29,14 +44,45 @@ namespace UI
             _continueBtn.onClick.AddListener(ShowPauseMenu);
             _endGameButton.onClick.AddListener(Shutdown);
             _menuBtn.onClick.AddListener(_returnToMenu);
+
+            _openSettingsButton.onClick.AddListener(ShowSettings);
+            _openControlsButton.onClick.AddListener(ShowControls);
+
+            uiSelectionHelper.OnCloseRoot = ClosePauseMenu;
         }
 
+        public void ClosePauseMenu()
+        {
+            ShowPauseMenu();
+        }
+        
         public void ShowPauseMenu()
         {
             _pauseActive = !_pauseActive;
             _pauseMenu.SetActive(_pauseActive);
             GameManager.Instance.Player.DisablePlayerMovement(_pauseActive);
             Time.timeScale = _pauseActive ? 0 : 1;
+            
+            
+            
+
+            if (_pauseActive)
+            {
+                uiSelectionHelper.AddActivePanel(_menuPanel);
+                uiSelectionHelper.GrabLastVisitedButton();
+                
+                uiSelectionHelper._inputSystem.UI.Enable();
+            }
+            else
+            {
+                uiSelectionHelper.RemoveActivePanel(_menuPanel);
+                uiSelectionHelper._inputSystem.UI.Disable();
+            }
+        }
+
+        public void HidePauseMenu()
+        {
+            _menuPanel.SetActive(false);
         }
         
         public void ShowCompletionBackground()
@@ -45,6 +91,28 @@ namespace UI
             GameManager.Instance.Player.DisablePlayerMovement(true);
             
             _completionBackground.SetActive(true);
+        }
+
+        private void ShowControls()
+        {
+            _controlsPanel.SetActive(true);
+            HidePauseMenu();
+                
+            uiSelectionHelper.AddActivePanel(_controlsPanel);
+            uiSelectionHelper.SetLastSelected(_openControlsButton.gameObject);
+            
+            EventSystem.current.SetSelectedGameObject(_closeControlsButton.gameObject);
+        }
+
+        private void ShowSettings()
+        {
+            _settingsPanel.SetActive(true);
+            HidePauseMenu();
+            
+            uiSelectionHelper.AddActivePanel(_settingsPanel);
+            uiSelectionHelper.SetLastSelected(_openSettingsButton.gameObject);
+            
+            EventSystem.current.SetSelectedGameObject(_closeSettingsButton.gameObject);
         }
 
         private void _returnToMenu()
