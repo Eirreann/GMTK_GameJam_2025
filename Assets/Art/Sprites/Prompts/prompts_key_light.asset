@@ -559,7 +559,7 @@ MonoBehaviour:
       m_Y: 1638
       m_Width: 204
       m_Height: 204
-    m_Scale: 1.5
+    m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -632283766, guid: fe28207f7cc888843980852236c08e96, type: 3}
@@ -735,7 +735,7 @@ MonoBehaviour:
       m_Y: 1433
       m_Width: 204
       m_Height: 204
-    m_Scale: 2
+    m_Scale: 3
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 1170600791, guid: fe28207f7cc888843980852236c08e96, type: 3}
@@ -895,7 +895,7 @@ MonoBehaviour:
       m_Y: 1228
       m_Width: 204
       m_Height: 204
-    m_Scale: 1.5
+    m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 999795613, guid: fe28207f7cc888843980852236c08e96, type: 3}
@@ -1215,7 +1215,7 @@ MonoBehaviour:
       m_Y: 819
       m_Width: 204
       m_Height: 204
-    m_Scale: 1.5
+    m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 1097045442, guid: fe28207f7cc888843980852236c08e96, type: 3}

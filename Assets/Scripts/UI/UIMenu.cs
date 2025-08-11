@@ -17,6 +17,9 @@ public class UIMenu : MonoBehaviour
     public GameObject scrollingGround;
     public GameObject threeDimensionalBackground;
 
+    public float groundScrollingSpeed = 0.10f;
+    public float parallaxScrollSpeed = 0.04f;
+
     [Header("Panels")]
     public GameObject MainMenuContainer;
     public GameObject SettingsPanel;
@@ -60,9 +63,8 @@ public class UIMenu : MonoBehaviour
         Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
         
-        buildVersion.text = "Application Version: " + Application.version + "\nBuild Number: " + "ITmG3hiJ" + "\nUnity " + Application.unityVersion;
-
-        buildVersion.text += Debug.isDebugBuild ? "\nDevelopment build" : "";
+        buildVersion.text = Debug.isDebugBuild ? "Development build" : "Production build";
+        buildVersion.text += "\nApplication Version: " + Application.version + "\nBuild Number: " + "ITmG3hiJ" + "\nUnity " + Application.unityVersion;
     }
 
     
@@ -70,8 +72,8 @@ public class UIMenu : MonoBehaviour
     private void Update()
     {
         //Move the 3D backdrop
-        scrollingGround.transform.Translate(new Vector3(-0.10f * Time.deltaTime, 0, 0));
-        threeDimensionalBackground.transform.Translate(new Vector3(-0.075f * Time.deltaTime, 0, 0));
+        scrollingGround.transform.Translate(new Vector3(groundScrollingSpeed * Time.deltaTime, 0, 0));
+        threeDimensionalBackground.transform.Translate(new Vector3(parallaxScrollSpeed * Time.deltaTime, 0, 0));
         
         if (scrollingGround.transform.position.x < -48) scrollingGround.transform.Translate(96f, 0, 0);
         if (threeDimensionalBackground.transform.position.x < -11.66f) threeDimensionalBackground.transform.Translate(11.66f, 0, 0);

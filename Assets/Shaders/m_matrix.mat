@@ -41,8 +41,12 @@ Material:
         m_Texture: {fileID: 2800000, guid: 0b668337ec686ff40a58f0042e10bbb3, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Gradient_Texture_2:
+        m_Texture: {fileID: 2800000, guid: c56db9e6083814f4996551d95c642af8, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 89939b208f483ad4794b0bc3830cec4e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0eb2ea6b3fd9ec34eaef3cb9f8a161f9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatrixTexture:
@@ -67,10 +71,11 @@ Material:
     - _QueueOffset: 0
     - _UseTexture: 0
     m_Colors:
-    - _Color: {r: 0.47530484, g: 0.3009968, b: 0.7169812, a: 1}
+    - _Color: {r: 0.97252464, g: 0, b: 1, a: 1}
     - _GradientTiling: {r: 2, g: 2, b: 0, a: 0}
     - _MatrixTiling: {r: 2, g: 2, b: 0, a: 0}
     - _ScrollSpeed: {r: 0, g: 0.1, b: 0, a: 0}
+    - _ScrollSpeed2: {r: 0, g: 0.2, b: 0, a: 0}
     - _TilingValue: {r: 2, g: 2, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

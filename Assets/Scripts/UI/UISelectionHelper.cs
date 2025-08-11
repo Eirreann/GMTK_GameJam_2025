@@ -52,13 +52,12 @@ namespace UI
             
             if (_inputSystem.UI.Cancel.WasPressedThisFrame())
             {
+                if(_activePanels.Count > 1) ReturnToLastButton();
                 if (_activePanels.Count == 1 && _canCloseRoot)
                 {
                     OnCloseRoot.Invoke();
-                    return;
-                } 
+                }
                 
-                if(_activePanels.Count > 1) ReturnToLastButton();
             }
         }
         

@@ -17,6 +17,7 @@ namespace AI
         public void Patrol(NavMeshAgent agent, Animator anim)
         {
             var distance = Vector3.Distance(agent.transform.position, _waypoints[_currentTargetIndex].position);
+            
             if (distance <= agent.stoppingDistance)
             {
                 agent.isStopped = true;

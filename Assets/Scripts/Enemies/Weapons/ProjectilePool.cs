@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Enemies
 {
-    public class ProjectilePool :MonoBehaviour
+    public class ProjectilePool : MonoBehaviour
     {
         [SerializeField] private int _initPoolSize = 10;
         [SerializeField] private ProjectileBase _projectileTemplate;
