@@ -212,7 +212,7 @@ GameObject:
   - component: {fileID: 382002904261270489}
   - component: {fileID: 3618672103977725739}
   - component: {fileID: 5204085179937993451}
-  - component: {fileID: 6991296711977546797}
+  - component: {fileID: 864164462408673271}
   m_Layer: 5
   m_Name: Close (Button)
   m_TagString: Untagged
@@ -334,7 +334,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &6991296711977546797
+--- !u!114 &864164462408673271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -378,10 +378,10 @@ RectTransform:
   - {fileID: 2362195480737658054}
   m_Father: {fileID: 4059872844581536762}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 1050, y: -420}
+  m_SizeDelta: {x: 700, y: 840}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &435780617722142116
 CanvasRenderer:
@@ -458,21 +458,22 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<b>Gamepad</b>
 
-    Jump: <sprite=0>
+    Jump: <sprite name=Gamepad_leftShoulder>
 
-    Interact: <sprite=1>
+    Interact:
+    <sprite name=Gamepad_buttonWest>
 
-    Draw
-    Wall: <sprite=2>
+    Draw Wall: <sprite name=Gamepad_rightTrigger>
 
-    Crouch/Slide: <sprite=3>
+    Crouch/Slide:
+    <sprite name=Gamepad_buttonEast>
 
-    Reset Level: <sprite=4>
+    Reset Level: <sprite name=Gamepad_buttonNorth>
 
     Move:
-    <sprite=5>
+    <sprite name=Keyboard_w>
 
-    Look:<sprite=6>'
+    Look: <sprite name=Gamepad_rightStick>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -575,10 +576,10 @@ RectTransform:
   - {fileID: 431167504220447904}
   m_Father: {fileID: 4059872844581536762}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 350, y: -420}
+  m_SizeDelta: {x: 700, y: 840}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7987568527782573325
 CanvasRenderer:
@@ -655,22 +656,22 @@ MonoBehaviour:
       m_Calls: []
   m_text: '<b>Keyboard</b>
 
-    Jump: <sprite name=Keyboard_space>
+    Jump: <sprite name="Keyboard_space">
 
     Interact:
-    <sprite name=Keyboard_e>
+    <sprite name="Keyboard_e">
 
-    Draw Wall: <sprite name=Mouse_leftButton>
+    Draw Wall: <sprite name="Mouse_leftButton">
 
     Crouch/Slide:
-    <sprite name=Keyboard_c>
+    <sprite name="Keyboard_c">
 
-    Reset Level: <sprite name=Keyboard_r>
+    Reset Level: <sprite name="Keyboard_r">
 
     Move:
-    <sprite name=dpad>
+    <sprite name="dpad">
 
-    Look:<sprite name=Pointer_delta>'
+    Look: <sprite name="Mouse_delta">'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -759,7 +760,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &94570453640795273
 RectTransform:
   m_ObjectHideFlags: 0

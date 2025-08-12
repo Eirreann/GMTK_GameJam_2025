@@ -30,19 +30,6 @@ public class TooltipHandler : MonoBehaviour
 
     public void ChangeTextAsset(String currentControlScheme)
     {
-        Debug.Log("Changing text asset.");
-        TMP_SpriteAsset asset = _keyboardAsset;
         
-        if (currentControlScheme == "Gamepad")
-        {
-            asset = _gamepadAsset;
-        }
-        else if(currentControlScheme == "Keyboard")
-        {
-            asset = _keyboardAsset;
-        }
-
-        _tooltipText.spriteAsset = asset;
-        _contextPopup.spriteAsset = asset;
     }
 }

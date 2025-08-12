@@ -47,7 +47,7 @@ namespace Game
             if(onLevelStart != null) onLevelStart.Invoke();
             
             // TODO
-            _setRopeActive(allCaptured);
+            _setRopeActive(allCaptured, playerHasRope);
             
             ropePickup.Init(PickupRope);
             ropeDeposit.Init(DepositRope);
@@ -59,7 +59,7 @@ namespace Game
         {
             if (playerHasRope) ReturnRope();
             
-            _setRopeActive(false);
+            _setRopeActive(false, false);
             _setRopeMaterials(ropePickup.triggered, ropeDeposit.triggered);
             
             enemies.ForEach(e => e.ResetEnemy());
@@ -71,7 +71,7 @@ namespace Game
         {
             allCaptured = enemies.TrueForAll(e => e.IsTrapped);
             
-            _setRopeActive(allCaptured);
+            _setRopeActive(allCaptured, playerHasRope);
             _setRopeMaterials(allCaptured, false);
         }
         
@@ -84,7 +84,7 @@ namespace Game
             
             ropeDeposit.triggered = false;
 
-            _setRopeActive(hasRope);
+            _setRopeActive(allCaptured, playerHasRope);
             _setRopeMaterials(hasRope, hasRope);
             
             AudioManager.Instance.OnPickupRope();
@@ -129,10 +129,10 @@ namespace Game
         }
 
 
-        private void _setRopeActive(bool isActive)
+        private void _setRopeActive(bool pickupActive, bool depositActive)
         {
-            ropePickup.isEnabled = isActive;
-            ropeDeposit.isEnabled = isActive;
+            ropePickup.isEnabled = pickupActive;
+            ropeDeposit.isEnabled = depositActive;
         }
 
         private void _setRopeMaterials(bool pickupActive, bool depositActive)

@@ -47,14 +47,17 @@ public class PlayerController : MonoBehaviour, IDamageable
         stateString = _playerStateMachine.CurrentState.ToString();
         if (playerCanMove)
         {
-            playerMovement.RotatePlayer();
+            playerMovement.RotatePlayer(GameManager.Instance.inputHandler._lookDirection);
             _playerStateMachine.Update();
         }
     }
 
     private void FixedUpdate()
     {
-        if(playerCanMove) _playerStateMachine.FixedUpdate();
+        if (playerCanMove)
+        {
+            _playerStateMachine.FixedUpdate();
+        }
     }
 
     private void Start()

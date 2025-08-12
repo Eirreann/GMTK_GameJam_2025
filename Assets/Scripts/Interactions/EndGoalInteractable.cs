@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using Game;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -38,6 +40,10 @@ namespace Interactions
                 _anim.Play(_activateAnim.name);
                 _renderer.material = _risingMat;
                 
+                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
+
+                AudioManager.Instance.OnPurgeSystem();
+                
                 StartCoroutine(_activateOnDelay());
                 return true;
             }
@@ -50,6 +56,8 @@ namespace Interactions
         private IEnumerator _activateOnDelay()
         {
             yield return new WaitForSeconds(_activateAnim.length);
+            AudioManager.Instance.CutSFX();
+            yield return new WaitForSeconds(1.25f);
             
             isEnabled = true;
             base.Interact(true);

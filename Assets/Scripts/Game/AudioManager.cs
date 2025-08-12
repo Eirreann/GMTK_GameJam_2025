@@ -65,10 +65,22 @@ public class AudioManager : MonoSingleton<AudioManager>
         SFXSource.Stop();
         SFXSource.PlayOneShot(Deposit);
     }
+
+    public void OnPurgeSystem()
+    {
+        SFXSource.loop = false;
+        SFXSource.Stop();
+        SFXSource.PlayOneShot(CarryLoop);
+    }
     
     public void ProgressMusic()
     {
         StartCoroutine(_transitionMusic());
+    }
+
+    public void CutSFX()
+    {
+        SFXSource.Stop();
     }
 
     public void FadeOutMusic()

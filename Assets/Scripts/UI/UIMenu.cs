@@ -76,7 +76,7 @@ public class UIMenu : MonoBehaviour
         threeDimensionalBackground.transform.Translate(new Vector3(parallaxScrollSpeed * Time.deltaTime, 0, 0));
         
         if (scrollingGround.transform.position.x < -48) scrollingGround.transform.Translate(96f, 0, 0);
-        if (threeDimensionalBackground.transform.position.x < -11.66f) threeDimensionalBackground.transform.Translate(11.66f, 0, 0);
+        if (threeDimensionalBackground.transform.position.x < -10f) threeDimensionalBackground.transform.Translate(10f, 0, 0);
     }
     
     public void SetMenuButtons(bool _state)

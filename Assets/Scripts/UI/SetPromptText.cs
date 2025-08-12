@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Game;
 using TMPro;
 using UnityEngine;
@@ -20,69 +21,62 @@ namespace UI
         public PlayerInput playerInput;
         private InputSystem_Actions _inputActions;
         private TMP_Text _textBox;
-        
-        public Dictionary<String, InputAction> _bindingsLookup;
-        public Dictionary<String, int> _deviceType;
 
-        private void Awake()
+        private void Start()
         {
             _inputActions = new InputSystem_Actions();
+            
             _textBox = GetComponent<TMP_Text>();
             _bindingsList = new List<InputAction>();
-            
-            _bindingsLookup = new Dictionary<string, InputAction>()
-            {
-                { "Move", _inputActions.Player.Move },
-                { "Look", _inputActions.Player.Look },
-                { "Interact", _inputActions.Player.Interact },
-                { "Attack", _inputActions.Player.Attack },
-                { "Jump", _inputActions.Player.Jump },
-                { "Crouch", _inputActions.Player.Crouch },
-                { "Reset", _inputActions.Player.Restart },
-            };
-
-            _deviceType = new Dictionary<String, int>()
-            {
-                { "Keyboard", 0 },
-                { "Gamepad", 1 },
-            };
         }
         
-        public void ReplaceMessage(string message, string currentControlScheme, List<string> bindingsList)
+        public void ReplaceMessage(string message, TooltipSO tooltip)
         {
-            if (bindingsList.Count <= 0) return;
-            
-            _message = message;
-            _bindingsList.Clear();
-
-            foreach (var binding in bindingsList)
+            var list = new List<InputAction>();
+            foreach (var binding in tooltip.bindingsList)
             {
-                _bindingsList.Add(_bindingsLookup[binding]);
+                list.Add(tooltip.GetBinding(binding));
             }
             
-            SetText();
+            _message = message;
+            SetText(message, list);
+        }
+
+        public void ReplaceMessage(string message, InputAction action)
+        {
+            
+            _message = message;
+            
+            SetText(message, new List<InputAction>() { action });
         }
 
         public void Refresh()
         {
-            SetText();
+            SetText("");
         }
 
         [ContextMenu("Set Text")]
-        private void SetText()
+        private void SetText(string message, List<InputAction> actions = null )
         {
-            if(!playerInput) playerInput = GameManager.Instance.inputHandler.playerInput;
-            
-            if (_deviceType[playerInput.currentControlScheme] > spriteAssetList.SpriteAssets.Count - 1)
+            var textBox = GetComponent<TMP_Text>();
+            if (actions == null || actions.Count == 0)
             {
-                Debug.Log($"Missing Asset for type: {_deviceType}");
+                textBox.text = message;
+                return;
             }
+            
+            var list = new List<string>() { "Keyboard", "Gamepad" };
+            var schemeIndex = list.IndexOf(playerInput.currentControlScheme);
+            
+            if(!playerInput) playerInput = GameManager.Instance.inputHandler.playerInput;
 
             var count = 0;
-            foreach (var binding in _bindingsList)
+            foreach (var action in actions)
             {
-                _textBox.text = AddButtonPromptToText.ReadAndReplaceBinding(_message, $"[BP_{count}]", binding.bindings[_deviceType[playerInput.currentControlScheme]], spriteAssetList.SpriteAssets[_deviceType[playerInput.currentControlScheme]]);
-                _message = _textBox.text;
+                textBox.spriteAsset = spriteAssetList.SpriteAssets[schemeIndex];
+                
+                textBox.text = AddButtonPromptToText.ReadAndReplaceBinding(message, $"[BP_{count}]", action.bindings[schemeIndex], spriteAssetList.SpriteAssets[schemeIndex]);
+                message = textBox.text;
 
                 count++;
             }

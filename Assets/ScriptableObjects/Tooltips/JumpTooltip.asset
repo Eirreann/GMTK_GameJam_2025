@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: JumpTooltip
   m_EditorClassIdentifier: 
   tooltipText: Press [BP_0] to jump.
-  bindingsList:
-  - Jump
+  bindingsList: 02000000

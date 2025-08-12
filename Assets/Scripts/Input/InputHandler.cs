@@ -28,18 +28,34 @@ namespace Input
 
     public bool _pause;
     
-    private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
+    private const float GAMEPAD_LOOK_SENSITIVITY = 10f;
     public bool usingGamepad;
     
 
     private string _lastControlScheme = "";
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    
+    public bool LookDeviceIsMouse;
+    
+    public float NonMouseSensitivityModifier = .5f;
+    public float MouseSensitivityModifier = 2.0f;
+
+    void Awake()
+    {
+        playerInput = GetComponent<PlayerInput>();
+        
+        inputSystem = new InputSystem_Actions();
+        inputSystem.Player.Look.performed += ctx => LookDeviceSet(ctx);
+    }
+    
+    private void LookDeviceSet(InputAction.CallbackContext context)
+    {
+        LookDeviceIsMouse = context.control.device.name == "Mouse";
+    }
+    
     void Start()
     {
-        inputSystem = new InputSystem_Actions();
-        playerInput = GetComponent<PlayerInput>();
-
         playerActions = inputSystem.Player;
         playerActions.Enable();
     }

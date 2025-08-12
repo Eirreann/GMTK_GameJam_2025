@@ -29,6 +29,8 @@ namespace UI
         [SerializeField] private Button _closeControlsButton;
         [SerializeField] private Button _closeSettingsButton;
         
+        
+        
 
         private bool _pauseActive = false;
         public UISelectionHelper uiSelectionHelper;
@@ -63,9 +65,6 @@ namespace UI
             GameManager.Instance.Player.DisablePlayerMovement(_pauseActive);
             Time.timeScale = _pauseActive ? 0 : 1;
             
-            
-            
-
             if (_pauseActive)
             {
                 uiSelectionHelper.AddActivePanel(_menuPanel);
@@ -89,6 +88,9 @@ namespace UI
         {
             Cursor.lockState = CursorLockMode.None;
             GameManager.Instance.Player.DisablePlayerMovement(true);
+            
+            uiSelectionHelper.SetLastSelected(_endGameButton.gameObject);
+            uiSelectionHelper.SetLastVisited(_endGameButton.gameObject);
             
             _completionBackground.SetActive(true);
         }

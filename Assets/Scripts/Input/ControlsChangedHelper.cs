@@ -7,7 +7,7 @@ namespace Input
     // Place on same object as PlayerInput component
     public class ControlsChangedHelper : MonoBehaviour
     {
-        private UnityAction _onControlsChanged;
+        public UnityAction OnControlsChanged;
         private PlayerInput _playerInput;
 
         private string _lastControlScheme;
@@ -21,8 +21,8 @@ namespace Input
         {
             if (_playerInput.currentControlScheme != _lastControlScheme)
             {
-                _onControlsChanged.Invoke();
                 _lastControlScheme = _playerInput.currentControlScheme;
+                OnControlsChanged.Invoke();
             }
         }
 

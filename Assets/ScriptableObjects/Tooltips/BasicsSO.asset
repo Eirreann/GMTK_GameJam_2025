@@ -14,7 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tooltipText: Use [BP_0] to move. [BP_1] to look. Press [BP_2] to reset current
     level.
-  bindingsList:
-  - Move
-  - Look
-  - Reset
+  bindingsList: 000000000100000006000000

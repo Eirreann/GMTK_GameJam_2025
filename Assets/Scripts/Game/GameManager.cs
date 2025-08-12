@@ -14,16 +14,20 @@ namespace Game
         public List<LevelManager> Levels;
         public LevelManager CurrentLevel => Levels[_levelIndex];
         public PlayerController Player;
+        
         [HideInInspector] public InputHandler inputHandler;
+        public ControlsChangedHelper controlsHelper;
+        
         
         [SerializeField] private GameHUD _gameHUD;
         [SerializeField] private int _levelIndex = 0;
- 
         
         private void Start()
         {
-            Application.targetFrameRate = PlayerPrefs.GetInt("TargetFrameRate", 120);
-            QualitySettings.vSyncCount = PlayerPrefs.GetInt("VSyncCount", 1);
+            controlsHelper = GetComponent<ControlsChangedHelper>();
+
+            controlsHelper.OnControlsChanged += Player.HUD.RefreshInteractText;
+            controlsHelper.OnControlsChanged += Player.HUD.RefreshTooltipText;
             
             inputHandler = GetComponent<InputHandler>();
 
@@ -33,6 +37,8 @@ namespace Game
                 
                 Levels[_levelIndex].StartLevel();
             }
+            
+            CurrentLevel.finalTerminal.Init(EndGame);
         }
         
         public void ResetLevel()
@@ -98,10 +104,7 @@ namespace Game
                 Levels[_levelIndex].StartLevel();
 
                 AudioManager.Instance.FadeOutMusic();
-
-                CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.SetReadyForCompletion();
-                CurrentLevel.finalTerminal.Init(EndGame);
             }
         }
     }

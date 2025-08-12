@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using DG.Tweening;
 using Game;
+using Input;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -34,11 +35,23 @@ public class UIPlayerHud : MonoBehaviour
 
         private const float LOW_HEALTH_THRESHOLD = 0.4f;
         private const float ROPE_ICON_ROTATION_SPEED = 125f;
+        
+        private List<InputAction> _bindingsLookup;
+        private InputSystem_Actions _inputSystemActions;
 
         public void Start()
         {
-            GameManager.Instance.inputHandler.playerInput.onControlsChanged += RefreshTooltipText;
-            GameManager.Instance.inputHandler.playerInput.onControlsChanged += RefreshInteractText;
+            _inputSystemActions = new InputSystem_Actions();
+            _bindingsLookup = new List<InputAction>()
+            {
+                _inputSystemActions.Player.Move,
+                _inputSystemActions.Player.Look,
+                _inputSystemActions.Player.Jump,
+                _inputSystemActions.Player.Crouch,
+                _inputSystemActions.Player.Attack,
+                _inputSystemActions.Player.Interact,
+                _inputSystemActions.Player.Restart
+            };
         }
         
         public void FixedUpdate()
@@ -66,7 +79,13 @@ public class UIPlayerHud : MonoBehaviour
             _textPopupBackground.gameObject.SetActive(text != "");
             if (!_interactText.gameObject.activeSelf) return;
             
-            _interactTextPromptSetter.ReplaceMessage(text, "", bindings);
+            _interactTextPromptSetter.ReplaceMessage(text, _inputSystemActions.Player.Interact);
+        }
+        public void RefreshInteractText()
+        {
+            if (!_interactText.gameObject.activeSelf) return;
+            
+            _interactTextPromptSetter.ReplaceMessage("[BP_0] Interact", _inputSystemActions.Player.Interact);
         }
 
         public void UpdateTooltipText(TooltipSO tooltip)
@@ -80,27 +99,24 @@ public class UIPlayerHud : MonoBehaviour
             
             _tooltipStorage = tooltip;
             
-            
+            tooltip.InitializeList(_bindingsLookup);
             _tooltipBackground.gameObject.SetActive(tooltip.tooltipText != "");
             if (!_tooltipText.gameObject.activeSelf) return;
             
-            _setPromptText.ReplaceMessage(tooltip.tooltipText, "", tooltip.bindingsList);
+            _setPromptText.ReplaceMessage(tooltip.tooltipText, tooltip);
         }
 
-        public void RefreshTooltipText(PlayerInput playerInput)
+        public void RefreshTooltipText()
         {
             if (!_tooltipText.gameObject.activeSelf) return;
             
             if (_tooltipStorage == null) return;
-            _setPromptText.ReplaceMessage(_tooltipStorage.tooltipText, "", _tooltipStorage.bindingsList);
+            
+            _tooltipStorage.InitializeList(_bindingsLookup);
+            _setPromptText.ReplaceMessage(_tooltipStorage.tooltipText, _tooltipStorage);
         }
 
-        public void RefreshInteractText(PlayerInput playerInput)
-        {
-            if (!_interactText.gameObject.activeSelf) return;
-            
-            _interactTextPromptSetter.ReplaceMessage("[BP_0] Interact", "", new List<string>() { "Interact" });
-        }
+        
 
         public void SetRopeVisible(bool visible)
         {

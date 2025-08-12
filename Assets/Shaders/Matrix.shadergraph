@@ -423,20 +423,6 @@
             },
             "m_InputSlot": {
                 "m_Node": {
-                    "m_Id": "7581711796734049abeccf083dd7d368"
-                },
-                "m_SlotId": 2
-            }
-        },
-        {
-            "m_OutputSlot": {
-                "m_Node": {
-                    "m_Id": "58e1c0af1cfe4064bad62e775b6ab8b1"
-                },
-                "m_SlotId": 2
-            },
-            "m_InputSlot": {
-                "m_Node": {
                     "m_Id": "cb11b238b7d04fefafffb9095f450c24"
                 },
                 "m_SlotId": 1
@@ -1644,7 +1630,7 @@
     "m_Hidden": false,
     "m_Value": {
         "x": 0.0,
-        "y": 0.15000000596046449,
+        "y": 0.0,
         "z": 0.0,
         "w": 0.0
     }
@@ -2035,9 +2021,9 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1010.0,
-            "y": -320.00006103515627,
-            "width": 207.999755859375,
+            "x": -838.9998779296875,
+            "y": -318.0,
+            "width": 208.0,
             "height": 302.0
         }
     },
@@ -2505,8 +2491,8 @@
     "m_ObjectId": "517d77658c41492f884939bbbe14b75f",
     "m_Title": "TEXT TEXTURE",
     "m_Position": {
-        "x": -960.0,
-        "y": 460.0000305175781
+        "x": -959.9998779296875,
+        "y": 459.9999694824219
     }
 }
 
@@ -3573,7 +3559,7 @@
     "m_Hidden": false,
     "m_Value": {
         "x": 0.0,
-        "y": 0.10000000149011612,
+        "y": 0.0,
         "z": 0.0,
         "w": 0.0
     }

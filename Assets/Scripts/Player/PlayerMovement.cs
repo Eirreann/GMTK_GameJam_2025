@@ -48,13 +48,19 @@ public class PlayerMovement : MonoBehaviour
         velocity = _rb.linearVelocity;
     }
     
-    public void RotatePlayer()
+    public void RotatePlayer(Vector2 _directionValue)
     {
-        float lookX = GameManager.Instance.inputHandler._lookDirection.x * Time.unscaledDeltaTime * _sensitivity;
-        float lookY = GameManager.Instance.inputHandler._lookDirection.y * Time.unscaledDeltaTime * _sensitivity;
+        
+        var modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier;
+        if (GameManager.Instance.inputHandler.LookDeviceIsMouse)
+        {
+            modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier;
+        }
 
-        yRotation += lookX;
-        xRotation -= lookY;
+        _directionValue *= _sensitivity;
+        
+        yRotation += _directionValue.x;
+        xRotation -= _directionValue.y;
          
         xRotation = Mathf.Clamp(xRotation, -_yRotationLimit, _yRotationLimit);
          
@@ -72,24 +78,24 @@ public class PlayerMovement : MonoBehaviour
          );
      }
     
-    public void AdjustPlayerSpeed(float desiredSpeed)
+    private void AdjustPlayerSpeed(float desiredSpeed)
     {
         if (_desiredMoveDirection != Vector3.zero)
         {
             if (_currentSpeed <= desiredSpeed)
             {
-                _currentSpeed += desiredSpeed * _speedRampUp * Time.deltaTime;
+                _currentSpeed += desiredSpeed * _speedRampUp * Time.unscaledDeltaTime;
             }
             else if (_currentSpeed > desiredSpeed)
             {
-                _currentSpeed -= desiredSpeed * _speedRampDown * Time.deltaTime;
+                _currentSpeed -= desiredSpeed * _speedRampDown * Time.unscaledDeltaTime;
             }
         }
         else
         {
             if (_currentSpeed > 0f)
             {
-                _currentSpeed -= desiredSpeed * _speedRampDown * Time.deltaTime;
+                _currentSpeed -= desiredSpeed * _speedRampDown * Time.unscaledDeltaTime;
                 return;
             }
             _currentSpeed = 0f;

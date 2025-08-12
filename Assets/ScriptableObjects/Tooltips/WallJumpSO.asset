@@ -13,5 +13,4 @@ MonoBehaviour:
   m_Name: WallJumpSO
   m_EditorClassIdentifier: 
   tooltipText: Press [BP_0] while jumping and adjacent to a wall to perform a Leap.
-  bindingsList:
-  - Jump
+  bindingsList: 02000000

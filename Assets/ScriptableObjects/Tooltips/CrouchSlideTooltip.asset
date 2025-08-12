@@ -13,6 +13,4 @@ MonoBehaviour:
   m_Name: CrouchSlideTooltip
   m_EditorClassIdentifier: 
   tooltipText: Hold [BP_0] to crouch. Hold [BP_1] when moving to perform a slide.
-  bindingsList:
-  - Crouch
-  - Crouch
+  bindingsList: 0300000003000000

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 449bf9978b290824a98a8a4873a0ab04, type: 3}
   m_Name: RopePickupTooltip
   m_EditorClassIdentifier: 
-  tooltipText: Press [BP_0] to pick up rope when all enemies have been captured.
-  bindingsList:
-  - Interact
+  tooltipText: When all enemies are captured, press [BP_0] to pick up the cable from
+    the box on the wall.
+  bindingsList: 05000000
