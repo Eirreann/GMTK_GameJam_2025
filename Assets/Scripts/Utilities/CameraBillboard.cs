@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GMTK_Jam.Util
+namespace Utilities
 {
 	public class CameraBillboard : MonoBehaviour
 	{

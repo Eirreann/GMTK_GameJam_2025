@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections;
+using Player;
 using UnityEngine;
 using Utilities;
 
-namespace Enemies
+namespace Enemies.Weapons
 {
     public class ProjectileBase : MonoBehaviour
     {

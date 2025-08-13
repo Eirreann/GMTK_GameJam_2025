@@ -3,7 +3,7 @@ using Game;
 using UnityEngine;
 using Utilities;
 
-namespace Enemies
+namespace Enemies.Weapons
 {
     public class MeleeWeapon : MonoBehaviour
     {

@@ -4,7 +4,9 @@ using Game;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class AudioManager : MonoSingleton<AudioManager>
+namespace Game
+{
+    public class AudioManager : MonoSingleton<AudioManager>
 {
     public AudioMixer Mixer;
 
@@ -118,4 +120,6 @@ public class AudioManager : MonoSingleton<AudioManager>
         
         _startToLoop = StartCoroutine(_startMusic(Part2Intro, Part2Loop));
     }
+}
+
 }

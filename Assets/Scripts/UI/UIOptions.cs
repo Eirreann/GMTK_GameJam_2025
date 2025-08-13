@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace GMTK_Jam.UI
+namespace UI
 {
     public class UIOptions : MonoBehaviour
     {

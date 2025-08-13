@@ -1,11 +1,15 @@
 using System;
 using Game;
+using Interactions;
 using Player;
 using Player.PlayerStates;
+using UI;
 using UnityEngine;
 using Utilities;
 
-public class PlayerController : MonoBehaviour, IDamageable
+namespace Player
+{
+    public class PlayerController : MonoBehaviour, IDamageable
 {
     public UIPlayerHud HUD;
     
@@ -26,6 +30,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     
     public Transform lastWallJumped;
     
+    
+    
     public void Awake() 
     {
         rb = GetComponent<Rigidbody>();
@@ -42,6 +48,11 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
+    public Vector3 XZHelper(Vector3 vec)
+    {
+        return new Vector3(vec.x, 0 ,vec.z);
+    }
+
     private void Update()
     {
         stateString = _playerStateMachine.CurrentState.ToString();
@@ -49,6 +60,26 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             playerMovement.RotatePlayer(GameManager.Instance.inputHandler._lookDirection);
             _playerStateMachine.Update();
+        }
+
+        foreach (var enemy in GameManager.Instance.CurrentLevel.enemies)
+        {
+            // Calculate the direction vector from the player to the object
+            Vector3 direction = XZHelper(enemy.transform.position) - XZHelper(playerCamera.transform.position);
+
+            // Normalize the vectors
+            Vector3 playerForward = XZHelper(playerCamera.transform.forward.normalized);
+            Vector3 objectDirection = direction.normalized;
+
+            // Calculate the angle
+            float angle = Vector3.Angle(playerForward, objectDirection);
+            float signedAngle = Vector3.SignedAngle(playerForward, direction, Vector3.up);
+            
+            float distance = Vector3.Distance(transform.position, enemy.transform.position);
+
+            Debug.Log($"Angle: {signedAngle}, Distance: {distance}");
+            
+            HUD.PointToEnemy(signedAngle, distance);
         }
     }
 
@@ -105,4 +136,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         _respawnLocation = respawnLocation;
     }
+}
+
 }

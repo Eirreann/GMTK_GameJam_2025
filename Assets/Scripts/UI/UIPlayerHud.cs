@@ -10,7 +10,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
-public class UIPlayerHud : MonoBehaviour
+namespace UI
+{
+    public class UIPlayerHud : MonoBehaviour
 {
         [SerializeField] private Image _healthBarFill;
         [SerializeField] private Image _wallJuiceBarFill;
@@ -32,6 +34,9 @@ public class UIPlayerHud : MonoBehaviour
         [SerializeField] private TextMeshProUGUI _damageText;
         
         [SerializeField] private TooltipSO _tooltipStorage;
+        
+        [SerializeField] private Image _crosshair;
+        [SerializeField] private Image _enemyLocation;
 
         private const float LOW_HEALTH_THRESHOLD = 0.4f;
         private const float ROPE_ICON_ROTATION_SPEED = 125f;
@@ -60,6 +65,18 @@ public class UIPlayerHud : MonoBehaviour
             {
                 _ropeIcon.rectTransform.Rotate(Vector3.forward * (ROPE_ICON_ROTATION_SPEED * Time.deltaTime));
             }
+        }
+
+        public void PointToEnemy(float angle, float distance)
+        {
+            float angleRad = angle * Mathf.Deg2Rad;
+            
+            float x = _crosshair.rectTransform.anchoredPosition.x + 64f * Mathf.Cos(-angleRad);
+            float y = _crosshair.rectTransform.anchoredPosition.y + 64f * Mathf.Sin(-angleRad);
+
+            // Update the element's position
+            _enemyLocation.rectTransform.anchoredPosition = new Vector2(x, y);
+            _enemyLocation.rectTransform.rotation = Quaternion.Euler(0, 0, -angle);
         }
         
         public void UpdateHealthUI(int current, int max)
@@ -142,4 +159,5 @@ public class UIPlayerHud : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
             _damagePanel.gameObject.SetActive(false);
         }
+}
 }

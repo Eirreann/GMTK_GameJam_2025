@@ -19,19 +19,13 @@ namespace UI
         
         [Header("Panels")]
         [SerializeField] private GameObject _menuPanel;
-        [SerializeField] private GameObject _controlsPanel;
         [SerializeField] private GameObject _settingsPanel;
         
         [Header("Buttons")]
-        [SerializeField] private Button _openControlsButton;
         [SerializeField] private Button _openSettingsButton;
         
-        [SerializeField] private Button _closeControlsButton;
         [SerializeField] private Button _closeSettingsButton;
         
-        
-        
-
         private bool _pauseActive = false;
         public UISelectionHelper uiSelectionHelper;
         
@@ -48,7 +42,6 @@ namespace UI
             _menuBtn.onClick.AddListener(_returnToMenu);
 
             _openSettingsButton.onClick.AddListener(ShowSettings);
-            _openControlsButton.onClick.AddListener(ShowControls);
 
             uiSelectionHelper.OnCloseRoot = ClosePauseMenu;
         }
@@ -67,13 +60,13 @@ namespace UI
             
             if (_pauseActive)
             {
+                uiSelectionHelper.GrabLastSelectedButton();
                 uiSelectionHelper.AddActivePanel(_menuPanel);
-                uiSelectionHelper.GrabLastVisitedButton();
-                
                 uiSelectionHelper._inputSystem.UI.Enable();
             }
             else
             {
+                uiSelectionHelper.SetLastSelected(_continueBtn.gameObject);
                 uiSelectionHelper.RemoveActivePanel(_menuPanel);
                 uiSelectionHelper._inputSystem.UI.Disable();
             }
@@ -93,17 +86,6 @@ namespace UI
             uiSelectionHelper.SetLastVisited(_endGameButton.gameObject);
             
             _completionBackground.SetActive(true);
-        }
-
-        private void ShowControls()
-        {
-            _controlsPanel.SetActive(true);
-            HidePauseMenu();
-                
-            uiSelectionHelper.AddActivePanel(_controlsPanel);
-            uiSelectionHelper.SetLastSelected(_openControlsButton.gameObject);
-            
-            EventSystem.current.SetSelectedGameObject(_closeControlsButton.gameObject);
         }
 
         private void ShowSettings()

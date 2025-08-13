@@ -1,8 +1,11 @@
 using System.Collections.Generic;
 using Enemies;
+using Enemies.Weapons;
 using UnityEngine;
 
-public class Enemy_Ranged : Enemy_Base
+namespace Enemies
+{
+    public class Enemy_Ranged : Enemy_Base
 {
     [Header("Ranged")]
     [SerializeField] protected float fireRate;
@@ -106,4 +109,6 @@ public class Enemy_Ranged : Enemy_Base
         if(onFire != null)
             audioSource.PlayOneShot(onFire);
     }
+}
+
 }

@@ -8,7 +8,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class UIMenu : MonoBehaviour
+namespace UI
+{
+    public class UIMenu : MonoBehaviour
 {
     [Header("Audio")]
     public AudioMixer Mixer;
@@ -21,24 +23,22 @@ public class UIMenu : MonoBehaviour
     public float parallaxScrollSpeed = 0.04f;
 
     [Header("Panels")]
+    public GameObject StartMenu;
     public GameObject MainMenuContainer;
     public GameObject SettingsPanel;
     public GameObject CreditsPanel;
-    public GameObject ControlsPanel;
     public GameObject IntroPanel;
     
     [Header("Buttons")]
     public Button StartBtn;
     public Button ExitBtn;
     
-    public Button ControlsBtn;
     public Button SettingsBtn;
     public Button CreditsBtn;
     public Button ContinueBtn;
 
     [Header("Back Buttons")]
     public Button SettingsBackBtn;
-    public Button ControlsBackBtn;
     public Button CreditsBackBtn;
     
     [Header("UI Helper")]
@@ -54,7 +54,6 @@ public class UIMenu : MonoBehaviour
 
         StartBtn.onClick.AddListener(_start);
         SettingsBtn.onClick.AddListener(_settings);
-        ControlsBtn.onClick.AddListener(_controls);
         CreditsBtn.onClick.AddListener(_credits);
         ContinueBtn.onClick.AddListener(_continue);
         ExitBtn.onClick.AddListener(_exit);
@@ -71,12 +70,17 @@ public class UIMenu : MonoBehaviour
 
     private void Update()
     {
-        //Move the 3D backdrop
-        scrollingGround.transform.Translate(new Vector3(groundScrollingSpeed * Time.deltaTime, 0, 0));
-        threeDimensionalBackground.transform.Translate(new Vector3(parallaxScrollSpeed * Time.deltaTime, 0, 0));
-        
-        if (scrollingGround.transform.position.x < -48) scrollingGround.transform.Translate(96f, 0, 0);
-        if (threeDimensionalBackground.transform.position.x < -10f) threeDimensionalBackground.transform.Translate(10f, 0, 0);
+
+        if (_uiSelectionHelper._inputSystem.UI.Submit.WasPressedThisFrame() && StartMenu.activeSelf)
+        {
+            StartMenu.SetActive(false);
+            MainMenuContainer.SetActive(true);
+            
+            _uiSelectionHelper.AddActivePanel(MainMenuContainer);
+            
+            _uiSelectionHelper.SetLastSelected(ContinueBtn.gameObject);
+            _uiSelectionHelper.GrabLastSelectedButton();
+        }
     }
     
     public void SetMenuButtons(bool _state)
@@ -95,18 +99,6 @@ public class UIMenu : MonoBehaviour
         SetMenuButtons(false);
         
         EventSystem.current.SetSelectedGameObject(ContinueBtn.gameObject);
-    }
-
-    private void _controls()
-    {
-        ControlsPanel.SetActive(true);
-        
-        _uiSelectionHelper.AddActivePanel(ControlsPanel);
-        _uiSelectionHelper.SetLastSelected(ControlsBtn.gameObject);
-        
-        SetMenuButtons(false);
-        
-        EventSystem.current.SetSelectedGameObject(ControlsBackBtn.gameObject);
     }
 
     private void _settings()
@@ -143,4 +135,5 @@ public class UIMenu : MonoBehaviour
     {
         Application.Quit();
     }
+}
 }

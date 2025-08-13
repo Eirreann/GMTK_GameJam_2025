@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Input;
+using Player;
 using UI;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -24,6 +25,9 @@ namespace Game
         
         private void Start()
         {
+            Application.targetFrameRate = 120;
+            QualitySettings.vSyncCount = 1;
+            
             controlsHelper = GetComponent<ControlsChangedHelper>();
 
             controlsHelper.OnControlsChanged += Player.HUD.RefreshInteractText;

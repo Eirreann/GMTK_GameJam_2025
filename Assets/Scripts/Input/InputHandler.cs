@@ -1,3 +1,4 @@
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -28,7 +29,7 @@ namespace Input
 
     public bool _pause;
     
-    private const float GAMEPAD_LOOK_SENSITIVITY = 10f;
+    private const float GAMEPAD_LOOK_SENSITIVITY = 25f;
     public bool usingGamepad;
     
 

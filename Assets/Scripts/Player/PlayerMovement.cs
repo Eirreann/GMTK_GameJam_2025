@@ -1,7 +1,9 @@
 using Game;
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+namespace Player
+{
+    public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private Camera playerCamera;
@@ -48,19 +50,18 @@ public class PlayerMovement : MonoBehaviour
         velocity = _rb.linearVelocity;
     }
     
-    public void RotatePlayer(Vector2 _directionValue)
+    public void RotatePlayer(Vector2 directionValue)
     {
         
-        var modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier;
+        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier;
         if (GameManager.Instance.inputHandler.LookDeviceIsMouse)
         {
-            modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier;
+            _modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier;
         }
-
-        _directionValue *= _sensitivity;
+        directionValue *= _modifier;
         
-        yRotation += _directionValue.x;
-        xRotation -= _directionValue.y;
+        yRotation += directionValue.x;
+        xRotation -= directionValue.y;
          
         xRotation = Mathf.Clamp(xRotation, -_yRotationLimit, _yRotationLimit);
          
@@ -123,4 +124,5 @@ public class PlayerMovement : MonoBehaviour
             ForceMode.Impulse
         );
     }
+}
 }

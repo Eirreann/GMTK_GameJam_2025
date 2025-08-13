@@ -13,6 +13,8 @@ namespace UI
         private UISelectionHelper _uiMenu;
         private Button _button;
 
+        [SerializeField] private bool _isBackButton;
+
         private PlayerInput _playerInput;
         
         private String _originalText;
@@ -52,7 +54,9 @@ namespace UI
         {
             if (_button)
             {
-                _button.GetComponentInChildren<TextMeshProUGUI>().text = $"{_originalText}";
+                var text = $"{_originalText}";
+                
+                _button.GetComponentInChildren<TextMeshProUGUI>().text = text;
             }
         }
     }
