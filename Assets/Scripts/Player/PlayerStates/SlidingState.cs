@@ -31,7 +31,10 @@ namespace Player.PlayerStates
             }
             else
             {
-                player._playerStateMachine.ChangeState(player._playerStateMachine.idleState);
+                if (!Physics.Raycast(player.playerCamera.transform.position, Vector3.up, out RaycastHit hit, 1.25f))
+                {
+                    player._playerStateMachine.ChangeState(player._playerStateMachine.idleState);
+                }
             }
             
             if (GameManager.Instance.inputHandler._jump)

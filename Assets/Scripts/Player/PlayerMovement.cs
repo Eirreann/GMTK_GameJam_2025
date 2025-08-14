@@ -53,11 +53,12 @@ namespace Player
     public void RotatePlayer(Vector2 directionValue)
     {
         
-        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier;
+        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier * Time.deltaTime;
         if (GameManager.Instance.inputHandler.LookDeviceIsMouse)
         {
             _modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier;
         }
+        
         directionValue *= _modifier;
         
         yRotation += directionValue.x;

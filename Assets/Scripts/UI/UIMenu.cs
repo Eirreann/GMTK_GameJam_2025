@@ -49,6 +49,9 @@ namespace UI
 
     private void Start()
     {
+        Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 2) * 30;
+        QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
+        
         _uiSelectionHelper = GetComponent<UISelectionHelper>();
         _uiSelectionHelper.AddActivePanel(MainMenuContainer);
 
@@ -63,7 +66,7 @@ namespace UI
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
         
         buildVersion.text = Debug.isDebugBuild ? "Development build" : "Production build";
-        buildVersion.text += "\nApplication Version: " + Application.version + "\nBuild Number: " + "ITmG3hiJ" + "\nUnity " + Application.unityVersion;
+        buildVersion.text += "\nApp version " + Application.version + ", Unity version " + Application.unityVersion;
     }
 
     

@@ -8,10 +8,12 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIMenuButtonHelper : MonoBehaviour, ISelectHandler, IDeselectHandler
+    public class UIMenuButtonHelper : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private UISelectionHelper _uiMenu;
         private Button _button;
+
+        private TextMeshProUGUI _textObj;
 
         [SerializeField] private bool _isBackButton;
 
@@ -28,7 +30,20 @@ namespace UI
             _button = GetComponent<Button>();
             if (_button)
             {
-                _originalText = _button.GetComponentInChildren<TextMeshProUGUI>().text;
+                _textObj = _button.GetComponentInChildren<TextMeshProUGUI>();
+                _originalText = _textObj.text;
+                
+                if(_isBackButton && _uiMenu) _button.onClick.AddListener(_uiMenu.ReturnToLastButton); 
+            }
+        }
+        
+        public void Update() 
+        {
+            if (_textObj && _button)
+            {
+                var color = _textObj.color;
+                color.a = _button.interactable ? 1f : 0.25f;
+                _textObj.color = color;
             }
         }
 
@@ -36,27 +51,49 @@ namespace UI
         {
             if (_button)
             {
-                _button.GetComponentInChildren<TextMeshProUGUI>().text = $"{_originalText}";
+                _textObj.text = $"{_originalText}";
             }
         }
 
         public void OnSelect(BaseEventData eventData)
         {
             _uiMenu.SetLastVisited(gameObject);
+            AdjustColorMultiplier(2f);
             
             if (_button && _playerInput.currentControlScheme == "Gamepad")
             {
-                _button.GetComponentInChildren<TextMeshProUGUI>().text = $"{_originalText} <sprite name=\"Gamepad_buttonSouth\">";
+                _textObj.text = $"{_originalText} <sprite name=\"Gamepad_buttonSouth\">";
             }
         }
 
         public void OnDeselect(BaseEventData eventData)
         {
+            AdjustColorMultiplier(1f);
             if (_button)
             {
                 var text = $"{_originalText}";
                 
-                _button.GetComponentInChildren<TextMeshProUGUI>().text = text;
+                _textObj.text = text;
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            if(_button.interactable) AdjustColorMultiplier(2f);
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if(_button.interactable) AdjustColorMultiplier(1f);
+        }
+
+        private void AdjustColorMultiplier(float target)
+        {
+            if (_button)
+            {
+                var colors = _button.colors;
+                colors.colorMultiplier = target;
+                _button.colors = colors;
             }
         }
     }

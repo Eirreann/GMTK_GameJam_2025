@@ -25,8 +25,8 @@ namespace Game
         
         private void Start()
         {
-            Application.targetFrameRate = 120;
-            QualitySettings.vSyncCount = 1;
+            Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 30) * 30;
+            QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 1);
             
             controlsHelper = GetComponent<ControlsChangedHelper>();
 
