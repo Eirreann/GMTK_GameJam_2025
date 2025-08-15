@@ -97,6 +97,9 @@ namespace UI
 
         public void GrabLastVisitedButton()
         {
+            var helper = _lastVisitedButton.GetComponent<UIMenuSelectableHelper>();
+            helper.AdjustColorMultiplier(2f);
+            
             if (playerInput.currentControlScheme != "Keyboard")
             {
                 EventSystem.current.SetSelectedGameObject(_lastVisitedButton);
@@ -108,6 +111,9 @@ namespace UI
         }
         public void GrabLastSelectedButton()
         {
+            var helper = _lastSelectedButton.GetComponent<UIMenuSelectableHelper>();
+            helper.AdjustColorMultiplier(2f);
+            
             if (playerInput.currentControlScheme != "Keyboard")
             {
                 EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
@@ -119,11 +125,25 @@ namespace UI
         
         public void SetLastVisited(GameObject lastVisitedButton)
         {
-            if(_lastVisitedButton) _lastVisitedButton.GetComponent<UIMenuSelectableHelper>().ResetButtonText();
+            if (_lastVisitedButton)
+            {
+                var helper = _lastVisitedButton.GetComponent<UIMenuSelectableHelper>();
+                helper.AdjustColorMultiplier(1f);
+                helper.ResetButtonText();
+                
+            }
+            
             _lastVisitedButton = lastVisitedButton;
         }
         public void SetLastSelected(GameObject lastSelectedButton)
         {
+            if (_lastVisitedButton)
+            {
+                var helper = _lastSelectedButton.GetComponent<UIMenuSelectableHelper>();
+                helper.ResetButtonText();
+                
+                helper.AdjustColorMultiplier(1f);
+            }
             
             _lastSelectedButton = lastSelectedButton;
         }

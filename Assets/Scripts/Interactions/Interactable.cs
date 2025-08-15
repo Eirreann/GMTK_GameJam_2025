@@ -28,6 +28,11 @@ namespace Interactions
             }
         }
 
+         public virtual string GetText()
+        {
+            return _interactText;
+        }
+
         public virtual void Init(UnityAction<bool> uAction)
         {
             interactableAction = uAction;
@@ -44,7 +49,7 @@ namespace Interactions
             if (isEnabled)
             {
                 triggered = status;
-                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
+                GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
             
                 interactableAction.Invoke(status);
                 return status;
@@ -57,7 +62,7 @@ namespace Interactions
             if (other.tag == "Player" && isEnabled && !triggered)
             {
                 _playerInRange = true;
-                GameManager.Instance.Player.HUD.UpdateInteractText($"[BP_0] {_interactText}", new List<string>() { "Interact" });
+                GameManager.Instance.Player.HUD.UpdateInteractText(this, true);
             }
         }
         
@@ -66,7 +71,7 @@ namespace Interactions
             if (other.tag == "Player")
             {
                 _playerInRange = false;
-                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
+                GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
             }
         }
     }

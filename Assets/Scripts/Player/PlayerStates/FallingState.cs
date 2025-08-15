@@ -24,7 +24,7 @@ namespace Player.PlayerStates
         {
             player.playerMovement.ProcessMovement(player.playerMovement.playerSpeed);
             
-            player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
+            //player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
             
             //do the crouch thing
             if (GameManager.Instance.inputHandler._crouch)

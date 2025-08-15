@@ -50,9 +50,16 @@ namespace UI
 
         public void ResetButtonText()
         {
+            var text = $"";
             if (_button)
             {
-                _textObj.text = $"{_originalText}";
+                text += $"{_originalText}";
+                
+                if (EventSystem.current.currentSelectedGameObject == _button.gameObject && _playerInput.currentControlScheme == "Gamepad")
+                    text += $" <sprite name=\"Gamepad_buttonSouth\">";
+                
+
+                _textObj.text = text;
             }
         }
 
@@ -73,42 +80,37 @@ namespace UI
             if (_button)
             {
                 var text = $"{_originalText}";
-                
                 _textObj.text = text;
             }
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if(_button && _button.interactable) AdjustColorMultiplier(2f);
-            if(_toggle && _toggle.interactable) AdjustColorMultiplier(2f);
-            if(_slider && _slider.interactable) AdjustColorMultiplier(2f);
+            AdjustColorMultiplier(2f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if(_button && _button.interactable) AdjustColorMultiplier(1f);
-            if(_toggle && _toggle.interactable) AdjustColorMultiplier(1f);
-            if(_slider && _slider.interactable) AdjustColorMultiplier(1f);
+            AdjustColorMultiplier(1f);
         }
 
-        private void AdjustColorMultiplier(float target)
+        public void AdjustColorMultiplier(float target)
         {
-            if (_button)
+            if (_button && _button.interactable)
             {
                 var colors = _button.colors;
                 colors.colorMultiplier = target;
                 _button.colors = colors;
             }
             
-            if (_toggle)
+            if (_toggle && _toggle.interactable)
             {
                 var colors = _toggle.colors;
                 colors.colorMultiplier = target;
                 _toggle.colors = colors;
             }
             
-            if (_slider)
+            if (_slider && _slider.interactable)
             {
                 var colors = _slider.colors;
                 colors.colorMultiplier = target;

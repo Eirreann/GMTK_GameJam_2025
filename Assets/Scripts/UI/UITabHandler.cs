@@ -22,6 +22,8 @@ public class UITabHandler : MonoBehaviour
     [SerializeField] private UISelectionHelper _selectionHelper;
     
     [SerializeField] private int _currentTab;
+
+    [SerializeField] private Button _closePanelButton;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,9 +69,10 @@ public class UITabHandler : MonoBehaviour
             if (_currentTab != 0)
             {
                 buttons[_currentTab - 1].onClick.Invoke();
-                _currentTab--;
             }
             
+            _selectionHelper.SetLastVisited(_closePanelButton.gameObject);
+            _selectionHelper.GrabLastVisitedButton();
         }
         
         if (_selectionHelper._inputSystem.UI.Next.WasPressedThisFrame())
@@ -77,8 +80,10 @@ public class UITabHandler : MonoBehaviour
             if (_currentTab < buttons.Count - 1)
             {
                 buttons[_currentTab + 1].onClick.Invoke();
-                _currentTab++;
             }
+            
+            _selectionHelper.SetLastVisited(_closePanelButton.gameObject);
+            _selectionHelper.GrabLastVisitedButton();
         }
     }
     
@@ -101,7 +106,7 @@ public class UITabHandler : MonoBehaviour
             var count = 0;
             foreach(GameObject tabs in tabs)
             {
-                tabs.SetActive(count == _currentTab);
+                tabs.SetActive(count == buttons.IndexOf(button));
                 count++;
             }
         };

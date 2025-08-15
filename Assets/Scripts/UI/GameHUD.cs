@@ -35,6 +35,7 @@ namespace UI
         
         private void Shutdown()
         {
+            Time.timeScale = 1;
             GameManager.Instance.Player.HUD.Fade(true);
             SceneManager.LoadScene(0);
         }
@@ -93,13 +94,14 @@ namespace UI
         
         public void ShowCompletionBackground()
         {
-            Cursor.lockState = CursorLockMode.None;
-            GameManager.Instance.Player.DisablePlayerMovement(true);
-            
-            uiSelectionHelper.SetLastSelected(_endGameButton.gameObject);
-            uiSelectionHelper.SetLastVisited(_endGameButton.gameObject);
-            
             _completionBackground.SetActive(true);
+            uiSelectionHelper.SetLastSelected(_endGameButton.gameObject);
+            
+            GameManager.Instance.Player.DisablePlayerMovement(_pauseActive);
+            Cursor.lockState = CursorLockMode.None;
+            
+            uiSelectionHelper.GrabLastSelectedButton();
+            uiSelectionHelper._inputSystem.UI.Enable();
         }
 
         private void ShowSettings()

@@ -62,26 +62,6 @@ namespace Player
                 playerMovement.RotatePlayer(GameManager.Instance.inputHandler._lookDirection);
                 _playerStateMachine.Update();
             }
-
-            // foreach (var enemy in GameManager.Instance.CurrentLevel.enemies)
-            // {
-            //     // Calculate the direction vector from the player to the object
-            //     Vector3 direction = XZHelper(enemy.transform.position) - XZHelper(playerCamera.transform.position);
-            //
-            //     // Normalize the vectors
-            //     Vector3 playerForward = XZHelper(playerCamera.transform.forward.normalized);
-            //     Vector3 objectDirection = direction.normalized;
-            //
-            //     // Calculate the angle
-            //     float angle = Vector3.Angle(playerForward, objectDirection);
-            //     float signedAngle = Vector3.SignedAngle(playerForward, direction, Vector3.up);
-            //     
-            //     float distance = Vector3.Distance(transform.position, enemy.transform.position);
-            //
-            //     Debug.Log($"Angle: {signedAngle}, Distance: {distance}");
-            //     
-            //     HUD.PointToEnemy(signedAngle, distance);
-            // }
         }
 
         private void FixedUpdate()
@@ -100,6 +80,7 @@ namespace Player
         public void Reset()
         {
             wallHandler.ResetWalls();
+            HUD.TurnOffTooltip();
             
             gameObject.SetActive(false);
             

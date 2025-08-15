@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game;
 using Input;
+using Interactions;
 using TMPro;
 using UI;
 using UnityEngine;
@@ -34,6 +35,8 @@ namespace UI
         [SerializeField] private TextMeshProUGUI _damageText;
         
         [SerializeField] private TooltipSO _tooltipStorage;
+        [SerializeField] private Interactable _interactableStorage;
+        
         
         [SerializeField] private Image _crosshair;
         [SerializeField] private Image _enemyLocation;
@@ -67,6 +70,12 @@ namespace UI
             }
         }
 
+        public void TurnOffTooltip()
+        {
+            _tooltipBackground.gameObject.SetActive(false);
+            _textPopupBackground.gameObject.SetActive(false);
+        }
+
         public void PointToEnemy(float angle, float distance)
         {
             float angleRad = angle * Mathf.Deg2Rad;
@@ -91,18 +100,29 @@ namespace UI
             _wallJuiceBarFill.fillAmount = (float)current / max;
         }
 
-        public void UpdateInteractText(String text, List<string> bindings)
+        public void UpdateInteractText(Interactable interactable, bool status)
         {
-            _textPopupBackground.gameObject.SetActive(text != "");
+            if (interactable == null)
+            {
+                _interactText.gameObject.SetActive(false);
+                _tooltipStorage = null;
+                return;
+            }
+            
+            _interactableStorage = interactable;
+            
+            _textPopupBackground.gameObject.SetActive(status);
             if (!_interactText.gameObject.activeSelf) return;
             
-            _interactTextPromptSetter.ReplaceMessage(text, _inputSystemActions.Player.Interact);
+            _interactTextPromptSetter.ReplaceMessage($"[BP_0] {_interactableStorage.GetText()}", _inputSystemActions.Player.Interact);
         }
         public void RefreshInteractText()
         {
             if (!_interactText.gameObject.activeSelf) return;
             
-            _interactTextPromptSetter.ReplaceMessage("[BP_0] Interact", _inputSystemActions.Player.Interact);
+            if (_interactableStorage == null) return;
+            
+            _interactTextPromptSetter.ReplaceMessage($"[BP_0] {_interactableStorage.GetText()}", _inputSystemActions.Player.Interact);
         }
 
         public void UpdateTooltipText(TooltipSO tooltip)

@@ -27,7 +27,7 @@ namespace Player.PlayerStates
         {
             player.playerMovement.ProcessMovement(player.playerMovement.playerSpeed);
             
-            if (player.rb.linearVelocity.y < -0f)
+            if (player.rb.linearVelocity.y < -1f)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.fallingState);
             }

@@ -32,6 +32,11 @@ namespace Interactions
             _renderer.material = _activeMat;
         }
 
+        public override string GetText()
+        {
+            return base.GetText();
+        }
+
         public override bool Interact(bool status)
         {
             if (_isGameComplete)
@@ -40,7 +45,7 @@ namespace Interactions
                 _anim.Play(_activateAnim.name);
                 _renderer.material = _risingMat;
                 
-                GameManager.Instance.Player.HUD.UpdateInteractText("", new List<string>());
+                GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
 
                 AudioManager.Instance.OnPurgeSystem();
                 
