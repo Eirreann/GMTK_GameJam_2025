@@ -46,7 +46,7 @@ namespace UI
         Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
         Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
         
-        Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 2) * 30;
+        Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 30);
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
         
         _uiSelectionHelper = GetComponent<UISelectionHelper>();

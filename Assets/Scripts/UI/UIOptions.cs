@@ -35,8 +35,8 @@ namespace UI
             Music.value = PlayerPrefs.GetFloat("Music", 1f);
             SFX.value = PlayerPrefs.GetFloat("SFX", 1f);
             
-            fpsSlider.value = PlayerPrefs.GetFloat("maxFPS", 2);
-            fpsDisplay.text = $"{fpsSlider.value * 30}";
+            fpsSlider.value = PlayerPrefs.GetInt("maxFPS", 30);
+            fpsDisplay.text = $"{fpsSlider.value}";
             
             vSyncToggle.isOn = PlayerPrefs.GetInt("vSync", 0) == 1;
         }
@@ -73,12 +73,10 @@ namespace UI
 
         private void _updateFPSSlider(float value)
         {
-            float baseValue = 30f;
-            
-            Application.targetFrameRate = (int)(baseValue * value);
+            Application.targetFrameRate = (int)value;
             PlayerPrefs.SetInt("maxFPS", (int)value);
 
-            fpsDisplay.text = $"{baseValue * value}";
+            fpsDisplay.text = $"{value}";
             //Debug.Log(value);
         }
 

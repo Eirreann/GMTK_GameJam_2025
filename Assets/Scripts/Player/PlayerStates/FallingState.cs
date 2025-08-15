@@ -39,6 +39,7 @@ namespace Player.PlayerStates
             
             //Check if player is near a wall.
             RaycastHit wallJumpHit;
+            
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
 

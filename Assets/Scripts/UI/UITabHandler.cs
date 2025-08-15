@@ -92,6 +92,7 @@ public class UITabHandler : MonoBehaviour
     {
         return () =>
         {
+            _currentTab = buttons.IndexOf(button);
             foreach(Button btn in buttons)
             {
                 btn.interactable = btn != button;
@@ -100,7 +101,7 @@ public class UITabHandler : MonoBehaviour
             var count = 0;
             foreach(GameObject tabs in tabs)
             {
-                tabs.SetActive(count == buttons.IndexOf(button));
+                tabs.SetActive(count == _currentTab);
                 count++;
             }
         };

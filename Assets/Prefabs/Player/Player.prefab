@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 8128099997728786182}
   - component: {fileID: 4343155719611324924}
   - component: {fileID: 5272580061708722290}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -38,7 +38,7 @@ Transform:
   m_LocalScale: {x: 1, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4885361065849832898}
+  - {fileID: 2240261949449267571}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &703080698027799720
@@ -111,6 +111,12 @@ MonoBehaviour:
   playerStats: {fileID: 0}
   playerInteractions: {fileID: 0}
   wallHandler: {fileID: 0}
+  playerCamera: {fileID: 7488266105443202889}
+  rb: {fileID: 0}
+  stateString: 
+  playerCanMove: 1
+  canWallJump: 0
+  lastWallJumped: {fileID: 0}
 --- !u!114 &541133255216557778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -123,23 +129,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca96c05c83272a14dae03944c6642d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCamera: {fileID: 47698364035874897}
-  leanTransform: {fileID: 0}
-  currentSpeed: 14
-  playerSpeed: 14
-  sprintMultiplier: 1
-  desiredMoveDirection: {x: 0, y: 0, z: 0}
-  jumpForce: 40
-  wallJumpUpForce: 32
-  wallJumpSideForce: 32
-  _sensitivity: 8
+  _rb: {fileID: 0}
+  playerCamera: {fileID: 7488266105443202889}
+  IsGrounded: 0
+  GroundLayer:
+    serializedVersion: 2
+    m_Bits: 1
+  _desiredMoveDirection: {x: 0, y: 0, z: 0}
+  _lastMoveDirection: {x: 0, y: 0, z: 0}
+  slideForce: 5
+  jumpForce: 20
+  playerSpeed: 15
+  _currentSpeed: 0
+  _speedRampUp: 4
+  _speedRampDown: 5
+  xRotation: 0
+  yRotation: 0
+  _sensitivity: 1.5
   _yRotationLimit: 70
-  isGrounded: 1
-  canWallJump: 0
-  isJumping: 0
-  _playerState: 0
-  lastWallJumped: {fileID: 0}
-  gravityScale: 2
+  velocity: {x: 0, y: 0, z: 0}
+  gravityScale: 6
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,6 +165,7 @@ MonoBehaviour:
   _wallPrefab: {fileID: 8698839035296989236, guid: 8979fcd103979254c877df2f7d4d6f95, type: 3}
   _trailPrefab: {fileID: 7183630887654587577, guid: a8cbf0907661f31439a860eb95fbc41d, type: 3}
   _trailDuration: 5
+  _isDrawing: 0
 --- !u!114 &2418554900736022803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +180,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _currentWallJuice: 60
   _maxWallJuice: 60
-  _currentPlayerHealth: 25
-  _maxPlayerHealth: 25
+  _currentPlayerHealth: 20
+  _maxPlayerHealth: 20
 --- !u!114 &8128099997728786182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,7 +203,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1168119540958964313}
   serializedVersion: 5
-  m_Mass: 6
+  m_Mass: 3.5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -201,7 +211,7 @@ Rigidbody:
   m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 12
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -228,12 +238,12 @@ BoxCollider:
     m_Bits: 0
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
-  m_ProvidesContacts: 0
+  m_ProvidesContacts: 1
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 0.9089729, z: 1}
   m_Center: {x: 0, y: 0.45448646, z: 0}
---- !u!1 &2984486309836767557
+--- !u!1 &7085332635289258436
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -241,10 +251,10 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4885361065849832898}
-  - component: {fileID: 47698364035874897}
-  - component: {fileID: 7891440715314327842}
-  - component: {fileID: 5842370707650886671}
+  - component: {fileID: 2240261949449267571}
+  - component: {fileID: 7488266105443202889}
+  - component: {fileID: 660003010885441946}
+  - component: {fileID: 7818275827057908439}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -252,28 +262,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4885361065849832898
+--- !u!4 &2240261949449267571
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2984486309836767557}
+  m_GameObject: {fileID: 7085332635289258436}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.975, z: 0}
+  m_LocalPosition: {x: 0, y: 0.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7139346810744578506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!20 &47698364035874897
+--- !u!20 &7488266105443202889
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2984486309836767557}
+  m_GameObject: {fileID: 7085332635289258436}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -318,21 +328,21 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &7891440715314327842
+--- !u!81 &660003010885441946
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2984486309836767557}
+  m_GameObject: {fileID: 7085332635289258436}
   m_Enabled: 1
---- !u!114 &5842370707650886671
+--- !u!114 &7818275827057908439
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2984486309836767557}
+  m_GameObject: {fileID: 7085332635289258436}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -350,7 +360,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 3
+  m_Antialiasing: 0
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0

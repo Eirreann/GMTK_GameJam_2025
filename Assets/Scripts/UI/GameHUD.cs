@@ -1,4 +1,5 @@
 ﻿using Game;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -28,6 +29,9 @@ namespace UI
         
         private bool _pauseActive = false;
         public UISelectionHelper uiSelectionHelper;
+
+        [SerializeField] private float _timer = 59f;
+        [SerializeField] private TextMeshProUGUI _timerDisplay;
         
         private void Shutdown()
         {
@@ -44,6 +48,16 @@ namespace UI
             _openSettingsButton.onClick.AddListener(ShowSettings);
 
             uiSelectionHelper.OnCloseRoot = ClosePauseMenu;
+        }
+
+        private void Update()
+        {
+            _timer += Time.deltaTime % 60;
+
+            var minutes = (int)_timer / 60;
+            var seconds = (int)_timer % 60;
+            
+            _timerDisplay.text = string.Format("{00:00}:{01:00}", minutes, (int)_timer % 60 - (minutes / 60));
         }
 
         public void ClosePauseMenu()
