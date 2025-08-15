@@ -30,6 +30,8 @@ namespace Player
 
         public bool canWallJump = false;
         public Transform lastWallJumped;
+
+        public bool hasWallJumped = false;
         
         public void Awake() 
         {

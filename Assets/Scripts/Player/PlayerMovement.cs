@@ -113,7 +113,9 @@ namespace Player
     public void DoWallJump()
     {
         Vector3 forceToApply = transform.up * jumpForce + playerCamera.transform.forward * jumpForce;
+        
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
+        
         _rb.AddForce(
             new Vector3(
                 forceToApply.x,

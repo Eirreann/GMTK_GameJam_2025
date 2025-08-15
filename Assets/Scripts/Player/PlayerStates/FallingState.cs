@@ -13,13 +13,12 @@ namespace Player.PlayerStates
             this.player = player;
         }
 
+        private const float WALL_JUMP_RANGE = 1.75f;
         public void Enter()
         {
             player.playerMovement.IsGrounded = false;
         }
-
-        private bool _hasWallJumped;
-        private const float WALL_JUMP_RANGE = 3f;
+        
         
         public void Update()
         {
@@ -39,25 +38,20 @@ namespace Player.PlayerStates
             
             //Check if player is near a wall.
             RaycastHit wallJumpHit;
-            
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
 
-            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE))
+            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
                 player.canWallJump = true;
                 if (GameManager.Instance.inputHandler._jump)
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
-                        _hasWallJumped = true;
+                        player.hasWallJumped = true;
                         player.lastWallJumped = wallJumpHit.collider.transform;
                     }
                 }
-            }
-            else
-            {
-                player.canWallJump = false;
             }
 
             // Check if player has reached the ground.
@@ -83,11 +77,11 @@ namespace Player.PlayerStates
 
         public void FixedUpdate()
         {
-            if (_hasWallJumped)
+            if (player.hasWallJumped)
             {
                 player.playerMovement.DoWallJump();
                 
-                _hasWallJumped = false;
+                player.hasWallJumped = false;
             }
         }
         

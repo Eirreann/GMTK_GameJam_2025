@@ -14,22 +14,20 @@ namespace Player.PlayerStates
         }
 
         private bool _hasJumped;
-        private bool _hasWallJumped;
         
-        private const float WALL_JUMP_RANGE = 3f;
-        
+        private const float WALL_JUMP_RANGE = 1.75f;
         public void Enter()
         {
             player.playerMovement.IsGrounded = false;
+
             _hasJumped = true;
-            _hasWallJumped = false;
         }
 
         public void Update()
         {
             player.playerMovement.ProcessMovement(player.playerMovement.playerSpeed);
             
-            if (player.rb.linearVelocity.y < -1f)
+            if (player.rb.linearVelocity.y < -0f)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.fallingState);
             }
@@ -47,21 +45,17 @@ namespace Player.PlayerStates
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
 
-            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE))
+            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
                 player.canWallJump = true;
                 if (GameManager.Instance.inputHandler._jump)
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
-                        _hasWallJumped = true;
+                        player.hasWallJumped = true;
                         player.lastWallJumped = wallJumpHit.collider.transform;
                     }
                 }
-            }
-            else
-            {
-                player.canWallJump = false;
             }
         }
 
@@ -73,11 +67,10 @@ namespace Player.PlayerStates
                 _hasJumped = false;
             }
 
-            if (_hasWallJumped)
+            if (player.hasWallJumped)
             {
                 player.playerMovement.DoWallJump();
-                
-                _hasWallJumped = false;
+                player.hasWallJumped = false;
             }
         }
         
