@@ -35,8 +35,10 @@ namespace UI
             Music.value = PlayerPrefs.GetFloat("Music", 1f);
             SFX.value = PlayerPrefs.GetFloat("SFX", 1f);
             
-            Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 2) * 30;
-            QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
+            fpsSlider.value = PlayerPrefs.GetFloat("maxFPS", 2);
+            fpsDisplay.text = $"{fpsSlider.value * 30}";
+            
+            vSyncToggle.isOn = PlayerPrefs.GetInt("vSync", 0) == 1;
         }
 
         private void _updateMasterAudio(float value)

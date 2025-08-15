@@ -12,6 +12,7 @@ namespace Player
     public LayerMask GroundLayer;
     
     [SerializeField] public Vector3 _desiredMoveDirection;
+    [SerializeField] public Vector3 _lastMoveDirection;
     
     [Header("Sliding")]
     [Range(0f, 5f)] [SerializeField] public float slideForce = 2.5f;
@@ -21,8 +22,8 @@ namespace Player
 
     [SerializeField] public float playerSpeed;
     [SerializeField] private float _currentSpeed;
-    [Range(0f, 5f)][SerializeField] private float _speedRampUp;
-    [Range(0f, 5f)][SerializeField] private float _speedRampDown;
+    [Range(1f, 99f)][SerializeField] private float _speedRampUp;
+    [Range(1f, 99f)][SerializeField] private float _speedRampDown;
     
     public float xRotation = 0f;
     public float yRotation = 0f;
@@ -45,18 +46,16 @@ namespace Player
     void Update()
     {
         _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
-        _desiredMoveDirection = new Vector3(_desiredMoveDirection.x, 0, _desiredMoveDirection.z).normalized;
-
-        velocity = _rb.linearVelocity;
+        _desiredMoveDirection = new Vector3(_desiredMoveDirection.x, 0, _desiredMoveDirection.z);
     }
     
     public void RotatePlayer(Vector2 directionValue)
     {
         
-        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier * Time.deltaTime;
+        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier * _sensitivity * Time.deltaTime;
         if (GameManager.Instance.inputHandler.LookDeviceIsMouse)
         {
-            _modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier;
+            _modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier * _sensitivity;
         }
         
         directionValue *= _modifier;
@@ -114,12 +113,11 @@ namespace Player
     public void DoWallJump()
     {
         Vector3 forceToApply = transform.up * jumpForce + playerCamera.transform.forward * jumpForce;
-                
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         _rb.AddForce(
             new Vector3(
                 forceToApply.x,
-                Mathf.Clamp(forceToApply.y, 30f, 80f),
+                Mathf.Clamp(forceToApply.y, 30f, 75f),
                 forceToApply.z
             ), 
             ForceMode.Impulse

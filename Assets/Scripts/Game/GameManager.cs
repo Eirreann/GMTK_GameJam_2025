@@ -108,6 +108,8 @@ namespace Game
                 Levels[_levelIndex].StartLevel();
 
                 AudioManager.Instance.FadeOutMusic();
+
+                CurrentLevel.finalTerminal.isEnabled = true;
                 CurrentLevel.finalTerminal.SetReadyForCompletion();
             }
         }

@@ -27,10 +27,9 @@ namespace Player
         
         public bool playerCanMove = true;
         private Transform _respawnLocation = null;
-        
+
+        public bool canWallJump = false;
         public Transform lastWallJumped;
-        
-        
         
         public void Awake() 
         {

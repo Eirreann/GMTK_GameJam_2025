@@ -8,17 +8,16 @@ using UnityEngine.UI;
 
 namespace UI
 {
-    public class UIMenuButtonHelper : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
+    public class UIMenuSelectableHelper : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        [SerializeField] private bool _isBackButton;
+        
         private UISelectionHelper _uiMenu;
         private Button _button;
-
+        private Toggle _toggle;
+        private Slider _slider;
         private TextMeshProUGUI _textObj;
-
-        [SerializeField] private bool _isBackButton;
-
         private PlayerInput _playerInput;
-        
         private String _originalText;
 
         private void Awake()
@@ -26,8 +25,10 @@ namespace UI
             _uiMenu = FindFirstObjectByType<UISelectionHelper>(FindObjectsInactive.Exclude);
             _playerInput = FindFirstObjectByType<PlayerInput>();
             
-            
             _button = GetComponent<Button>();
+            _slider = GetComponent<Slider>();
+            _toggle = GetComponent<Toggle>();
+            
             if (_button)
             {
                 _textObj = _button.GetComponentInChildren<TextMeshProUGUI>();
@@ -79,12 +80,16 @@ namespace UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if(_button.interactable) AdjustColorMultiplier(2f);
+            if(_button && _button.interactable) AdjustColorMultiplier(2f);
+            if(_toggle && _toggle.interactable) AdjustColorMultiplier(2f);
+            if(_slider && _slider.interactable) AdjustColorMultiplier(2f);
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if(_button.interactable) AdjustColorMultiplier(1f);
+            if(_button && _button.interactable) AdjustColorMultiplier(1f);
+            if(_toggle && _toggle.interactable) AdjustColorMultiplier(1f);
+            if(_slider && _slider.interactable) AdjustColorMultiplier(1f);
         }
 
         private void AdjustColorMultiplier(float target)
@@ -94,6 +99,20 @@ namespace UI
                 var colors = _button.colors;
                 colors.colorMultiplier = target;
                 _button.colors = colors;
+            }
+            
+            if (_toggle)
+            {
+                var colors = _toggle.colors;
+                colors.colorMultiplier = target;
+                _toggle.colors = colors;
+            }
+            
+            if (_slider)
+            {
+                var colors = _slider.colors;
+                colors.colorMultiplier = target;
+                _slider.colors = colors;
             }
         }
     }

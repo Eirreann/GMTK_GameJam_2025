@@ -8,6 +8,7 @@ namespace Input
     public class ControlsChangedHelper : MonoBehaviour
     {
         public UnityAction OnControlsChanged;
+        
         private PlayerInput _playerInput;
 
         private string _lastControlScheme;
@@ -22,7 +23,8 @@ namespace Input
             if (_playerInput.currentControlScheme != _lastControlScheme)
             {
                 _lastControlScheme = _playerInput.currentControlScheme;
-                OnControlsChanged.Invoke();
+                
+                if(OnControlsChanged != null) OnControlsChanged.Invoke();
             }
         }
 

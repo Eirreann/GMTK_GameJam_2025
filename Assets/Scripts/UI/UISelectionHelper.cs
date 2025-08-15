@@ -10,7 +10,7 @@ namespace UI
 {
     public class UISelectionHelper : MonoBehaviour
     {
-        public PlayerInput _playerInput;
+        public PlayerInput playerInput;
         public InputSystem_Actions _inputSystem;
         
         [SerializeField] private Button _defaultButton;
@@ -35,7 +35,7 @@ namespace UI
             _lastVisitedButton = _defaultButton.gameObject;
             EventSystem.current.SetSelectedGameObject(_defaultButton.gameObject);
             
-            _playerInput = GetComponent<PlayerInput>();
+            playerInput = GetComponent<PlayerInput>();
             _inputSystem = new InputSystem_Actions();
             
             if(_activateUIInputsOnStart) _inputSystem.UI.Enable();
@@ -43,23 +43,23 @@ namespace UI
 
         private void Update()
         {
-            if (_playerInput.currentControlScheme == "Keyboard" && EventSystem.current.IsPointerOverGameObject())
+            if (playerInput.currentControlScheme == "Keyboard" && EventSystem.current.IsPointerOverGameObject())
             {
                 EventSystem.current.SetSelectedGameObject(null);
             }
             
-            if (_playerInput.currentControlScheme != _lastControlScheme)
+            if (playerInput.currentControlScheme != _lastControlScheme)
             {
-                if (_lastVisitedButton && _playerInput.currentControlScheme != "Gamepad")
+                if (_lastVisitedButton && playerInput.currentControlScheme != "Gamepad")
                 {
-                    _lastVisitedButton.GetComponent<UIMenuButtonHelper>().ResetButtonText();
+                    _lastVisitedButton.GetComponent<UIMenuSelectableHelper>().ResetButtonText();
                 }
                 else
                 {
                     GrabLastVisitedButton();
                 }
                 
-                _lastControlScheme = _playerInput.currentControlScheme;
+                _lastControlScheme = playerInput.currentControlScheme;
             }
 
             
@@ -97,7 +97,7 @@ namespace UI
 
         public void GrabLastVisitedButton()
         {
-            if (_playerInput.currentControlScheme != "Keyboard")
+            if (playerInput.currentControlScheme != "Keyboard")
             {
                 EventSystem.current.SetSelectedGameObject(_lastVisitedButton);
                 return;
@@ -108,7 +108,7 @@ namespace UI
         }
         public void GrabLastSelectedButton()
         {
-            if (_playerInput.currentControlScheme != "Keyboard")
+            if (playerInput.currentControlScheme != "Keyboard")
             {
                 EventSystem.current.SetSelectedGameObject(_lastSelectedButton);
                 return;
@@ -119,7 +119,7 @@ namespace UI
         
         public void SetLastVisited(GameObject lastVisitedButton)
         {
-            if(_lastVisitedButton) _lastVisitedButton.GetComponent<UIMenuButtonHelper>().ResetButtonText();
+            if(_lastVisitedButton) _lastVisitedButton.GetComponent<UIMenuSelectableHelper>().ResetButtonText();
             _lastVisitedButton = lastVisitedButton;
         }
         public void SetLastSelected(GameObject lastSelectedButton)

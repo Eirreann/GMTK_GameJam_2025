@@ -16,7 +16,7 @@ namespace Player.PlayerStates
         private bool _hasJumped;
         private bool _hasWallJumped;
         
-        private const float WALL_JUMP_RANGE = 1.5f;
+        private const float WALL_JUMP_RANGE = 3f;
         
         public void Enter()
         {
@@ -43,20 +43,25 @@ namespace Player.PlayerStates
                 player.transform.localScale = new Vector3(player.transform.localScale.x, 2f, player.transform.localScale.z);
             }
             
+            RaycastHit wallJumpHit;
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
-         
-            RaycastHit hit;
-            if (GameManager.Instance.inputHandler._jump)
+
+            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE))
             {
-                if (Physics.Raycast(leftRay, out hit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out hit, WALL_JUMP_RANGE))
+                player.canWallJump = true;
+                if (GameManager.Instance.inputHandler._jump)
                 {
-                    if (!hit.collider.CompareTag("Enemy") && hit.collider.transform != player.lastWallJumped)
+                    if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
                         _hasWallJumped = true;
-                        player.lastWallJumped = hit.collider.transform;
+                        player.lastWallJumped = wallJumpHit.collider.transform;
                     }
                 }
+            }
+            else
+            {
+                player.canWallJump = false;
             }
         }
 
@@ -78,7 +83,7 @@ namespace Player.PlayerStates
         
         public void Exit()
         {
-            
+            player.canWallJump = false;
         }
     }
 }

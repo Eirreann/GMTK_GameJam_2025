@@ -19,7 +19,7 @@ namespace Player.PlayerStates
         }
 
         private bool _hasWallJumped;
-        private const float WALL_JUMP_RANGE = 1.5f;
+        private const float WALL_JUMP_RANGE = 3f;
         
         public void Update()
         {
@@ -42,9 +42,10 @@ namespace Player.PlayerStates
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
 
-            if (GameManager.Instance.inputHandler._jump)
+            if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE))
             {
-                if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE))
+                player.canWallJump = true;
+                if (GameManager.Instance.inputHandler._jump)
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
@@ -52,6 +53,10 @@ namespace Player.PlayerStates
                         player.lastWallJumped = wallJumpHit.collider.transform;
                     }
                 }
+            }
+            else
+            {
+                player.canWallJump = false;
             }
 
             // Check if player has reached the ground.
@@ -87,6 +92,7 @@ namespace Player.PlayerStates
         
         public void Exit()
         {
+            player.canWallJump = false;
             player.lastWallJumped = null;
         }
     }

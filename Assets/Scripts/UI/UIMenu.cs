@@ -15,13 +15,6 @@ namespace UI
     [Header("Audio")]
     public AudioMixer Mixer;
 
-    [Header("Animated Backdrop")]
-    public GameObject scrollingGround;
-    public GameObject threeDimensionalBackground;
-
-    public float groundScrollingSpeed = 0.10f;
-    public float parallaxScrollSpeed = 0.04f;
-
     [Header("Panels")]
     public GameObject StartMenu;
     public GameObject MainMenuContainer;
@@ -42,13 +35,17 @@ namespace UI
     public Button CreditsBackBtn;
     
     [Header("UI Helper")]
-    private UISelectionHelper _uiSelectionHelper;
+    public UISelectionHelper _uiSelectionHelper;
     
     [Header("Build Version")]
     public TextMeshProUGUI buildVersion;
 
     private void Start()
     {
+        Mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master", 1f)) * 20);
+        Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
+        Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
+        
         Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 2) * 30;
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
         
@@ -60,10 +57,6 @@ namespace UI
         CreditsBtn.onClick.AddListener(_credits);
         ContinueBtn.onClick.AddListener(_continue);
         ExitBtn.onClick.AddListener(_exit);
-        
-        Mixer.SetFloat("Master", Mathf.Log10(PlayerPrefs.GetFloat("Master", 1f)) * 20);
-        Mixer.SetFloat("Music", Mathf.Log10(PlayerPrefs.GetFloat("Music", 1f)) * 20);
-        Mixer.SetFloat("SFX", Mathf.Log10(PlayerPrefs.GetFloat("SFX", 1f)) * 20);
         
         buildVersion.text = Debug.isDebugBuild ? "Development build" : "Production build";
         buildVersion.text += "\nApp version " + Application.version + ", Unity version " + Application.unityVersion;

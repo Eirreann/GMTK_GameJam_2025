@@ -47,7 +47,9 @@ namespace Enemies
                         audioSource.PlayOneShot(onDetect);
                     _isPursuing = true;
                 }
-                
+
+
+                if (!player) return;
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > distToAttack)
                 {
