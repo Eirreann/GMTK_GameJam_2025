@@ -66,15 +66,14 @@ namespace Interactions
 
         private void _checkIfEnemyIsCaptured()
         {
-            List<GameObject> enemyObjects = GameObject.FindGameObjectsWithTag("Enemy").ToList();
-            enemyObjects.ForEach(e =>
+            //List<GameObject> enemyObjects = GameObject.FindGameObjectsWithTag("Enemy").ToList();
+            GameManager.Instance.CurrentLevel.enemies.ForEach(e =>
             {
                 Vector3 enemyPosition = e.transform.position;
                 if (GeometryHelper.IsPointInPolygonXZ(enemyPosition, _points.ToArray()))
                 {
-                    var enemy = e.GetComponent<Enemy_Base>();
-                    enemy.SetTrapped(true);
-                    _trappedEnemies.Add(enemy);
+                    e.SetTrapped(true);
+                    _trappedEnemies.Add(e);
                 }
             });
         }

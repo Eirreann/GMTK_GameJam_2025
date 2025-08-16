@@ -117,6 +117,7 @@ MonoBehaviour:
   playerCanMove: 1
   canWallJump: 0
   lastWallJumped: {fileID: 0}
+  hasWallJumped: 0
 --- !u!114 &541133255216557778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ MonoBehaviour:
   _sensitivity: 1.5
   _yRotationLimit: 70
   velocity: {x: 0, y: 0, z: 0}
-  gravityScale: 6
+  gravityScale: 10
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,7 +166,6 @@ MonoBehaviour:
   _wallPrefab: {fileID: 8698839035296989236, guid: 8979fcd103979254c877df2f7d4d6f95, type: 3}
   _trailPrefab: {fileID: 7183630887654587577, guid: a8cbf0907661f31439a860eb95fbc41d, type: 3}
   _trailDuration: 5
-  _isDrawing: 0
 --- !u!114 &2418554900736022803
 MonoBehaviour:
   m_ObjectHideFlags: 0
