@@ -52,8 +52,8 @@ namespace Interactions
                 GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
             
                 interactableAction.Invoke(status);
-                return status;
             }
+            
             return status;
         }
 

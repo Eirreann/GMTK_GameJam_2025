@@ -31,8 +31,8 @@ namespace UI
 
         private void Start()
         {
-            _lastSelectedButton = _defaultButton.gameObject;
-            _lastVisitedButton = _defaultButton.gameObject;
+            SetLastSelected(_defaultButton.gameObject);
+            SetLastVisited(_defaultButton.gameObject);
             EventSystem.current.SetSelectedGameObject(_defaultButton.gameObject);
             
             playerInput = GetComponent<PlayerInput>();

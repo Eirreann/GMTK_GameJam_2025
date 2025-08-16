@@ -41,6 +41,8 @@ namespace Player.PlayerStates
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.jumpingState);
             }
+            
+            
         }
 
         public void FixedUpdate()
@@ -51,7 +53,9 @@ namespace Player.PlayerStates
                 _hasSlid = false;
             }
             
-            player.rb.AddForce(-player.rb.linearVelocity * 7.5f, ForceMode.Force);
+            if(!player.playerMovement.IsGrounded) player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
+            
+            player.rb.AddForce(-new Vector3(player.rb.linearVelocity.x, 0, player.rb.linearVelocity.z) * 7.5f, ForceMode.Force);
         }
         
         public void Exit()

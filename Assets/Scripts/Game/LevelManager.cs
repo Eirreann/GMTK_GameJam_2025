@@ -14,7 +14,9 @@ namespace Game
         
         public Transform PlayerRespawnLocation;
         
-        public Interactable ropePickup;
+        public Interactable pickupInteractable;
+        public RopePickup pickupObj;
+        
         public Interactable ropeDeposit;
 
         public Transform ropePickupLocation;
@@ -36,6 +38,7 @@ namespace Game
 
         [SerializeField] private Material _disabledMat;
         [SerializeField] private Material _enabledMat;
+        [SerializeField] private Material _connectedMat;
 
         public bool playerHasRope = false;
 
@@ -49,8 +52,9 @@ namespace Game
             
             // TODO
             _setRopeActive(allCaptured, playerHasRope);
+            pickupObj = pickupInteractable.GetComponent<RopePickup>();
             
-            ropePickup.Init(PickupRope);
+            pickupInteractable.Init(PickupRope);
             ropeDeposit.Init(DepositRope);
             
             GameManager.Instance.Player.SetRespawnLocation(PlayerRespawnLocation);
@@ -61,7 +65,7 @@ namespace Game
             if (playerHasRope) ReturnRope();
             
             _setRopeActive(false, false);
-            _setRopeMaterials(ropePickup.triggered, ropeDeposit.triggered);
+            _setRopeMaterials(pickupInteractable.triggered, ropeDeposit.triggered);
             
             enemies.ForEach(e => e.ResetEnemy());
             
@@ -80,7 +84,7 @@ namespace Game
         {
             playerHasRope = hasRope;
             
-            ropePickup.GetComponent<RopePickup>().rope.endPoint = GameManager.Instance.Player.transform;
+            pickupObj.rope.endPoint = GameManager.Instance.Player.transform;
             GameManager.Instance.Player.HUD.SetRopeVisible(hasRope);
             
             ropeDeposit.triggered = false;
@@ -101,17 +105,19 @@ namespace Game
         {
             if (playerHasRope)
             {
-                ropePickup.GetComponent<RopePickup>().rope.endPoint = ropeDepositLocation;
+                pickupObj.rope.endPoint = ropeDepositLocation;
                 
                 GameManager.Instance.Player.HUD.SetRopeVisible(false);
                 playerHasRope = false;
                 
                 endDoorCollider.enabled = false;
-                
                 DestroyLevelWalls();
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?
                 _endLevel();
+
+                pickupCubeRend.material = _connectedMat;
+                depositPointCubeRend.material = _connectedMat;
                 
                 AudioManager.Instance.OnDepositRope();
             }
@@ -124,15 +130,15 @@ namespace Game
             GameManager.Instance.Player.HUD.SetRopeVisible(false);
             playerHasRope = false;
             
-            ropePickup.GetComponent<RopePickup>().rope.endPoint = ropePickupLocation;
-            ropePickup.triggered = false;
+            pickupObj.rope.endPoint = ropePickupLocation;
+            pickupInteractable.triggered = false;
             AudioManager.Instance.OnDropRope();
         }
 
 
         private void _setRopeActive(bool pickupActive, bool depositActive)
         {
-            ropePickup.isEnabled = pickupActive;
+            pickupInteractable.isEnabled = pickupActive;
             ropeDeposit.isEnabled = depositActive;
         }
 

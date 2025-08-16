@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: platform
+  m_Name: wall
   m_Shader: {fileID: -6465566751694194690, guid: b87113b61812916499222e7f58fa7d3c, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -57,11 +57,11 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TileDensity: 3
+    - _TileDensity: 1
     - _TilesPerSegment: 2
     - _TilingMultiplier: 5
     m_Colors:
-    - _Color: {r: 0.7701677, g: 0.33333334, b: 0.8117647, a: 1}
+    - _Color: {r: 0.7466757, g: 0.3329477, b: 0.8113208, a: 1}
     - _Tiling: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -75,6 +75,7 @@ namespace UI
             
             if (_pauseActive)
             {
+                uiSelectionHelper._inputSystem.Player.Disable();
                 uiSelectionHelper.GrabLastSelectedButton();
                 uiSelectionHelper.AddActivePanel(_menuPanel);
                 uiSelectionHelper._inputSystem.UI.Enable();
@@ -84,6 +85,7 @@ namespace UI
                 uiSelectionHelper.SetLastSelected(_continueBtn.gameObject);
                 uiSelectionHelper.RemoveActivePanel(_menuPanel);
                 uiSelectionHelper._inputSystem.UI.Disable();
+                uiSelectionHelper._inputSystem.Player.Enable();
             }
         }
 
