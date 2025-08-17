@@ -57,11 +57,11 @@ Material:
     m_Floats:
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _TileDensity: 3
+    - _TileDensity: 0.01
     - _TilesPerSegment: 2
     - _TilingMultiplier: 5
     m_Colors:
-    - _Color: {r: 0.9459868, g: 0.4009434, b: 1, a: 1}
+    - _Color: {r: 0.77923256, g: 0.39999998, b: 1, a: 1}
     - _Tiling: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
