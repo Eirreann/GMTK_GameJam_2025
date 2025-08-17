@@ -150,6 +150,8 @@ MonoBehaviour:
   _yRotationLimit: 70
   velocity: {x: 0, y: 0, z: 0}
   gravityScale: 10
+  sideWalJumpForce: 16
+  upWallJumpForce: 16
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0

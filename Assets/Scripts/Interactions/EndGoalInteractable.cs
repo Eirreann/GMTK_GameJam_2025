@@ -15,6 +15,8 @@ namespace Interactions
         [SerializeField] private Material _risingMat;
         
         [SerializeField] private AnimationClip _activateAnim;
+
+        [SerializeField] private GameObject endWall;
         
         private Animator _anim;
         private bool _isGameComplete = false;
@@ -30,6 +32,8 @@ namespace Interactions
             _isGameComplete = true;
             
             _renderer.material = _activeMat;
+            
+            endWall.SetActive(true);
         }
 
         public override string GetText()
