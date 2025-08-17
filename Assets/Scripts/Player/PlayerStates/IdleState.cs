@@ -17,6 +17,8 @@ namespace Player.PlayerStates
         {
             player.rb.linearVelocity = Vector3.zero;
             player.playerMovement.IsGrounded = true;
+            
+            player.lastWallJumped = null;
         }
 
         public void Update()

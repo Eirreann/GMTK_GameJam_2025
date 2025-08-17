@@ -7,7 +7,7 @@ namespace UI
 {
     public static class AddButtonPromptToText
     {
-        public static string ReadAndReplaceBinding(string textToDisplay, string stringToReplace, InputBinding binding, TMP_SpriteAsset spriteAsset)
+        public static string ReadAndReplaceBinding(string textToDisplay, string stringToReplace, InputBinding binding)
         {
             string stringButtonName = binding.ToString();
             stringButtonName = RenameInput(stringButtonName, binding.action);

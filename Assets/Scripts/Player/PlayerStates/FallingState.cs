@@ -24,7 +24,6 @@ namespace Player.PlayerStates
         {
             player.playerMovement.ProcessMovement(player.playerMovement.playerSpeed);
             
-            player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
             
             //do the crouch thing
             if (GameManager.Instance.inputHandler._crouch)
@@ -40,7 +39,7 @@ namespace Player.PlayerStates
             RaycastHit wallJumpHit;
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
-
+    
             if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
                 player.canWallJump = true;
@@ -48,8 +47,11 @@ namespace Player.PlayerStates
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
+                        player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, 0, player.rb.linearVelocity.z);
                         player.hasWallJumped = true;
+                        
                         player.lastWallJumped = wallJumpHit.collider.transform;
+                        player._playerStateMachine.ChangeState(player._playerStateMachine.jumpingState);
                     }
                 }
             }
@@ -77,18 +79,12 @@ namespace Player.PlayerStates
 
         public void FixedUpdate()
         {
-            if (player.hasWallJumped)
-            {
-                player.playerMovement.DoWallJump();
-                
-                player.hasWallJumped = false;
-            }
+            player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
         }
         
         public void Exit()
         {
-            player.canWallJump = false;
-            player.lastWallJumped = null;
+            //player.lastWallJumped = null;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Interactions
     {
         private List<WallSegment> _segments = new List<WallSegment>();
 
+        private const float BUILD_DELAY = 0.25f;
         private const int WALL_HEALTH = 45;
         
         private Vector3[] _points;
@@ -46,7 +47,7 @@ namespace Interactions
 
         private IEnumerator _buildAfterDelay()
         {
-            yield return new WaitForSeconds(.8f);
+            yield return new WaitForSeconds(BUILD_DELAY);
             _segments.ForEach(s => s.BuildAfterDelay());
             _checkIfEnemyIsCaptured();
         }

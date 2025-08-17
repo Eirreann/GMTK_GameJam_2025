@@ -16,6 +16,8 @@ namespace Player.PlayerStates
         public void Enter()
         {
             player.playerMovement.IsGrounded = true;
+            
+            player.lastWallJumped = null;
         }
 
         public void Update()

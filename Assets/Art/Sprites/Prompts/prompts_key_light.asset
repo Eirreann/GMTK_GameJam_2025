@@ -94,7 +94,7 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 2
     m_Scale: 1
-    m_Name: prompts_key_light_2
+    m_Name: Mouse_rightButton
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 3
@@ -259,7 +259,7 @@ MonoBehaviour:
     m_Unicode: 65534
     m_GlyphIndex: 35
     m_Scale: 1
-    m_Name: prompts_key_light_35
+    m_Name: Keyboard_j
   - m_ElementType: 2
     m_Unicode: 65534
     m_GlyphIndex: 36
@@ -552,7 +552,7 @@ MonoBehaviour:
       m_Width: 204.8
       m_Height: 204.77777
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 146.4
+      m_HorizontalBearingY: 150
       m_HorizontalAdvance: 204.8
     m_GlyphRect:
       m_X: 0
@@ -568,7 +568,7 @@ MonoBehaviour:
       m_Width: 204.8
       m_Height: 204.77777
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 143.7
+      m_HorizontalBearingY: 150
       m_HorizontalAdvance: 204.8
     m_GlyphRect:
       m_X: 204
@@ -584,14 +584,14 @@ MonoBehaviour:
       m_Width: 204.8
       m_Height: 204.77777
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 102.388885
+      m_HorizontalBearingY: 150
       m_HorizontalAdvance: 204.8
     m_GlyphRect:
       m_X: 409
       m_Y: 1638
       m_Width: 204
       m_Height: 204
-    m_Scale: 1.5
+    m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: -667663156, guid: fe28207f7cc888843980852236c08e96, type: 3}
@@ -1112,14 +1112,14 @@ MonoBehaviour:
       m_Width: 204.8
       m_Height: 204.77777
       m_HorizontalBearingX: -0
-      m_HorizontalBearingY: 102.388885
+      m_HorizontalBearingY: 138.3
       m_HorizontalAdvance: 204.8
     m_GlyphRect:
       m_X: 1024
       m_Y: 1023
       m_Width: 204
       m_Height: 204
-    m_Scale: 1
+    m_Scale: 2
     m_AtlasIndex: 0
     m_ClassDefinitionType: 0
     sprite: {fileID: 485033002, guid: fe28207f7cc888843980852236c08e96, type: 3}

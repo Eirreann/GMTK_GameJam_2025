@@ -16,6 +16,8 @@ namespace Player.PlayerStates
         public void Enter()
         {
             player.transform.localScale = new Vector3(player.transform.localScale.x, 1f, player.transform.localScale.z);
+            
+            player.lastWallJumped = null;
         }
 
         public void Update()

@@ -14,7 +14,6 @@ namespace Player.PlayerStates
         }
 
         private bool _hasJumped;
-        
         private const float WALL_JUMP_RANGE = 1.75f;
         public void Enter()
         {
@@ -41,6 +40,7 @@ namespace Player.PlayerStates
                 player.transform.localScale = new Vector3(player.transform.localScale.x, 2f, player.transform.localScale.z);
             }
             
+            //Check if player is near a wall.
             RaycastHit wallJumpHit;
             Ray leftRay = new Ray(player.playerCamera.transform.position, -player.playerCamera.transform.right);
             Ray rightRay = new Ray(player.playerCamera.transform.position, player.playerCamera.transform.right);
@@ -52,8 +52,11 @@ namespace Player.PlayerStates
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
+                        player.rb.linearVelocity = new Vector3(player.rb.linearVelocity.x, 0, player.rb.linearVelocity.z);
                         player.hasWallJumped = true;
+                        
                         player.lastWallJumped = wallJumpHit.collider.transform;
+                        player._playerStateMachine.ChangeState(player._playerStateMachine.jumpingState);
                     }
                 }
             }
@@ -63,20 +66,27 @@ namespace Player.PlayerStates
         {
             if (_hasJumped)
             {
-                player.rb.AddForce(Vector3.up * player.playerMovement.jumpForce, ForceMode.Impulse);
-                _hasJumped = false;
+                if (player.hasWallJumped)
+                {
+                    player.playerMovement.DoWallJump();
+                    player.hasWallJumped = false;
+                }
+                else
+                {
+                    player.rb.AddForce(Vector3.up * player.playerMovement.jumpForce, ForceMode.Impulse);
+                    _hasJumped = false;
+                }
             }
-
-            if (player.hasWallJumped)
+            
+            if (GameManager.Instance.inputHandler._crouch)
             {
-                player.playerMovement.DoWallJump();
-                player.hasWallJumped = false;
+                player.rb.AddForce(Vector3.down * player.playerMovement.gravityScale, ForceMode.Force);
             }
         }
         
         public void Exit()
         {
-            player.canWallJump = false;
+            
         }
     }
 }

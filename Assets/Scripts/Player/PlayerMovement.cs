@@ -110,16 +110,18 @@ namespace Player
         _rb.AddForce(force, ForceMode.Impulse);
     }
 
+    public float sideWalJumpForce = 16f;
+    public float upWallJumpForce = 16f;
     public void DoWallJump()
     {
-        Vector3 forceToApply = transform.up * jumpForce + playerCamera.transform.forward * jumpForce;
+        Vector3 forceToApply = transform.up * upWallJumpForce + playerCamera.transform.forward * sideWalJumpForce;
         
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         
         _rb.AddForce(
             new Vector3(
                 forceToApply.x,
-                Mathf.Clamp(forceToApply.y, 30f, 75f),
+                forceToApply.y,
                 forceToApply.z
             ), 
             ForceMode.Impulse

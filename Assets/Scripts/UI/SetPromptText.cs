@@ -75,7 +75,7 @@ namespace UI
             {
                 textBox.spriteAsset = spriteAssetList.SpriteAssets[schemeIndex];
                 
-                textBox.text = AddButtonPromptToText.ReadAndReplaceBinding(message, $"[BP_{count}]", action.bindings[schemeIndex], spriteAssetList.SpriteAssets[schemeIndex]);
+                textBox.text = AddButtonPromptToText.ReadAndReplaceBinding(message, $"[BP_{count}]", action.bindings[schemeIndex]);
                 message = textBox.text;
 
                 count++;
