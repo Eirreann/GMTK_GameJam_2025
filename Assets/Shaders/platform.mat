@@ -61,7 +61,7 @@ Material:
     - _TilesPerSegment: 2
     - _TilingMultiplier: 5
     m_Colors:
-    - _Color: {r: 0.7701677, g: 0.33333334, b: 0.8117647, a: 1}
+    - _Color: {r: 0.9459868, g: 0.4009434, b: 1, a: 1}
     - _Tiling: {r: 6, g: 6, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
