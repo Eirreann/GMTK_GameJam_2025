@@ -43,7 +43,10 @@ namespace Enemies
         public virtual void SetTrapped(bool state)
         {
             IsTrapped = state;
-            GameManager.Instance.CurrentLevel.RegisterEnemyCaptured();
+            if(state)
+                GameManager.Instance.CurrentLevel.RegisterEnemyCaptured();
+            else
+                GameManager.Instance.CurrentLevel.ReturnRope();
         }
 
         protected virtual void lookAt(Transform target)

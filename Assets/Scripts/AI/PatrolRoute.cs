@@ -44,6 +44,12 @@ namespace AI
             }
         }
 
+        public void ResetPatrol()
+        {
+            _currentTargetIndex = 0;
+            _patrolWaitCooldown = 0;
+        }
+
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;

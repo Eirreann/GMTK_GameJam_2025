@@ -67,9 +67,8 @@ namespace Game
             _setRopeActive(false, false);
             _setRopeMaterials(pickupInteractable.triggered, ropeDeposit.triggered);
             
-            enemies.ForEach(e => e.ResetEnemy());
-            
             DestroyLevelWalls();
+            enemies.ForEach(e => e.ResetEnemy());
         }
 
         public void RegisterEnemyCaptured()
@@ -97,7 +96,7 @@ namespace Game
 
         public void DestroyLevelWalls()
         {
-            LevelWalls.ForEach(w => Destroy(w.gameObject));
+            LevelWalls.ForEach(w => w.DestroyWall());
             LevelWalls.Clear();
         }
         

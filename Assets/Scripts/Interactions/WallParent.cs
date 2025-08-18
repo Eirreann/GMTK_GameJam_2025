@@ -59,7 +59,6 @@ namespace Interactions
             _currentHealth -= damage;
             if (_currentHealth <= 0)
             {
-                GameManager.Instance.CurrentLevel.ReturnRope();
                 GameManager.Instance.CurrentLevel.LevelWalls.Remove(this);
                 DestroyWall();
             }

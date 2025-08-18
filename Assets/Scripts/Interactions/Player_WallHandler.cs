@@ -103,25 +103,6 @@ public class Player_WallHandler : MonoBehaviour
         }
         else
         {
-            // var positions = new Vector3[_trail.positionCount];
-            // if (_trail.positionCount > 0)
-            // {
-            //     _trail.GetPositions(positions);
-            //     var firstPoint = positions[0];
-            //     var distance = Vector3.Distance(_trail.transform.position, firstPoint);
-            //     if (positions.Length > 2 && distance <= DISTANCE_THRESHOLD)
-            //     {
-            //         _buildWall(positions);
-            //     }
-            //     else
-            //     {
-            //         // TODO: Fizzle visual/audio effect?
-            //         
-            //         // Give juice back
-            //         GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
-            //     }
-            // }
-            
             var positions = new Vector3[_trail.positionCount];
             var count = _trail.GetPositions(positions);
             var distance = Vector3.Distance(_trail.transform.position, positions[0]);
@@ -132,19 +113,17 @@ public class Player_WallHandler : MonoBehaviour
             }
             else if (count >= 4) // If the line has at least four vertices (to prevent undesired small walls)
             {
-                // project to XZ 2D for intersection tests
                 Vector2[] path2D = new Vector2[count];
                 for(int i = 0; i < count; i++)
                     path2D[i] = new Vector2(positions[i].x, positions[i].z);
 
-                int foundI = -1; // second index of first segment (segment A is (foundI-1, foundI))
-                int foundJ = -1; // first index of second segment (segment B is (foundJ, foundJ+1))
+                int foundI = -1;
+                int foundJ = -1;
                 Vector2 intersectionPoint = Vector2.zero;
                 
-                // find first non-adjacent intersection
                 for (int i = 1; i < count - 2; i++)
                 {
-                    for (int j = i + 2; j < count - 1; j++) // j = i+2 ensures non-adjacent (no shared vertex)
+                    for (int j = i + 2; j < count - 1; j++)
                     {
                         if (GeometryHelper.LineSegmentsIntersect(path2D[i - 1], path2D[i], path2D[j], path2D[j + 1], out Vector2 inter))
                         {
@@ -159,7 +138,6 @@ public class Player_WallHandler : MonoBehaviour
 
                 if (foundI != -1)
                 {
-                    // Compute exact 3D intersection for segment A (between positions[foundI-1] and positions[foundI])
                     Vector2 a1 = path2D[foundI - 1];
                     Vector2 a2 = path2D[foundI];
                     Vector2 dirA = a2 - a1;
@@ -169,7 +147,6 @@ public class Player_WallHandler : MonoBehaviour
                     float  yA = Mathf.Lerp(positions[foundI - 1].y, positions[foundI].y, tA);
                     Vector3 intersectionA3D = new Vector3(intersectionPoint.x, yA, intersectionPoint.y);
                     
-                    // Compute exact 3D intersection for segment B (between positions[foundJ] and positions[foundJ+1])
                     Vector2 b1 = path2D[foundJ];
                     Vector2 b2 = path2D[foundJ + 1];
                     Vector2 dirB = b2 - b1;
@@ -179,26 +156,20 @@ public class Player_WallHandler : MonoBehaviour
                     float yB = Mathf.Lerp(positions[foundJ].y, positions[foundJ + 1].y, tB);
                     Vector3 intersectionB3D = new Vector3(intersectionPoint.x, yB, intersectionPoint.y);
                     
-                    // Build ordered loop: intersectionA -> positions[foundI] .. positions[foundJ] -> intersectionB
                     var loopPoints = new List<Vector3>((foundJ - foundI) + 3);
                     loopPoints.Add(intersectionA3D);
                     
-                    // Add the sampled points between the two intersection segments
                     for(int k = foundI; k <= foundJ; k++)
                         loopPoints.Add(positions[k]);
                     
                     loopPoints.Add(intersectionB3D);
                     
-                    // Clean near-duplicate consecutive points
                     var cleaned = GeometryHelper.CleanLoopPoints(loopPoints);
                     GeometryHelper.LogTinySegments(cleaned);
                     
-                    // If after cleaning we have at least 3 vertices, build the wall
                     if (loopPoints.Count >= 3)
                     {
                         _buildWall(cleaned.ToArray());
-                        
-                        // Restore juice not used in the wall
                         if((_currentPoints - loopPoints.Count) > 0)
                             GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints - loopPoints.Count);
                     }
@@ -234,7 +205,7 @@ public class Player_WallHandler : MonoBehaviour
         WallParent wallParent = Instantiate(_wallParentPrefab);
         for (int i = 0; i < count; i++)
         {
-            float yPos = points[0].y + 0.1f; // Position slightly above ground by default for later raycast check
+            float yPos = points[0].y; // Uniform Y position for all wall segments
             Vector3 start = new Vector3(points[i].x, yPos, points[i].z);
             Vector3 endPoint = points[(i + 1) % count];
             Vector3 end = new Vector3(endPoint.x, yPos, endPoint.z);

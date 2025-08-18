@@ -73,7 +73,6 @@ namespace Utilities
         {
             if (points == null || points.Count <= 1) return points;
 
-            // 1) Remove consecutive near-duplicates
             float minDistSqr = minDist * minDist;
             var cleaned = new List<Vector3>(points.Count);
             cleaned.Add(points[0]);
@@ -83,14 +82,11 @@ namespace Utilities
                     cleaned.Add(points[i]);
             }
 
-            // 2) Handle wrap-around near-duplicate (last vs first)
             if (cleaned.Count >= 2 && (cleaned[0] - cleaned[cleaned.Count - 1]).sqrMagnitude < minDistSqr)
             {
-                // remove the last point (merge it with first)
                 cleaned.RemoveAt(cleaned.Count - 1);
             }
 
-            // 3) Remove near-colinear points (keeps polygon simpler, prevents tiny triangles)
             if (cleaned.Count >= 3)
             {
                 var simplified = new List<Vector3>(cleaned.Count);
@@ -103,18 +99,15 @@ namespace Utilities
                     Vector3 v1 = (curr - prev).normalized;
                     Vector3 v2 = (next - curr).normalized;
 
-                    // if nearly colinear (angle small), skip adding current
                     float angle = Vector3.Angle(v1, v2);
                     if (angle <= colinearAngleDeg && (curr - prev).sqrMagnitude < ( (next - curr).sqrMagnitude + minDistSqr ) )
                     {
-                        // skip curr (it is almost colinear); this heuristic avoids removing long segments
                         continue;
                     }
 
                     simplified.Add(curr);
                 }
 
-                // After simplification, we should again ensure wrap-around duplicates are removed
                 if (simplified.Count >= 2 && (simplified[0] - simplified[simplified.Count - 1]).sqrMagnitude < minDistSqr)
                     simplified.RemoveAt(simplified.Count - 1);
 
@@ -124,7 +117,7 @@ namespace Utilities
             return cleaned;
         }
 
-        // Debug helper: print any very small segments (good for tuning)
+        // Debug helper: print any very small segments for tuning
         public static void LogTinySegments(IReadOnlyList<Vector3> pts, float tinyThreshold = 0.001f)
         {
             float tSqr = tinyThreshold * tinyThreshold;

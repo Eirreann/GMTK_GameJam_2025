@@ -37,8 +37,9 @@ namespace Enemies
             weapon.Init(damage);
         }
 
-        private void FixedUpdate()
+        protected override void Update()
         {
+            base.Update();
             if (hasTarget)
             {
                 if (!_isPursuing)
@@ -47,9 +48,7 @@ namespace Enemies
                         audioSource.PlayOneShot(onDetect);
                     _isPursuing = true;
                 }
-
-
-                if (!player) return;
+                
                 float distance = Vector3.Distance(transform.position, player.transform.position);
                 if (distance > distToAttack)
                 {
@@ -59,7 +58,7 @@ namespace Enemies
                                 out RaycastHit hit, distance) && hit.collider.CompareTag("PlayerWall"))
                         {
                             float distanceToWall = Vector3.Distance(transform.position, hit.transform.position);
-                            if (distanceToWall > (distToAttack + 0.5))
+                            if (distanceToWall > distToAttack)
                             {
                                 //Debug.DrawRay(transform.position + Vector3.up, player.transform.position - hit.transform.position, Color.red);
                                 _agent.isStopped = false;
@@ -74,7 +73,7 @@ namespace Enemies
                     {
                         _agent.isStopped = false;
                         _anim.SetBool("isWalking", true);
-                        _agent.SetDestination((player.transform.position));
+                        _agent.SetDestination(player.transform.position);
                         _runCooldown();
                     }
                 }
@@ -95,8 +94,10 @@ namespace Enemies
         public override void ResetEnemy()
         {
             base.ResetEnemy();
+            _isPursuing = false;
             _agent.isStopped = true;
             transform.position = startPos;
+            patrolRoute.ResetPatrol();
         }
 
         public void PlayFootstep()
@@ -116,10 +117,9 @@ namespace Enemies
         {
             if (_attackCooldown == 0)
             {
+                _agent.isStopped = true;
                 _attackCooldown = attackSpd;
-                
                 _anim.SetBool("isWalking", false);
-                
                 _anim.Play(attackAnim.name);
                 
                 if(onAttack != null)
