@@ -28,6 +28,7 @@ namespace Interactions
         public void Init(Vector3[] points)
         {
             _points = points;
+            _positionWallsOnGround();
             StartCoroutine(_buildAfterDelay());
         }
         
@@ -35,6 +36,7 @@ namespace Interactions
         {
             segment.transform.SetParent(transform);
             segment.SetOnHitCallback(_onWallHit);
+            segment.GetComponent<Animator>().Play("Wall_Create");
             _segments.Add(segment);
         }
 
@@ -77,6 +79,26 @@ namespace Interactions
                     _trappedEnemies.Add(e);
                 }
             });
+        }
+
+        private void _positionWallsOnGround()
+        {
+            const float pivotOffset = 0f;
+            Vector3 origin = _segments[0].transform.position + Vector3.up * 0.5f;
+            Ray ray = new Ray(origin, Vector3.down);
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+            {
+                if (hit.collider.CompareTag("Ground"))
+                {
+                    _segments.ForEach(s =>
+                    {
+                        Vector3 pos = s.transform.position;
+                        pos.y = hit.point.y + pivotOffset;
+                        s.transform.position = pos;
+                        
+                    });
+                }
+            }
         }
     }
 }

@@ -7,17 +7,12 @@ using Utilities;
 
 public class WallSegment : MonoBehaviour, IDamageable
 {
+    [SerializeField] private MeshRenderer _renderer;
     [SerializeField] private Material _builtWall;
     [SerializeField] private Material _hitMat;
 
-    private MeshRenderer _renderer;
     private UnityAction<int> _onHit;
     private bool _isHittable = false;
-
-    private void Start()
-    {
-        _renderer = GetComponent<MeshRenderer>();
-    }
 
     public void SetOnHitCallback(UnityAction<int> callback)
     {

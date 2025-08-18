@@ -23,7 +23,7 @@ public class Player_WallHandler : MonoBehaviour
     [SerializeField] private float _trailDuration = 5f;
     
     private const float COOLDOWN = 1f;
-    private const float DISTANCE_THRESHOLD = 2f;
+    private const float DISTANCE_THRESHOLD = 1f;
     private const float MIN_VERTEX_DISTANCE = 2f;
     
     private TrailRenderer _trail;
@@ -124,8 +124,13 @@ public class Player_WallHandler : MonoBehaviour
             
             var positions = new Vector3[_trail.positionCount];
             var count = _trail.GetPositions(positions);
-
-            if (count >= 4) // If the line has at least four vertices (to prevent undesired small walls)
+            var distance = Vector3.Distance(_trail.transform.position, positions[0]);
+            
+            if (count > 2 && distance <= DISTANCE_THRESHOLD) // Old wall drawing method, keeping so it works both ways
+            {
+                _buildWall(positions);
+            }
+            else if (count >= 4) // If the line has at least four vertices (to prevent undesired small walls)
             {
                 // project to XZ 2D for intersection tests
                 Vector2[] path2D = new Vector2[count];
@@ -200,24 +205,19 @@ public class Player_WallHandler : MonoBehaviour
                     else
                     {
                         Debug.Log("Detected intersection but loop has insufficient points after cleaning.");
-                        
+                        _cancelWall(_currentPoints);
                     }
                 }
                 else
                 {
                     Debug.Log("No self-intersection detected; trail ended without forming a loop.");
-
-                    // Give juice back
-                    GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
+                    _cancelWall(_currentPoints);
                 }
             }
             else
             {
                 Debug.Log("Trail too short to form a loop.");
-
-                // Give juice back
-                GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
-                // TODO: Fizzle visual/audio effect?
+                _cancelWall(_currentPoints);
             }
             
             Destroy(_trail.gameObject);
@@ -234,7 +234,7 @@ public class Player_WallHandler : MonoBehaviour
         WallParent wallParent = Instantiate(_wallParentPrefab);
         for (int i = 0; i < count; i++)
         {
-            float yPos = points[0].y + 1.5f;
+            float yPos = points[0].y + 0.1f; // Position slightly above ground by default for later raycast check
             Vector3 start = new Vector3(points[i].x, yPos, points[i].z);
             Vector3 endPoint = points[(i + 1) % count];
             Vector3 end = new Vector3(endPoint.x, yPos, endPoint.z);
@@ -254,5 +254,13 @@ public class Player_WallHandler : MonoBehaviour
         }
         wallParent.Init(points);
         GameManager.Instance.CurrentLevel.LevelWalls.Add(wallParent);
+    }
+
+    private void _cancelWall(int points)
+    {
+        // TODO: Fizzle visual/audio effect?
+        
+        // Give juice back
+        GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints);
     }
 }
