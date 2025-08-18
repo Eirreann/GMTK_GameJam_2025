@@ -22,16 +22,12 @@ namespace Player
 
         public Camera playerCamera;
         public Rigidbody rb;
-
-        public String stateString = "";
         
         public bool playerCanMove = true;
-        private Transform _respawnLocation = null;
+        private Transform _respawnLocation;
 
-        public bool canWallJump = false;
         public Transform lastWallJumped;
-
-        public bool hasWallJumped = false;
+        public bool hasWallJumped;
         
         public void Awake() 
         {
@@ -41,6 +37,8 @@ namespace Player
             playerStats = GetComponent<PlayerStats>();
             playerInteractions = GetComponent<PlayerInteractions>();
             wallHandler = GetComponent<Player_WallHandler>();
+
+            HUD = FindFirstObjectByType<UIPlayerHud>();
 
             _playerStateMachine = new PlayerStateMachine(this);
             if (_playerStateMachine != null)
@@ -56,7 +54,6 @@ namespace Player
 
         private void Update()
         {
-            stateString = _playerStateMachine.CurrentState.ToString();
             if (playerCanMove)
             {
                 playerMovement.RotatePlayer(GameManager.Instance.inputHandler._lookDirection);

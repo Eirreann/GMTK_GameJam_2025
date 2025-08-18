@@ -37,6 +37,8 @@ namespace Player
     private float _knockbackCooldown;
     private const float RESET_COOLDOWN = 1f;
 
+    public float leanStrength = 2f;
+
     private void Awake()
     {
         _rb = GetComponent<Rigidbody>();
@@ -65,7 +67,7 @@ namespace Player
          
         xRotation = Mathf.Clamp(xRotation, -_yRotationLimit, _yRotationLimit);
          
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
+        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, -Vector3.Dot(_rb.linearVelocity.normalized, playerCamera.transform.right.normalized) * leanStrength);
     }
     
     public void ProcessMovement(float desiredSpeed)

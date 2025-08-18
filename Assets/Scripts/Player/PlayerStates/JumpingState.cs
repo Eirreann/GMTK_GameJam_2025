@@ -47,7 +47,6 @@ namespace Player.PlayerStates
 
             if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
-                player.canWallJump = true;
                 if (GameManager.Instance.inputHandler._jump)
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
