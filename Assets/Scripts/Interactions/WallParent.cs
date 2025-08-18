@@ -40,10 +40,11 @@ namespace Interactions
             _segments.Add(segment);
         }
 
-        public void DestroyWall()
+        public void DestroyWall(bool levelEnd = false)
         {
             // TODO: destroy visual effect?
-            _trappedEnemies.ForEach(e => e.SetTrapped(false));
+            if(!levelEnd)
+                _trappedEnemies.ForEach(e => e.SetTrapped(false));
             Destroy(gameObject);
         }
 

@@ -94,9 +94,9 @@ namespace Game
             AudioManager.Instance.OnPickupRope();
         }
 
-        public void DestroyLevelWalls()
+        public void DestroyLevelWalls(bool levelEnd = false)
         {
-            LevelWalls.ForEach(w => w.DestroyWall());
+            LevelWalls.ForEach(w => w.DestroyWall(levelEnd));
             LevelWalls.Clear();
         }
         
@@ -110,7 +110,6 @@ namespace Game
                 playerHasRope = false;
                 
                 endDoorCollider.enabled = false;
-                DestroyLevelWalls();
                 
                 // TODO: Check if this deposit point is the final one, as opposed to a tether?
                 _endLevel();
@@ -150,6 +149,7 @@ namespace Game
         private void _endLevel()
         {
             _destroyEnemies();
+            DestroyLevelWalls(true);
             endDoorAnimator.Play("Door_Open");
         }
 

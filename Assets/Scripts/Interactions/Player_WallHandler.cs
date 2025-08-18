@@ -23,8 +23,7 @@ public class Player_WallHandler : MonoBehaviour
     [SerializeField] private float _trailDuration = 5f;
     
     private const float COOLDOWN = 1f;
-    private const float DISTANCE_THRESHOLD = 1f;
-    private const float MIN_VERTEX_DISTANCE = 2f;
+    private const float DISTANCE_THRESHOLD = 1.5f;
     
     private TrailRenderer _trail;
     private float _drawCooldown = 0f;
@@ -116,7 +115,13 @@ public class Player_WallHandler : MonoBehaviour
                 Vector2[] path2D = new Vector2[count];
                 for(int i = 0; i < count; i++)
                     path2D[i] = new Vector2(positions[i].x, positions[i].z);
-
+                
+                // Move last point ahead a smidge for a more satisfying draw experience
+                Vector3 lastPoint = new Vector3(path2D[path2D.Length - 1].x, _trailYPos, path2D[path2D.Length - 1].y);
+                Vector3 directionOfMotion = GetComponent<Rigidbody>().linearVelocity.normalized;
+                Vector3 projectedForwardPoint = lastPoint + directionOfMotion * DISTANCE_THRESHOLD;
+                path2D[path2D.Length - 1] = new Vector2(projectedForwardPoint.x, projectedForwardPoint.z);
+                
                 int foundI = -1;
                 int foundJ = -1;
                 Vector2 intersectionPoint = Vector2.zero;

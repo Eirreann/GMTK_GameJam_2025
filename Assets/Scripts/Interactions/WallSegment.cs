@@ -11,6 +11,8 @@ public class WallSegment : MonoBehaviour, IDamageable
     [SerializeField] private Material _builtWall;
     [SerializeField] private Material _hitMat;
 
+    private const float DAMAGE_MODIFIER = 0.75f;
+    
     private UnityAction<int> _onHit;
     private bool _isHittable = false;
 
@@ -21,8 +23,10 @@ public class WallSegment : MonoBehaviour, IDamageable
 
     public void TakeDamage(int damage)
     {
+        int modifiedDamage = Convert.ToInt32(damage * DAMAGE_MODIFIER);
+        
         if(_isHittable)
-            _onHit.Invoke(damage);
+            _onHit.Invoke(modifiedDamage);
         
         StartCoroutine(_flashOnHit());
     }
