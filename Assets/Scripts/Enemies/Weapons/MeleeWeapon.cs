@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game;
 using UnityEngine;
 using Utilities;
@@ -13,39 +14,42 @@ namespace Enemies.Weapons
         private const float DAMAGE_COOLDOWN = 0.5f;
         
         private int _damage;
-        private float _damageCooldownTimer = 0f;
-
+        private List<IDamageable> _hitList = new List<IDamageable>();
+        
         public void Init(int damage)
         {
             _damage = damage;
         }
 
-        private void Update()
-        {
-            if (_damageCooldownTimer > 0)
-            {
-                _damageCooldownTimer -= Time.deltaTime;
-                if(_damageCooldownTimer < 0)
-                    _damageCooldownTimer = 0;
-            }
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             var hit = other.GetComponent(typeof(IDamageable));
-            if (hit != null && _damageCooldownTimer <= 0)
+            if (hit != null)
             {
-                (hit as IDamageable).TakeDamage(_damage);
-                if (other.CompareTag("Player") && _hasKnockback)
+                var target = hit as IDamageable;
+                if (!_hitList.Contains(target))
                 {
-                    var dir = transform.forward;
-                    var force = dir * _knockbackForce;
-                    force.y = 0;
-                    GameManager.Instance.Player.playerMovement.SetKnockback(force);
+                    target.TakeDamage(_damage);
+                    _hitList.Add(hit as IDamageable);
+                    
+                    if (other.CompareTag("Player") && _hasKnockback)
+                    {
+                        var dir = transform.forward;
+                        var force = dir * _knockbackForce;
+                        force.y = 0;
+                        GameManager.Instance.Player.playerMovement.SetKnockback(force);
+                    }
+                    else if (other.CompareTag("PlayerWall"))
+                    {
+                        
+                    }
                 }
-                
-                _damageCooldownTimer = DAMAGE_COOLDOWN;
             }
+        }
+
+        private void OnDisable()
+        {
+            _hitList.Clear();
         }
     }
 }
