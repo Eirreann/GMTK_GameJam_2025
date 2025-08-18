@@ -13,7 +13,7 @@ namespace Interactions
     {
         private List<WallSegment> _segments = new List<WallSegment>();
 
-        private const float BUILD_DELAY = 0.25f;
+        private const float BUILD_DELAY = 0.35f; // lines up with animation
         private const int WALL_HEALTH = 45;
         
         private Vector3[] _points;
@@ -38,6 +38,11 @@ namespace Interactions
             segment.SetOnHitCallback(_onWallHit);
             segment.GetComponent<Animator>().Play("Wall_Create");
             _segments.Add(segment);
+        }
+
+        public List<WallSegment> GetSegments()
+        {
+            return _segments;
         }
 
         public void DestroyWall(bool levelEnd = false)

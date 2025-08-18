@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Game;
+using Interactions;
 using UnityEngine;
 using Utilities;
 
@@ -41,7 +42,8 @@ namespace Enemies.Weapons
                     }
                     else if (other.CompareTag("PlayerWall"))
                     {
-                        // TODO: avoid hitting multiple walls at once?
+                        var segments = other.GetComponentInParent<WallParent>().GetSegments();
+                        _hitList.AddRange(segments);
                     }
                 }
             }
