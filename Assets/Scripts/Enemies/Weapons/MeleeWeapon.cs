@@ -30,7 +30,7 @@ namespace Enemies.Weapons
                 if (!_hitList.Contains(target))
                 {
                     target.TakeDamage(_damage);
-                    _hitList.Add(hit as IDamageable);
+                    _hitList.Add(target);
                     
                     if (other.CompareTag("Player") && _hasKnockback)
                     {
@@ -41,7 +41,7 @@ namespace Enemies.Weapons
                     }
                     else if (other.CompareTag("PlayerWall"))
                     {
-                        
+                        // TODO: avoid hitting multiple walls at once?
                     }
                 }
             }
