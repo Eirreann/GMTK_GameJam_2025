@@ -1,3 +1,4 @@
+using System;
 using Game;
 using UnityEngine;
 
@@ -66,8 +67,8 @@ namespace Player
         xRotation -= directionValue.y;
          
         xRotation = Mathf.Clamp(xRotation, -_yRotationLimit, _yRotationLimit);
-         
-        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, -Vector3.Dot(_rb.linearVelocity.normalized, playerCamera.transform.right.normalized) * leanStrength);
+
+        playerCamera.transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f); //Mathf.Clamp(-Vector3.Dot(_rb.linearVelocity, playerCamera.transform.right), -leanStrength, leanStrength));
     }
     
     public void ProcessMovement(float desiredSpeed)

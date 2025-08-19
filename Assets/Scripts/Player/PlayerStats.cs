@@ -15,18 +15,14 @@ namespace Player
         [SerializeField] private int _maxPlayerHealth;
     
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        public void Start()
-        {
-            //Debug.Log("Memory leak.");
-            //StartCoroutine(_JOTEffect());
-        }
-
-        private IEnumerator _JOTEffect()
-        {
-            DrainJuice(1);
-            yield return new WaitForSeconds(2f);
         
-            StartCoroutine(_JOTEffect());
+
+        public IEnumerator JOTEffect(float frequency, int amount)
+        {
+            if(_currentWallJuice > 0 )DrainJuice(amount);
+            yield return new WaitForSeconds(frequency);
+        
+            StartCoroutine(JOTEffect(frequency, amount));
         }
 
         public int DrainJuice(int drain)

@@ -19,9 +19,16 @@ namespace Game
         [HideInInspector] public InputHandler inputHandler;
         public ControlsChangedHelper controlsHelper;
         
-        
         [SerializeField] private GameHUD _gameHUD;
         [SerializeField] private int _levelIndex = 0;
+        
+        [Header("Memory Leak Modifiers")]
+        public bool memoryLeak;
+        public float leakFrequency;
+        public int leakAmount;
+        
+        [Header("Instant Death Modifier")]
+        public bool instantDeath;
         
         private void Start()
         {
@@ -43,6 +50,8 @@ namespace Game
             }
             
             CurrentLevel.finalTerminal.Init(EndGame);
+
+            if (memoryLeak) StartCoroutine(Player.playerStats.JOTEffect(leakFrequency, leakAmount));
         }
         
         public void ResetLevel()

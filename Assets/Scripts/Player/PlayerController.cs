@@ -105,7 +105,7 @@ namespace Player
             
             AudioManager.Instance.OnTakeDamage();
             
-            if (health <= 0)
+            if (health <= 0 || GameManager.Instance.instantDeath)
             {
                 GameManager.Instance.ResetLevel();
             }

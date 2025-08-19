@@ -34,8 +34,8 @@ namespace UI
             SetLastSelected(_defaultButton.gameObject);
             SetLastVisited(_defaultButton.gameObject);
             EventSystem.current.SetSelectedGameObject(_defaultButton.gameObject);
-            
-            playerInput = GetComponent<PlayerInput>();
+
+            playerInput = FindFirstObjectByType<PlayerInput>();
             _inputSystem = new InputSystem_Actions();
             
             if(_activateUIInputsOnStart) _inputSystem.UI.Enable();

@@ -38,10 +38,14 @@ namespace UI
             Time.timeScale = 1;
             GameManager.Instance.Player.HUD.Fade(true);
             SceneManager.LoadScene(0);
+            
+            uiSelectionHelper._inputSystem.UI.Disable();
         }
         
         public void Start()
         {
+            uiSelectionHelper = GetComponent<UISelectionHelper>();
+            
             _continueBtn.onClick.AddListener(ShowPauseMenu);
             _endGameButton.onClick.AddListener(Shutdown);
             _menuBtn.onClick.AddListener(_returnToMenu);
