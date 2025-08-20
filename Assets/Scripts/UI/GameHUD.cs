@@ -57,12 +57,16 @@ namespace UI
 
         private void Update()
         {
-            _timer += Time.deltaTime % 60;
-
-            var minutes = (int)_timer / 60;
-            var seconds = (int)_timer % 60;
-            
-            _timerDisplay.text = string.Format("{00:00}:{01:00}", minutes, (int)_timer % 60 - (minutes / 60));
+            if (_timerDisplay.gameObject.activeSelf)
+            {
+                _timer += Time.deltaTime % 60;
+                
+                var minutes = (int)_timer / 60;
+                var seconds = (int)_timer % 60;
+                int milliseconds = (int)(_timer * 1000 - (1000 * seconds));
+                
+                _timerDisplay.text = string.Format("{00:00}:{01:00}.{02:00}", minutes, (int)_timer % 60 - (minutes / 60), milliseconds.ToString("D3"));
+            }
         }
 
         public void ClosePauseMenu()

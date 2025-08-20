@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6029812497986603871}
   - component: {fileID: 8502831014548363400}
   - component: {fileID: 2807003999342509433}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Rope
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -138,9 +138,9 @@ LineRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Positions:
-  - {x: 79.39239, y: 1.1517, z: -15.95244}
-  - {x: 79.73248, y: 0.45550194, z: -15.962636}
-  - {x: 80.11369, y: 1.0177001, z: -15.974065}
+  - {x: 0.46238732, y: 1.1717, z: -17.422441}
+  - {x: 0.8024817, y: 0.4755005, z: -17.432636}
+  - {x: 1.1836903, y: 1.0377, z: -17.444065}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2114251006060489171}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Mid Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -273,7 +273,7 @@ Transform:
   m_GameObject: {fileID: 3644691832378967675}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.02647284, y: -1.441383, z: -0.06793739}
+  m_LocalPosition: {x: -0.026477447, y: -1.4413843, z: -0.06793663}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -293,7 +293,7 @@ GameObject:
   - component: {fileID: 5289442051450124955}
   - component: {fileID: 1751143365062683422}
   - component: {fileID: 2790997319588285800}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RopePickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +436,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6839924651487981370}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: ReturnPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -523,7 +523,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7135891334044998946}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RopeEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -554,7 +554,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3582410134396783023}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: RopeStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 4603714509797036698}
   - component: {fileID: 5948903235259311602}
   - component: {fileID: 7990280270872520086}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game;
+using Player;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -8,6 +9,7 @@ namespace Interactions
 {
     public class Interactable : MonoBehaviour
     {
+        private PlayerController _playerController;
         private bool _playerInRange = false;
         public UnityAction<bool> interactableAction;
 
@@ -17,15 +19,14 @@ namespace Interactions
         public bool triggered = false;
         public bool isEnabled = false;
 
+        public void Start()
+        {
+            _playerController = FindFirstObjectByType<PlayerController>();
+        }
+        
         public void Update()
         {
-            if (isEnabled && _playerInRange)
-            {
-                if (GameManager.Instance.inputHandler._interact)
-                {
-                    if(!triggered) Interact(true);
-                }
-            }
+            
         }
 
          public virtual string GetText()
@@ -57,12 +58,24 @@ namespace Interactions
             return status;
         }
 
+        public void EnableInteractableText()
+        {
+            if (isEnabled && !triggered)
+            {
+                GameManager.Instance.Player.HUD.UpdateInteractText(this, true);
+            }
+        }
+
+        public void DisableInteractableText()
+        {
+            GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
+        }
+
         public void OnTriggerEnter(Collider other)
         {
-            if (other.tag == "Player" && isEnabled && !triggered)
+            if (other.tag == "Player")
             {
-                _playerInRange = true;
-                GameManager.Instance.Player.HUD.UpdateInteractText(this, true);
+                other.gameObject.GetComponent<PlayerController>().playerCanInteract = true;
             }
         }
         
@@ -70,8 +83,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                _playerInRange = false;
-                GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
+                other.gameObject.GetComponent<PlayerController>().playerCanInteract = false;
             }
         }
     }

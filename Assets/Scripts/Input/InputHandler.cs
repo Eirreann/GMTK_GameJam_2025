@@ -13,6 +13,7 @@ namespace Input
     
     public InputSystem_Actions inputSystem;
     private InputSystem_Actions.PlayerActions playerActions;
+    private InputSystem_Actions.UIActions uiActions;
 
     [SerializeField] private TooltipHandler tooltipHandler;
 
@@ -58,6 +59,7 @@ namespace Input
     void Start()
     {
         playerActions = inputSystem.Player;
+        uiActions = inputSystem.UI;
         playerActions.Enable();
     }
 

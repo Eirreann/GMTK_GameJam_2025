@@ -24,7 +24,11 @@ namespace Player
         public Rigidbody rb;
         
         public bool playerCanMove = true;
+        public bool playerCanInteract = false;
+        
         private Transform _respawnLocation;
+
+        public LayerMask interactableLayer;
 
         public Transform lastWallJumped;
         public bool hasWallJumped;
@@ -52,6 +56,7 @@ namespace Player
             return new Vector3(vec.x, 0 ,vec.z);
         }
 
+        private Interactable _interactableLookedAt;
         private void Update()
         {
             if (playerCanMove)
@@ -59,6 +64,32 @@ namespace Player
                 playerMovement.RotatePlayer(GameManager.Instance.inputHandler._lookDirection);
                 _playerStateMachine.Update();
             }
+
+            if (playerCanInteract)
+            {
+                if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out RaycastHit hit, 3f, interactableLayer, QueryTriggerInteraction.Ignore))
+                {
+                    if (_interactableLookedAt == null)
+                    {
+                        _interactableLookedAt = hit.collider.GetComponent<Interactable>();
+                        _interactableLookedAt.EnableInteractableText();
+                    }
+                    
+                    if (GameManager.Instance.inputHandler._interact && _interactableLookedAt != null)
+                    {
+                        _interactableLookedAt.Interact(true);
+                    }
+                }
+                else
+                {
+                    if (_interactableLookedAt != null)
+                    {
+                        _interactableLookedAt.DisableInteractableText();
+                        _interactableLookedAt = null;
+                    }
+                }
+            }
+            
         }
 
         private void FixedUpdate()
