@@ -126,6 +126,8 @@ namespace UI
             Time.timeScale = 1;
             GameManager.Instance.inputHandler.OnGameOver();
             SceneManager.LoadScene(0);
+            
+            uiSelectionHelper._inputSystem.UI.Disable();
         }
     }
 }

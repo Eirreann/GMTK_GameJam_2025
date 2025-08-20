@@ -9,13 +9,13 @@ namespace Input
     {
         public UnityAction OnControlsChanged;
         
-        private PlayerInput _playerInput;
+        [SerializeField] private PlayerInput _playerInput;
 
         private string _lastControlScheme;
         
         private void Awake()
         {
-            _playerInput = GetComponent<PlayerInput>();
+            if(!_playerInput) _playerInput = GetComponent<PlayerInput>();
         }
 
         public void Update()

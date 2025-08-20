@@ -1151,6 +1151,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5081181306063167995, guid: a6d0cc25e94825e4ca986a14d63bab6a, type: 3}
   m_PrefabInstance: {fileID: 202064969828840825}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5212320332150261395 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5375046967576392682, guid: a6d0cc25e94825e4ca986a14d63bab6a, type: 3}
+  m_PrefabInstance: {fileID: 202064969828840825}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &719242932505793532
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1388,6 +1399,10 @@ PrefabInstance:
       propertyPath: tabs.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2375714544550014273, guid: 9aba329500fffa34c89ab384ba93f846, type: 3}
+      propertyPath: _closePanelButton
+      value: 
+      objectReference: {fileID: 5212320332150261395}
     - target: {fileID: 2375714544550014273, guid: 9aba329500fffa34c89ab384ba93f846, type: 3}
       propertyPath: buttons.Array.size
       value: 3
@@ -2659,7 +2674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 913956259403716524, guid: 705019eb514621843a0b2f7a352b66d3, type: 3}
       propertyPath: m_MaxValue
-      value: 300
+      value: 120
       objectReference: {fileID: 0}
     - target: {fileID: 913956259403716524, guid: 705019eb514621843a0b2f7a352b66d3, type: 3}
       propertyPath: m_MinValue
