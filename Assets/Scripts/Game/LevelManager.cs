@@ -74,6 +74,7 @@ namespace Game
         public void RegisterEnemyCaptured()
         {
             allCaptured = enemies.TrueForAll(e => e.IsTrapped);
+            Debug.Log("All Captured: " + allCaptured);
             
             _setRopeActive(allCaptured, playerHasRope);
             _setRopeMaterials(allCaptured, false);
@@ -131,6 +132,10 @@ namespace Game
             pickupObj.rope.endPoint = ropePickupLocation;
             pickupInteractable.triggered = false;
             AudioManager.Instance.OnDropRope();
+            
+            allCaptured = enemies.TrueForAll(e => e.IsTrapped);
+            _setRopeActive(allCaptured, playerHasRope);
+            _setRopeMaterials(allCaptured, false);
         }
 
 

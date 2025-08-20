@@ -121,10 +121,12 @@ namespace Player
         
         _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, 0, _rb.linearVelocity.z);
         
+        Debug.Log(Mathf.Clamp(forceToApply.y, 5f, upWallJumpForce));
+        
         _rb.AddForce(
             new Vector3(
                 forceToApply.x,
-                forceToApply.y,
+                Mathf.Clamp(forceToApply.y, 5f, upWallJumpForce),
                 forceToApply.z
             ), 
             ForceMode.Impulse
