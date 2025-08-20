@@ -113,9 +113,11 @@ MonoBehaviour:
   wallHandler: {fileID: 0}
   playerCamera: {fileID: 7488266105443202889}
   rb: {fileID: 0}
-  stateString: 
   playerCanMove: 1
-  canWallJump: 0
+  playerCanInteract: 0
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 128
   lastWallJumped: {fileID: 0}
   hasWallJumped: 0
 --- !u!114 &541133255216557778
@@ -150,8 +152,9 @@ MonoBehaviour:
   _yRotationLimit: 70
   velocity: {x: 0, y: 0, z: 0}
   gravityScale: 10
-  sideWalJumpForce: 16
-  upWallJumpForce: 16
+  leanStrength: 2
+  sideWalJumpForce: 12
+  upWallJumpForce: 12
 --- !u!114 &7711792485344224027
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,7 +275,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7085332635289258436}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.96, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
