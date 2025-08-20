@@ -94,6 +94,7 @@ public class Player_WallHandler : MonoBehaviour
     private void _drawWall(bool state)
     {
         _isDrawing = state;
+        AudioManager.Instance.DrawWallAudio(_isDrawing);
         if (state)
         {
             _trail = Instantiate(_trailPrefab).GetComponent<TrailRenderer>();
@@ -108,7 +109,7 @@ public class Player_WallHandler : MonoBehaviour
             
             if (count > 2 && distance <= DISTANCE_THRESHOLD) // Old wall drawing method, keeping so it works both ways
             {
-                _buildWall(positions);
+                _buildWall(positions, positions[0]);
             }
             else if (count >= 4) // If the line has at least four vertices (to prevent undesired small walls)
             {
@@ -174,7 +175,7 @@ public class Player_WallHandler : MonoBehaviour
                     
                     if (loopPoints.Count >= 3)
                     {
-                        _buildWall(cleaned.ToArray());
+                        _buildWall(cleaned.ToArray(), new Vector3(intersectionPoint.x, _trailYPos, intersectionPoint.y));
                         if((_currentPoints - loopPoints.Count) > 0)
                             GameManager.Instance.Player.playerStats.InjectJuice(_currentPoints - loopPoints.Count);
                     }
@@ -202,12 +203,12 @@ public class Player_WallHandler : MonoBehaviour
         }
     }
 
-    private void _buildWall(Vector3[] points)
+    private void _buildWall(Vector3[] points, Vector3 startPos)
     {
         int count = points.Length;
         if (count < 2) return;
 
-        WallParent wallParent = Instantiate(_wallParentPrefab);
+        WallParent wallParent = Instantiate(_wallParentPrefab, startPos, Quaternion.identity);
         for (int i = 0; i < count; i++)
         {
             float yPos = points[0].y; // Uniform Y position for all wall segments

@@ -14,12 +14,15 @@ namespace Game
     public AudioSource MusicStartSource;
     public AudioSource MusicLoopSource;
     public AudioSource SFXSource;
+    public AudioSource WallSFXSource;
 
     [Header("Sound Effects")]
     public AudioClip TakeDamage;
     public AudioClip Pickup;
     public AudioClip CarryLoop;
     public AudioClip Deposit;
+    public AudioClip DrawWallStart;
+    public AudioClip DrawWallLoop;
     
     [Header("Music")]
     public AudioClip Part1Intro;
@@ -66,6 +69,22 @@ namespace Game
         SFXSource.loop = false;
         SFXSource.Stop();
         SFXSource.PlayOneShot(Deposit);
+    }
+
+    public void DrawWallAudio(bool state)
+    {
+        if (state)
+        {
+            WallSFXSource.PlayOneShot(DrawWallStart);
+            WallSFXSource.clip = DrawWallLoop;
+            WallSFXSource.loop = true;
+            WallSFXSource.Play();   
+        }
+        else
+        {
+            WallSFXSource.loop = false;
+            WallSFXSource.Stop();
+        }
     }
 
     public void OnPurgeSystem()
