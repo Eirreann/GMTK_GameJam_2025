@@ -15,7 +15,7 @@ namespace Input
         
         private void Awake()
         {
-            if(!_playerInput) _playerInput = GetComponent<PlayerInput>();
+            _playerInput = FindFirstObjectByType<PlayerInput>();
         }
 
         public void Update()

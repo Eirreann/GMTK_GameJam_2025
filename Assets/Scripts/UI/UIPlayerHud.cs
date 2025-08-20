@@ -32,8 +32,6 @@ namespace UI
         [SerializeField] private Image _damagePanel;
         [SerializeField] private Image _fadePanel;
         
-        [SerializeField] private TextMeshProUGUI _damageText;
-        
         [SerializeField] private TooltipSO _tooltipStorage;
         [SerializeField] private Interactable _interactableStorage;
         
