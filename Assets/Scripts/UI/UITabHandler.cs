@@ -28,6 +28,8 @@ public class UITabHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        _selectionHelper = FindFirstObjectByType<UISelectionHelper>();
+        
         _currentTab = 0;
         
         buttons[_currentTab].interactable = false;
