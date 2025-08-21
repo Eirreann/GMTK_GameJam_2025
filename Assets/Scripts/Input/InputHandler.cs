@@ -40,8 +40,9 @@ namespace Input
         public float NonMouseSensitivityModifier = .5f;
         public float MouseSensitivityModifier = 2.0f;
 
-        private void Start()
+        public override void Init(bool isPersistent = false)
         {
+            base.Init(isPersistent);
             playerInput = GetComponent<PlayerInput>();
             
             inputSystem = new InputSystem_Actions();
