@@ -23,7 +23,7 @@ namespace Game
         
         private void Start()
         {
-            Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 30);
+            Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 60);
             QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
             Screen.fullScreenMode = PlayerPrefs.GetInt("fullscreen", 1) == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
             

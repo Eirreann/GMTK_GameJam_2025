@@ -102,7 +102,7 @@ namespace UI
         public void SetInitialVideoValues()
         {
             
-            fpsSlider.value = PlayerPrefs.GetInt("maxFPS", 30);
+            fpsSlider.value = PlayerPrefs.GetInt("maxFPS", 60);
             fpsDisplay.text = $"{fpsSlider.value}";
             
             vSyncToggle.isOn = PlayerPrefs.GetInt("vSync", 0) == 1;
