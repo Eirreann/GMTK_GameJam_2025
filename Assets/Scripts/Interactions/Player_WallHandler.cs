@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 using Game;
 using Input;
+using Player;
 using Utilities;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
@@ -94,6 +95,8 @@ public class Player_WallHandler : MonoBehaviour
 
     private void _drawWall(bool state)
     {
+        if (!GameManager.Instance.Player.playerCanMove) return;
+        
         _isDrawing = state;
         AudioManager.Instance.DrawWallAudio(_isDrawing);
         if (state)
