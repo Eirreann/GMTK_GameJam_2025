@@ -28,6 +28,7 @@ public class UITabHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        helper = GetComponent<ControlsChangedHelper>();
         _selectionHelper = FindFirstObjectByType<UISelectionHelper>();
         
         _currentTab = 0;
@@ -38,6 +39,9 @@ public class UITabHandler : MonoBehaviour
         SetNextBackState();
         
         helper.OnControlsChanged += SetNextBackState;
+
+        ResetTabs();
+        _closePanelButton.onClick.AddListener(ResetTabs);
         
         var buttonCount = 1;
         foreach (var button in buttons)
@@ -87,6 +91,12 @@ public class UITabHandler : MonoBehaviour
             _selectionHelper.SetLastVisited(_closePanelButton.gameObject);
             _selectionHelper.GrabLastVisitedButton();
         }
+    }
+
+    public void ResetTabs()
+    {
+        _currentTab = 0;
+        ClickTabButton(buttons[_currentTab]);
     }
     
     public void SetNextBackState()

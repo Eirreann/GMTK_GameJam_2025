@@ -26,6 +26,7 @@ namespace Game
         {
             Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 30);
             QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
+            Screen.fullScreenMode = PlayerPrefs.GetInt("fullscreen", 1) == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
             
             controlsHelper = GetComponent<ControlsChangedHelper>();
 

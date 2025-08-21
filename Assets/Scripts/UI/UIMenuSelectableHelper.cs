@@ -17,6 +17,8 @@ namespace UI
         private Toggle _toggle;
         private Slider _slider;
         private TextMeshProUGUI _textObj;
+        private TMP_Dropdown _dropdown;
+        
         private PlayerInput _playerInput;
         private String _originalText;
 
@@ -28,6 +30,7 @@ namespace UI
             _button = GetComponent<Button>();
             _slider = GetComponent<Slider>();
             _toggle = GetComponent<Toggle>();
+            _dropdown = GetComponent<TMP_Dropdown>();
             
             if (_button)
             {
@@ -115,6 +118,13 @@ namespace UI
                 var colors = _slider.colors;
                 colors.colorMultiplier = target;
                 _slider.colors = colors;
+            }
+            
+            if (_dropdown && _dropdown.interactable)
+            {
+                var colors = _dropdown.colors;
+                colors.colorMultiplier = target;
+                _dropdown.colors = colors;
             }
         }
     }

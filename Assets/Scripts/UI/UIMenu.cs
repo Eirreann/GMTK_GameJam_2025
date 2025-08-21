@@ -48,6 +48,7 @@ namespace UI
         
         Application.targetFrameRate = PlayerPrefs.GetInt("maxFPS", 30);
         QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
+        Screen.fullScreenMode = PlayerPrefs.GetInt("fullscreen", 1) == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
         
         _uiSelectionHelper = GetComponent<UISelectionHelper>();
         _uiSelectionHelper.AddActivePanel(MainMenuContainer);
@@ -81,7 +82,7 @@ namespace UI
     
     public void SetMenuButtons(bool _state)
     {
-        _uiSelectionHelper.tint.enabled = !_state;
+        if(_uiSelectionHelper.tint) _uiSelectionHelper.tint.enabled = !_state;
         MainMenuContainer.SetActive(_state);
     }
 

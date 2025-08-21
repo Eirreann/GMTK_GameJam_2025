@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0eb2ea6b3fd9ec34eaef3cb9f8a161f9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 0dd3ff42dbad89447b0eff5a6310700c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MatrixTexture:
@@ -67,11 +67,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _ColorIntensity: 3
+    - _EmissionMultiplier: 3
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _UseTexture: 0
+    - _UseTexture: 1
     m_Colors:
-    - _Color: {r: 0.70980406, g: 0, b: 1, a: 1}
+    - _Color: {r: 0.67761374, g: 0, b: 1, a: 1}
     - _GradientTiling: {r: 3, g: 3, b: 0, a: 0}
     - _MatrixTiling: {r: 3, g: 5, b: 0, a: 0}
     - _ScrollSpeed: {r: 0, g: 0.1, b: 0, a: 0}
