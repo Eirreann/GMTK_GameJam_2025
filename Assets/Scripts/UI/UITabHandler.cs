@@ -113,12 +113,16 @@ public class UITabHandler : MonoBehaviour
             foreach(Button btn in buttons)
             {
                 btn.interactable = btn != button;
+                
+                var colors = btn.colors;
+                colors.colorMultiplier = btn != button ? 1f : 2f;
+                btn.colors = colors;
             }
 
             var count = 0;
-            foreach(GameObject tabs in tabs)
+            foreach(GameObject tab in tabs)
             {
-                tabs.SetActive(count == buttons.IndexOf(button));
+                tab.SetActive(count == buttons.IndexOf(button));
                 count++;
             }
         };

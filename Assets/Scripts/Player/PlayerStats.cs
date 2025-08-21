@@ -8,18 +8,22 @@ namespace Player
 {
     public class PlayerStats : MonoBehaviour
     {
-        [SerializeField] private int _currentWallJuice;
-        [SerializeField] private int _maxWallJuice;
 
-        [SerializeField] private int _currentPlayerHealth;
-        [SerializeField] private int _maxPlayerHealth;
+        [SerializeField] private PlayerStat health;
+        [SerializeField] private PlayerStat wallJuice;
     
         // Start is called once before the first execution of Update after the MonoBehaviour is created
-        
+
+        [Serializable]
+        private struct PlayerStat
+        {
+            public int current;
+            public int max;
+        }
 
         public IEnumerator JOTEffect(float frequency, int amount)
         {
-            if(_currentWallJuice > 0 )DrainJuice(amount);
+            if(wallJuice.current > 0 )DrainJuice(amount);
             yield return new WaitForSeconds(frequency);
         
             StartCoroutine(JOTEffect(frequency, amount));
@@ -27,59 +31,59 @@ namespace Player
 
         public int DrainJuice(int drain)
         {
-            _currentWallJuice -= drain;
-            if(_currentWallJuice < 0)
-                _currentWallJuice = 0;
+            wallJuice.current -= drain;
+            if(wallJuice.current < 0)
+                wallJuice.current = 0;
         
             _updateUI();
-            return _currentWallJuice;
+            return wallJuice.current;
         }
 
         public int InjectJuice(int inject)
         {
-            _currentWallJuice += inject;
-            if(_currentWallJuice > _maxWallJuice)
-                _currentWallJuice = _maxWallJuice;
+            wallJuice.current += inject;
+            if(wallJuice.current > wallJuice.max)
+                wallJuice.current = wallJuice.max;
             _updateUI();
-            return _currentWallJuice;
+            return wallJuice.current;
         }
 
         public int DamagePlayer(int damage)
         {
-            _currentPlayerHealth -= damage;
+            health.current -= damage;
             _updateUI();
-            return _currentPlayerHealth;
+            return health.current;
         }
 
         public int HealPlayer(int heal)
         {
-            _currentPlayerHealth += heal;
+            health.current += heal;
             _updateUI();
-            return _currentPlayerHealth;
+            return health.current;
         }
 
         public void IncreaseMaxJuice(int increase)
         {
-            _maxWallJuice += increase;
+            wallJuice.current += increase;
             _updateUI();
         }
 
         public void ReplenishAllJuice()
         {
-            _currentWallJuice = _maxWallJuice;
+            wallJuice.current = wallJuice.max;
             _updateUI();
         }
     
         public void ReplenishAllHealth()
         {
-            _currentPlayerHealth = _maxPlayerHealth;
+            health.current = health.max;
             _updateUI();
         }
 
         private void _updateUI()
         {
-            GameManager.Instance.Player.HUD.UpdateHealthUI(_currentPlayerHealth, _maxPlayerHealth);
-            GameManager.Instance.Player.HUD.UpdateWallJuiceUI(_currentWallJuice, _maxWallJuice);
+            GameManager.Instance.Player.HUD.UpdateHealthUI(health.current, health.max);
+            GameManager.Instance.Player.HUD.UpdateWallJuiceUI(wallJuice.current, wallJuice.max);
         }
     }
 

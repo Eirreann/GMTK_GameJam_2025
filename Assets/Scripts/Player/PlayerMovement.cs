@@ -1,5 +1,6 @@
 using System;
 using Game;
+using Input;
 using UnityEngine;
 
 namespace Player
@@ -48,17 +49,17 @@ namespace Player
     
     void Update()
     {
-        _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * GameManager.Instance.inputHandler._moveDirection.y + playerCamera.transform.right * GameManager.Instance.inputHandler._moveDirection.x).normalized;
+        _desiredMoveDirection = (new Vector3(playerCamera.transform.forward.x, 0, playerCamera.transform.forward.z) * InputHandler.Instance._moveDirection.y + playerCamera.transform.right * InputHandler.Instance._moveDirection.x).normalized;
         _desiredMoveDirection = new Vector3(_desiredMoveDirection.x, 0, _desiredMoveDirection.z);
     }
     
     public void RotatePlayer(Vector2 directionValue)
     {
         
-        var _modifier = GameManager.Instance.inputHandler.NonMouseSensitivityModifier * _sensitivity * Time.deltaTime;
-        if (GameManager.Instance.inputHandler.LookDeviceIsMouse)
+        var _modifier = InputHandler.Instance.NonMouseSensitivityModifier * _sensitivity * Time.deltaTime;
+        if (InputHandler.Instance.LookDeviceIsMouse)
         {
-            _modifier = GameManager.Instance.inputHandler.MouseSensitivityModifier * _sensitivity;
+            _modifier = InputHandler.Instance.MouseSensitivityModifier * _sensitivity;
         }
         
         directionValue *= _modifier;

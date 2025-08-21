@@ -12,8 +12,7 @@ namespace Interactions
         private PlayerController _playerController;
         private bool _playerInRange = false;
         public UnityAction<bool> interactableAction;
-
-        private string _buttonNumber = "1";
+        
         [SerializeField] private string _interactText = "Interact";
 
         public bool triggered = false;
@@ -22,11 +21,6 @@ namespace Interactions
         public void Start()
         {
             _playerController = FindFirstObjectByType<PlayerController>();
-        }
-        
-        public void Update()
-        {
-            
         }
 
          public virtual string GetText()
@@ -39,15 +33,9 @@ namespace Interactions
             interactableAction = uAction;
         }
 
-        public virtual void ToggleEnabled()
-        {
-            enabled = !enabled;
-            isEnabled = enabled;
-        }
-
         public virtual bool Interact(bool status)
         {
-            if (isEnabled)
+            if (isEnabled && !triggered)
             {
                 triggered = status;
                 GameManager.Instance.Player.HUD.UpdateInteractText(this, false);
@@ -75,7 +63,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                other.gameObject.GetComponent<PlayerController>().playerCanInteract = true;
+                GameManager.Instance.Player.playerInteractions.playerCanInteract = true;
             }
         }
         
@@ -83,7 +71,7 @@ namespace Interactions
         {
             if (other.tag == "Player")
             {
-                other.gameObject.GetComponent<PlayerController>().playerCanInteract = false;
+                GameManager.Instance.Player.playerInteractions.playerCanInteract = false;
             }
         }
     }

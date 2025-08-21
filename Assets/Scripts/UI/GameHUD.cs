@@ -1,4 +1,5 @@
 ﻿using Game;
+using Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -128,7 +129,7 @@ namespace UI
         private void _returnToMenu()
         {
             Time.timeScale = 1;
-            GameManager.Instance.inputHandler.OnGameOver();
+            InputHandler.Instance.OnGameOver();
             SceneManager.LoadScene(0);
             
             uiSelectionHelper._inputSystem.UI.Disable();

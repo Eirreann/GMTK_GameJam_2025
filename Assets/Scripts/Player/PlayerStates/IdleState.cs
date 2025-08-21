@@ -1,4 +1,5 @@
 ﻿using Game;
+using Input;
 using UnityEngine;
 using Utilities;
 
@@ -29,17 +30,17 @@ namespace Player.PlayerStates
                 player._playerStateMachine.ChangeState(player._playerStateMachine.fallingState);
             }
 
-            if (GameManager.Instance.inputHandler._moveDirection.magnitude > 0)
+            if (InputHandler.Instance._moveDirection.magnitude > 0)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.runningState);
             }
             
-            if (GameManager.Instance.inputHandler._jump)
+            if (InputHandler.Instance._jump)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.jumpingState);
             }
 
-            if (GameManager.Instance.inputHandler._crouch)
+            if (InputHandler.Instance._crouch)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.crouchingState);
             }

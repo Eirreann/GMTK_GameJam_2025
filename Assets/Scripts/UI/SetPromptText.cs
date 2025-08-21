@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Game;
+using Input;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -22,12 +23,10 @@ namespace UI
         private InputSystem_Actions _inputActions;
         private TMP_Text _textBox;
 
-        private void Start()
+        private void Awake()
         {
-            _inputActions = new InputSystem_Actions();
-            
+            playerInput = InputHandler.Instance.playerInput;
             _textBox = GetComponent<TMP_Text>();
-            _bindingsList = new List<InputAction>();
         }
         
         public void ReplaceMessage(string message, TooltipSO tooltip)
@@ -44,21 +43,20 @@ namespace UI
 
         public void ReplaceMessage(string message, InputAction action)
         {
-            
             _message = message;
-            
             SetText(message, new List<InputAction>() { action });
         }
 
         public void Refresh()
         {
-            SetText("");
+            SetText("", new List<InputAction>());
         }
 
         [ContextMenu("Set Text")]
-        private void SetText(string message, List<InputAction> actions = null )
+        private void SetText(string message, List<InputAction> actions )
         {
             var textBox = GetComponent<TMP_Text>();
+            
             if (actions == null || actions.Count == 0)
             {
                 textBox.text = message;
@@ -66,9 +64,8 @@ namespace UI
             }
             
             var list = new List<string>() { "Keyboard", "Gamepad" };
-            var schemeIndex = list.IndexOf(playerInput.currentControlScheme);
             
-            if(!playerInput) playerInput = GameManager.Instance.inputHandler.playerInput;
+            var schemeIndex = list.IndexOf(playerInput.currentControlScheme);
 
             var count = 0;
             foreach (var action in actions)

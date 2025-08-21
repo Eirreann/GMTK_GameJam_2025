@@ -62,10 +62,13 @@ namespace Game
 
         public void Reset()
         {
-            if (playerHasRope) ReturnRope();
-            
-            _setRopeActive(false, false);
-            _setRopeMaterials(pickupInteractable.triggered, ropeDeposit.triggered);
+            if (playerHasRope)
+            {
+                ReturnRope();
+                
+                _setRopeActive(false, false);
+                _setRopeMaterials(pickupInteractable.triggered, ropeDeposit.triggered);
+            }
             
             DestroyLevelWalls();
             enemies.ForEach(e => e.ResetEnemy());

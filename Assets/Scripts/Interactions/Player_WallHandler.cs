@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Game;
+using Input;
 using Utilities;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
@@ -64,7 +65,7 @@ public class Player_WallHandler : MonoBehaviour
         if(_drawCooldown > 0f)
             _drawCooldown -= Time.deltaTime;
         
-        return _drawCooldown > 0f ? false : GameManager.Instance.inputHandler._drawWall;
+        return !(_drawCooldown > 0f) && InputHandler.Instance._drawWall;
     }
 
     private void _deductDrawJuice()

@@ -1,4 +1,5 @@
 ﻿using Game;
+using Input;
 using UnityEngine;
 using Utilities;
 
@@ -26,7 +27,7 @@ namespace Player.PlayerStates
             
             
             //do the crouch thing
-            if (GameManager.Instance.inputHandler._crouch)
+            if (InputHandler.Instance._crouch)
             {
                 player.transform.localScale = new Vector3(player.transform.localScale.x, 1f, player.transform.localScale.z);
             }
@@ -42,7 +43,7 @@ namespace Player.PlayerStates
     
             if (Physics.Raycast(leftRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore) || Physics.Raycast(rightRay, out wallJumpHit, WALL_JUMP_RANGE, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
-                if (GameManager.Instance.inputHandler._jump)
+                if (InputHandler.Instance._jump)
                 {
                     if (!wallJumpHit.collider.CompareTag("Enemy") && wallJumpHit.collider.transform != player.lastWallJumped)
                     {
@@ -59,7 +60,7 @@ namespace Player.PlayerStates
             RaycastHit hit;
             if (Physics.Raycast(player.playerCamera.transform.position, Vector3.down, out hit, player.transform.localScale.y + 0.05f, player.playerMovement.GroundLayer, QueryTriggerInteraction.Ignore))
             {
-                if (GameManager.Instance.inputHandler._crouch)
+                if (InputHandler.Instance._crouch)
                 {
                     player._playerStateMachine.ChangeState(player._playerStateMachine.crouchingState);
                     return;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Input;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -31,12 +32,13 @@ namespace UI
 
         private void Start()
         {
+            if(!playerInput) playerInput = InputHandler.Instance.playerInput;
+            _inputSystem = new InputSystem_Actions();
+            
             SetLastSelected(_defaultButton.gameObject);
             SetLastVisited(_defaultButton.gameObject);
             EventSystem.current.SetSelectedGameObject(_defaultButton.gameObject);
 
-            playerInput = FindFirstObjectByType<PlayerInput>();
-            _inputSystem = new InputSystem_Actions();
             
             if(_activateUIInputsOnStart) _inputSystem.UI.Enable();
         }

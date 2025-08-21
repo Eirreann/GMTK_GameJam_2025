@@ -1,4 +1,5 @@
 ﻿using Game;
+using Input;
 using UnityEngine;
 using Utilities;
 
@@ -24,7 +25,7 @@ namespace Player.PlayerStates
 
         public void Update()
         {
-            if (GameManager.Instance.inputHandler._crouch)
+            if (InputHandler.Instance._crouch)
             {
                 if (player.rb.linearVelocity.magnitude < 2f)
                 {
@@ -39,7 +40,7 @@ namespace Player.PlayerStates
                 }
             }
             
-            if (GameManager.Instance.inputHandler._jump)
+            if (InputHandler.Instance._jump)
             {
                 player._playerStateMachine.ChangeState(player._playerStateMachine.jumpingState);
             }

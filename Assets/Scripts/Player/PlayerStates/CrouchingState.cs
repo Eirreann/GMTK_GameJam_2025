@@ -1,4 +1,5 @@
 ﻿using Game;
+using Input;
 using UnityEngine;
 using Utilities;
 
@@ -24,7 +25,7 @@ namespace Player.PlayerStates
         {
             player.playerMovement.ProcessMovement(player.playerMovement.playerSpeed * 0.5f);
             
-            if (!GameManager.Instance.inputHandler._crouch)
+            if (!InputHandler.Instance._crouch)
             {
                 if (!Physics.Raycast(player.playerCamera.transform.position, Vector3.up, out RaycastHit hit, 1.25f))
                 {

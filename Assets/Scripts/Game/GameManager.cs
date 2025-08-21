@@ -16,7 +16,6 @@ namespace Game
         public LevelManager CurrentLevel => Levels[_levelIndex];
         public PlayerController Player;
         
-        [HideInInspector] public InputHandler inputHandler;
         public ControlsChangedHelper controlsHelper;
         
         [SerializeField] private GameHUD _gameHUD;
@@ -28,21 +27,20 @@ namespace Game
             QualitySettings.vSyncCount = PlayerPrefs.GetInt("vSync", 0);
             Screen.fullScreenMode = PlayerPrefs.GetInt("fullscreen", 1) == 1 ? FullScreenMode.ExclusiveFullScreen : FullScreenMode.Windowed;
             
-            controlsHelper = GetComponent<ControlsChangedHelper>();
-
+            controlsHelper = InputHandler.Instance.GetComponent<ControlsChangedHelper>();
             controlsHelper.OnControlsChanged += Player.HUD.RefreshInteractText;
             controlsHelper.OnControlsChanged += Player.HUD.RefreshTooltipText;
-            
-            inputHandler = GetComponent<InputHandler>();
+
+            _gameHUD = FindFirstObjectByType<GameHUD>();
 
             if (Levels.Count > 0)
             {
                 Levels.ForEach(lvl => lvl.gameObject.SetActive(lvl == CurrentLevel));
                 
                 Levels[_levelIndex].StartLevel();
+                CurrentLevel.finalTerminal.Init(EndGame);
             }
             
-            CurrentLevel.finalTerminal.Init(EndGame);
         }
         
         public void ResetLevel()
@@ -53,10 +51,10 @@ namespace Game
 
         private void Update()
         {
-            if(inputHandler._reset)
+            if(InputHandler.Instance._reset)
                 ResetLevel();
 
-            if (inputHandler._pause)
+            if (InputHandler.Instance._pause)
                 _gameHUD.ShowPauseMenu();
             
             if (Player.transform.position.y < -5f || Player.transform.position.y > 20f)
@@ -71,7 +69,7 @@ namespace Game
         public void EndGame(bool isEnd)
         {
             Debug.Log("Ending game.");
-            inputHandler.OnGameOver();
+            InputHandler.Instance.OnGameOver();
             _gameHUD.ShowCompletionBackground();
         }
 

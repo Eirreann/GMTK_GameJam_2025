@@ -47,24 +47,26 @@ namespace UI
 
         public void Start()
         {
+            Debug.Log(Master);
+            
             selectionHelper = FindFirstObjectByType<UISelectionHelper>();
             
-            Master.onValueChanged.AddListener(_updateMasterAudio);
-            Music.onValueChanged.AddListener(_updateMusicAudio);
-            SFX.onValueChanged.AddListener(_updateSFXAudio);
+            if(Master) Master.onValueChanged.AddListener(_updateMasterAudio);
+            if(Music) Music.onValueChanged.AddListener(_updateMusicAudio);
+            if(SFX) SFX.onValueChanged.AddListener(_updateSFXAudio);
             
-            fpsSlider.onValueChanged.AddListener(_updateFPSSlider);
-            vSyncToggle.onValueChanged.AddListener(_updateVSyncToggle);
-            fullscreenToggle.onValueChanged.AddListener(_updateFullscreenToggle);
+            if(fpsSlider) fpsSlider.onValueChanged.AddListener(_updateFPSSlider);
+            if(vSyncToggle) vSyncToggle.onValueChanged.AddListener(_updateVSyncToggle);
+            if(fullscreenToggle) fullscreenToggle.onValueChanged.AddListener(_updateFullscreenToggle);
             
-            resolutionDropdown.onValueChanged.AddListener(_updateResolutionDropdown);
+            if(resolutionDropdown) resolutionDropdown.onValueChanged.AddListener(_updateResolutionDropdown);
 
-            applyChangesButton.onClick.AddListener(_applyGraphicsChanges);
+            if(applyChangesButton) applyChangesButton.onClick.AddListener(_applyGraphicsChanges);
             
-            closeButton.onClick.AddListener(SetInitialVideoValues);
+            if(closeButton) closeButton.onClick.AddListener(SetInitialVideoValues);
             
-            confirmButton.onClick.AddListener(_confirmGraphicsChanges);
-            revertButton.onClick.AddListener(_revertGraphicsChanges);
+            if(confirmButton) confirmButton.onClick.AddListener(_confirmGraphicsChanges);
+            if(revertButton) revertButton.onClick.AddListener(_revertGraphicsChanges);
 
             Master.value = PlayerPrefs.GetFloat("Master", 1f);
             Music.value = PlayerPrefs.GetFloat("Music", 1f);
@@ -145,13 +147,12 @@ namespace UI
             Application.targetFrameRate = (int)fpsSlider.value;
             QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
             SetResolution(resolutionDropdown.value);
-
+            
             applyChangesButton.interactable = false;
-
-
-            confirmSettingsPanel.SetActive(true);
+            
             Timer = 15f;
             
+            confirmSettingsPanel.SetActive(true);
             EventSystem.current.SetSelectedGameObject(confirmButton.gameObject);
         }
 

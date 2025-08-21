@@ -114,10 +114,6 @@ MonoBehaviour:
   playerCamera: {fileID: 7488266105443202889}
   rb: {fileID: 0}
   playerCanMove: 1
-  playerCanInteract: 0
-  interactableLayer:
-    serializedVersion: 2
-    m_Bits: 128
   lastWallJumped: {fileID: 0}
   hasWallJumped: 0
 --- !u!114 &541133255216557778
@@ -183,10 +179,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90568b4b1e2e16641bbe6b95f210a67d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentWallJuice: 60
-  _maxWallJuice: 60
-  _currentPlayerHealth: 20
-  _maxPlayerHealth: 20
+  health:
+    current: 25
+    max: 25
+  wallJuice:
+    current: 40
+    max: 40
 --- !u!114 &8128099997728786182
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,7 +197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c9178bd639b4f4e86e7807585296d6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactablesInRange: []
+  playerCamera: {fileID: 7488266105443202889}
+  playerCanInteract: 0
+  interactableLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!54 &4343155719611324924
 Rigidbody:
   m_ObjectHideFlags: 0
