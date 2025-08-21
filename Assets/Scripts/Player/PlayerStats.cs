@@ -64,7 +64,7 @@ namespace Player
 
         public void IncreaseMaxJuice(int increase)
         {
-            wallJuice.current += increase;
+            wallJuice.max += increase;
             _updateUI();
         }
 
