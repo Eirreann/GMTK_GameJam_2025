@@ -20,16 +20,21 @@ namespace UI
         public Slider SFX;
 
         [Header("Video")] 
+        private List<Resolution> _resolutions;
+        
         public Slider fpsSlider;
         public TextMeshProUGUI fpsDisplay;
         public Toggle vSyncToggle;
         public Toggle fullscreenToggle;
         public Button applyChangesButton;
-        
         public TMP_Dropdown resolutionDropdown;
-        private List<Resolution> _resolutions;
 
-        public Button closeButton;
+        public GameObject confirmSettingsPanel;
+        public float Timer;
+        public TextMeshProUGUI timerText;
+        
+        public Button confirmButton;
+        public Button revertButton;
         
         [Header("UI Elements")]
         public GameObject resolutionSelectObject;
@@ -38,6 +43,7 @@ namespace UI
         public GameObject vsyncToggleObject;
         
         UISelectionHelper selectionHelper;
+        public Button closeButton;
 
         public void Start()
         {
@@ -56,6 +62,9 @@ namespace UI
             applyChangesButton.onClick.AddListener(_applyGraphicsChanges);
             
             closeButton.onClick.AddListener(SetInitialVideoValues);
+            
+            confirmButton.onClick.AddListener(_confirmGraphicsChanges);
+            revertButton.onClick.AddListener(_revertGraphicsChanges);
 
             Master.value = PlayerPrefs.GetFloat("Master", 1f);
             Music.value = PlayerPrefs.GetFloat("Music", 1f);
@@ -71,6 +80,23 @@ namespace UI
             #endif
         }
 
+        public void Update()
+        {
+            if (confirmSettingsPanel && confirmSettingsPanel.activeSelf)
+            {
+                if (Timer > 0)
+                {
+                    Timer -= Time.unscaledDeltaTime;
+                    timerText.text = $"You have {(int)Timer} seconds to confirm.";
+                }
+
+                if (Timer <= 0)
+                {
+                    SetInitialVideoValues();
+                }
+            }
+        }
+
         public void SetInitialVideoValues()
         {
             
@@ -83,6 +109,8 @@ namespace UI
             applyChangesButton.interactable = false;
             
             GenerateScreenResolutions();
+            
+            if(confirmSettingsPanel.activeSelf) confirmSettingsPanel.SetActive(false);
         }
 
         private void GenerateScreenResolutions()
@@ -115,17 +143,33 @@ namespace UI
         private void _applyGraphicsChanges()
         {
             Application.targetFrameRate = (int)fpsSlider.value;
-            PlayerPrefs.SetInt("maxFPS", (int)fpsSlider.value);
-            
             QualitySettings.vSyncCount = vSyncToggle.isOn ? 1 : 0;
-            PlayerPrefs.SetInt("vSync", vSyncToggle.isOn ? 1 : 0);
-            
-            PlayerPrefs.SetInt("fullscreen", fullscreenToggle.isOn ? 1 : 0);
-            
             SetResolution(resolutionDropdown.value);
 
             applyChangesButton.interactable = false;
 
+
+            confirmSettingsPanel.SetActive(true);
+            Timer = 15f;
+            
+            EventSystem.current.SetSelectedGameObject(confirmButton.gameObject);
+        }
+
+        private void _confirmGraphicsChanges()
+        {
+            PlayerPrefs.SetInt("maxFPS", (int)fpsSlider.value);
+            PlayerPrefs.SetInt("vSync", vSyncToggle.isOn ? 1 : 0);
+            PlayerPrefs.SetInt("fullscreen", fullscreenToggle.isOn ? 1 : 0);
+            
+            confirmSettingsPanel.SetActive(false);
+            EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
+        }
+
+        private void _revertGraphicsChanges()
+        {
+            SetInitialVideoValues();
+            
+            confirmSettingsPanel.SetActive(false);
             EventSystem.current.SetSelectedGameObject(closeButton.gameObject);
         }
         
